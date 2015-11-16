@@ -11,66 +11,122 @@
   var preload = function preload() {
     resize();
     game.load.image('square', 'images/square.png');
-    game.load.image('rectangle', 'images/rectangle.png');
   };
 
   var create = function create() {
     // work-around for Phaser's shoddy world wrap
     var worldMargin = 16;
     game.world.setBounds(-worldMargin, -worldMargin, nativeWidth + worldMargin * 2, nativeHeight + worldMargin * 2);
+    
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     (function addPlayer() {
-      player = game.add.sprite(20, 160, 'square');
-      player.scale.setTo(8, 8);
+      player = game.add.sprite(8, 16, 'square');
+      player.scale.setTo(4, 8);
       game.physics.arcade.enable(player);
-      player.body.bounce.y = 0.2;
-      player.body.gravity.y = 300;
-      //player.body.collideWorldBounds = true;
+      player.body.bounce.y = 0.1;
+      player.body.gravity.y = 380;
     }());
 
     (function buildLevel() {
       platforms = game.add.group();
       platforms.enableBody = true;
-      var platformPositions = [[-64, 32], [0,32], [64,32], [192,32], [256,32], [320, 32],
-                               [64, 80], [128, 80], [192,80],
-                               [-64, 112], [0, 112], [256, 112], [320, 112],
-                               [128, 128],
-                               [-64, 176], [0, 176], [64, 176], [192, 176], [256, 176], [320, 176]];
+      var platformPositions = [[48, 64], [208, 64], 
+                                   [128, 104],
+                               [48, 154,], [208, 154]];
 
       platformPositions.forEach(function(position) {
-        var platform = platforms.create(position[0], position[1], 'rectangle');
-        platform.scale.setTo(8, 6);
+        var platform = platforms.create(position[0], position[1], 'square');
+        platform.scale.setTo(24, 4);
         platform.body.immovable = true;
+      });
+      
+      var walls = [];
+      walls.push(platforms.create(-16, 32, 'square'));
+      walls.push(platforms.create(304, 32, 'square'));
+      walls.forEach(function(wall) {
+        wall.scale.setTo(16, 74);
+        wall.body.immovable = true;
       });
     }());
   };
 
   var update = function update() {
     game.physics.arcade.collide(player, platforms);
-
-    // controls/movement
-    cursors = game.input.keyboard.createCursorKeys();
-    player.body.velocity.x = 0; //  Reset the players velocity (movement)
-
-    switch (true) {
-      case cursors.left.isDown:
-        player.body.velocity.x = -64;
-        break;
-      case cursors.right.isDown:
-        player.body.velocity.x = 64;
-        break;
-      default:
-        break;
-    }
-
-    //  jump
-    if (cursors.up.isDown && player.body.touching.down) {
-      player.body.velocity.y = -200;
-    }
-
-    console.log('game.world.wrap', game.world.wrap);
     game.world.wrap(player, 0, true);
+    
+    (function friction() {
+      if (player.body.touching.down) {
+        if (player.body.velocity.x > 0) {
+          player.body.velocity.x -= 4;
+        } else if (player.body.velocity.x < 0) {
+          player.body.velocity.x += 4;
+        }
+      }
+    }());
+
+    (function playerControls() {
+      cursors = game.input.keyboard.createCursorKeys();
+
+      (function run() {
+        var maxSpeed = 64;
+        switch (true) {
+          // players have less control in the air
+          case cursors.left.isDown:
+            if (player.body.touching.down) {
+              player.body.velocity.x = Math.max(player.body.velocity.x - 8, -maxSpeed);
+            } else {
+              player.body.velocity.x = Math.max(player.body.velocity.x - 3, -maxSpeed);
+            }
+            break;
+          case cursors.right.isDown:
+            if (player.body.touching.down) {
+              player.body.velocity.x = Math.min(player.body.velocity.x + 8, maxSpeed);
+            } else {
+              player.body.velocity.x = Math.min(player.body.velocity.x + 3, maxSpeed);
+            }
+            break;
+        }
+      }());
+
+      (function jump() {
+        if (cursors.up.isDown) {
+          switch (true) {
+            case player.body.touching.down:
+              player.body.velocity.y = -200;
+              break;
+            // wall jumps
+            case player.body.touching.left:
+              player.body.velocity.y = -240;
+              player.body.velocity.x = 90;
+              break;
+            case player.body.touching.right:
+              player.body.velocity.y = -240;
+              player.body.velocity.x = -90;
+              break;
+          }
+        }
+      }());
+
+      (function duck() {
+        // is this bad practice? adding boolean to phaser's cursors
+        if (typeof cursors.down.wasDown === 'undefined') {
+          cursors.down.wasDown = false;
+        }
+
+        if (cursors.down.isDown) {
+          player.scale.setTo(4, 4);
+          if (!cursors.down.wasDown) {
+            player.y += 8;
+          }
+          cursors.down.wasDown = true;
+        } else if (cursors.down.wasDown) {
+          cursors.down.wasDown = false;
+          player.y -= 8;
+          player.scale.setTo(4, 8);
+        }
+      }());
+    }());
   };
 
   var game = new Phaser.Game(nativeWidth, nativeHeight, Phaser.AUTO, '#game', {
