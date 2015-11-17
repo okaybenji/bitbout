@@ -1,0 +1,27 @@
+{
+  "name": "game",
+  "version": "0.1.0",
+  "description": "a game.",
+  "main": "bundle.js",
+  "scripts": {
+    "build": "browserify scripts/game.js -o bundle.js",
+    "watch": "nodemon -e js -w scripts -x 'npm run build'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/okaybenji/game.git"
+  },
+  "author": "Benji Kay <okaybenji@gmail.com> (http://benjikay.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/okaybenji/game/issues"
+  },
+  "homepage": "https://github.com/okaybenji/game",
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "nodemon": "^1.8.1"
+  },
+  "dependencies": {
+    "jquery": "^2.1.4"
+  }
+}

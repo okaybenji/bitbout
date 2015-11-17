@@ -1,6 +1,4 @@
-var window = window;
-var $ = $;
-var Phaser = Phaser;
+var $ = require('jquery');
 
 (function() {
   var nativeWidth = 320;
@@ -9,7 +7,7 @@ var Phaser = Phaser;
 
   var resize = function resize() {
     var zoom = $(window).width() / nativeWidth * 100;
-    $("html").css("zoom", zoom + "%");
+    $('html').css('zoom', zoom + '%');
   };
 
   var preload = function preload() {
