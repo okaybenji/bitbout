@@ -157,5 +157,5 @@ var Phaser = Phaser;
     preload: preload,
     create: create,
     update: update,
-  });
+  }, false, false);
 }());
