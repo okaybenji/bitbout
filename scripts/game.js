@@ -1,8 +1,11 @@
-(function game() {
+var window = window;
+var $ = $;
+var Phaser = Phaser;
+
+(function() {
   var nativeWidth = 320;
   var nativeHeight = 180;
-  var platforms;
-  var players = [];
+  var platforms, players;
 
   var resize = function resize() {
     var zoom = $(window).width() / nativeWidth * 100;
@@ -20,14 +23,21 @@
     game.world.setBounds(-worldMargin, -worldMargin, nativeWidth + worldMargin * 2, nativeHeight + worldMargin * 2);
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    var cursors = game.input.keyboard.createCursorKeys();
+    players = game.add.group();
 
     var createPlayer = function(config) {
       config = config || {};
-      var x = config.x || 4;
-      var y = config.y || 8;
-      player = game.add.sprite(x, y, 'square');
+      var xPos = config.x || 4;
+      var yPos = config.y || 8;
+      config.keys = config.keys || {};
+      var keys = {
+        up: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.up] || 'UP'),
+        down: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.down] || 'DOWN'),
+        left: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.left] || 'LEFT'),
+        right: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.right] || 'RIGHT'),
+      };
+
+      var player = players.create(xPos, yPos, 'square');
       player.scale.setTo(4, 8);
       game.physics.arcade.enable(player);
       player.body.bounce.y = 0.1;
@@ -35,6 +45,8 @@
 
       // phaser apparently automatically calls any function named update attached to a sprite!
       player.update = function() {
+        game.world.wrap(player, 0, true);
+
         (function friction() {
           if (player.body.touching.down) {
             if (player.body.velocity.x > 0) {
@@ -50,14 +62,14 @@
             var maxSpeed = 64;
             switch (true) {
               // players have less control in the air
-              case cursors.left.isDown:
+              case keys.left.isDown:
                 if (player.body.touching.down) {
                   player.body.velocity.x = Math.max(player.body.velocity.x - 8, -maxSpeed);
                 } else {
                   player.body.velocity.x = Math.max(player.body.velocity.x - 3, -maxSpeed);
                 }
                 break;
-              case cursors.right.isDown:
+              case keys.right.isDown:
                 if (player.body.touching.down) {
                   player.body.velocity.x = Math.min(player.body.velocity.x + 8, maxSpeed);
                 } else {
@@ -68,7 +80,7 @@
           }());
 
           (function jump() {
-            if (cursors.up.isDown) {
+            if (keys.up.isDown) {
               switch (true) {
                 case player.body.touching.down:
                   player.body.velocity.y = -200;
@@ -87,19 +99,19 @@
           }());
 
           (function duck() {
-            // is this bad practice? adding boolean to phaser's cursors
-            if (typeof cursors.down.wasDown === 'undefined') {
-              cursors.down.wasDown = false;
+            // is this bad practice? adding boolean to phaser's keys
+            if (typeof keys.down.wasDown === 'undefined') {
+              keys.down.wasDown = false;
             }
 
-            if (cursors.down.isDown) {
+            if (keys.down.isDown) {
               player.scale.setTo(4, 4);
-              if (!cursors.down.wasDown) {
+              if (!keys.down.wasDown) {
                 player.y += 8;
               }
-              cursors.down.wasDown = true;
-            } else if (cursors.down.wasDown) {
-              cursors.down.wasDown = false;
+              keys.down.wasDown = true;
+            } else if (keys.down.wasDown) {
+              keys.down.wasDown = false;
               player.y -= 8;
               player.scale.setTo(4, 8);
             }
@@ -110,9 +122,8 @@
       return player;
     };
 
-    players.push(createPlayer());
-    players.push(createPlayer({x: 90, y: 90}));
-    players.push(createPlayer({x: 306, y: 16}));
+    createPlayer({keys: { up: 'W', down: 'S', left: 'A', right: 'D' }});
+    createPlayer({x: 306, y: 16, keys: { up: 'I', down: 'K', left: 'J', right: 'L' }});
 
     (function buildLevel() {
       platforms = game.add.group();
@@ -138,16 +149,8 @@
   };
 
   var update = function update() {
-    players.forEach(function(player, i) {
-      game.physics.arcade.collide(player, platforms);
-      game.world.wrap(player, 0, true);
-      players.forEach(function(otherPlayer, j) {
-        // let players collide with each other, but not with themselves
-        if (i !== j) {
-          game.physics.arcade.collide(player, otherPlayer);
-        }
-      });
-    });
+    game.physics.arcade.collide(players, platforms);
+    game.physics.arcade.collide(players, players);
   };
 
   var game = new Phaser.Game(nativeWidth, nativeHeight, Phaser.AUTO, '#game', {
