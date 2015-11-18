@@ -1,4 +1,5 @@
 var utils = {
+  // from underscore
   debounce: function debounce(func, wait, immediate) {
 	var timeout;
 	return function() {
