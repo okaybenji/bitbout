@@ -16,9 +16,72 @@ var createPlayer = function createPlayer(game, config) {
   player.body.bounce.y = 0.1;
   player.body.gravity.y = 380;
 
+  var movement = {
+    run: function run(direction) {
+      var maxSpeed = 64;
+      var acceleration = player.body.touching.down ? 8 : 3; // players have less control in the air
+
+      switch (direction) {
+        case 'left':
+          player.body.velocity.x = Math.max(player.body.velocity.x - acceleration, -maxSpeed);
+          break;
+        case 'right':
+          player.body.velocity.x = Math.min(player.body.velocity.x + acceleration, maxSpeed);
+          break;
+      }
+    },
+
+    jump: function jump() {
+      if (player.body.touching.down) {
+        player.body.velocity.y = -200;
+      // wall jumps
+      } else if (player.body.touching.left) {
+        player.body.velocity.y = -240;
+        player.body.velocity.x = 90;
+      } else if (player.body.touching.right) {
+        player.body.velocity.y = -240;
+        player.body.velocity.x = -90;
+      }
+    },
+
+    duck: function duck() {
+      player.scale.setTo(4, 4);
+      if (!keys.down.wasDown) {
+        player.y += 8;
+      }
+      keys.down.wasDown = true;
+    },
+
+    stand: function stand() {
+      keys.down.wasDown = false;
+      player.y -= 8;
+      player.scale.setTo(4, 8);
+    }
+  };
+
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
     game.world.wrap(player, 0, true);
+
+    if (keys.left.isDown && !keys.right.isDown) {
+      movement.run('left');
+    } else if (keys.right.isDown && !keys.left.isDown) {
+      movement.run('right');
+    }
+
+    if (keys.up.isDown) {
+      movement.jump();
+    }
+
+    // is this bad practice? adding boolean to phaser's keys
+    if (typeof keys.down.wasDown === 'undefined') {
+      keys.down.wasDown = false;
+    }
+    if (keys.down.isDown) {
+      movement.duck();
+    } else if (keys.down.wasDown) {
+      movement.stand();
+    }
 
     (function friction() {
       if (player.body.touching.down) {
@@ -28,67 +91,6 @@ var createPlayer = function createPlayer(game, config) {
           player.body.velocity.x += 4;
         }
       }
-    }());
-
-    (function playerControls() {
-      (function run() {
-        var maxSpeed = 64;
-        switch (true) {
-          // players have less control in the air
-          case keys.left.isDown:
-            if (player.body.touching.down) {
-              player.body.velocity.x = Math.max(player.body.velocity.x - 8, -maxSpeed);
-            } else {
-              player.body.velocity.x = Math.max(player.body.velocity.x - 3, -maxSpeed);
-            }
-            break;
-          case keys.right.isDown:
-            if (player.body.touching.down) {
-              player.body.velocity.x = Math.min(player.body.velocity.x + 8, maxSpeed);
-            } else {
-              player.body.velocity.x = Math.min(player.body.velocity.x + 3, maxSpeed);
-            }
-            break;
-        }
-      }());
-
-      (function jump() {
-        if (keys.up.isDown) {
-          switch (true) {
-            case player.body.touching.down:
-              player.body.velocity.y = -200;
-              break;
-            // wall jumps
-            case player.body.touching.left:
-              player.body.velocity.y = -240;
-              player.body.velocity.x = 90;
-              break;
-            case player.body.touching.right:
-              player.body.velocity.y = -240;
-              player.body.velocity.x = -90;
-              break;
-          }
-        }
-      }());
-
-      (function duck() {
-        // is this bad practice? adding boolean to phaser's keys
-        if (typeof keys.down.wasDown === 'undefined') {
-          keys.down.wasDown = false;
-        }
-
-        if (keys.down.isDown) {
-          player.scale.setTo(4, 4);
-          if (!keys.down.wasDown) {
-            player.y += 8;
-          }
-          keys.down.wasDown = true;
-        } else if (keys.down.wasDown) {
-          keys.down.wasDown = false;
-          player.y -= 8;
-          player.scale.setTo(4, 8);
-        }
-      }());
     }());
   };
 
