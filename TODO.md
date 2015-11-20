@@ -1,8 +1,6 @@
 #To do
 ### movement
-* if player crouches while above a minimum velocity, add forward velocity and keep sprite ducked for a period, representing a duck-and-roll
-* if players run into each other while both standing or both crouched and rolling, knock them back in the opposite direction
-* if players run into each other with one standing and one crouched but below roll velocity, give standing player forward and upward velocity so he flies over crouching player
+* if players run into each other with one standing and above a certain velocity and one crouched but below roll velocity, give standing player forward and upward velocity so he flies over crouching player
 * if players run into each other with one standing and one crouched and rolling, give standing player upward velocity so crouching player rolls under him
 
 ###attack

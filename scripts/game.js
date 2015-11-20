@@ -38,15 +38,21 @@
         sprite.body.velocity.x = velocity;
       }
 
-      var bounceVelocity = 100;
-      var velocityA = velocityB = bounceVelocity;
-      if (playerA.position.x > playerB.position.x) {
-        velocityB *= -1;
-      } else {
-        velocityA *= -1;
+      var bothRolling = playerA.isRolling && playerB.isRolling;
+      var bothStanding = !playerA.isRolling && !playerB.isRolling;
+      if (bothRolling || bothStanding) {
+        (function bounce() {
+          var bounceVelocity = 100;
+          var velocityA = velocityB = bounceVelocity;
+          if (playerA.position.x > playerB.position.x) {
+            velocityB *= -1;
+          } else {
+            velocityA *= -1;
+          }
+          addVelocity(playerA, velocityA);
+          addVelocity(playerB, velocityB);
+        }());
       }
-      addVelocity(playerA, velocityA);
-      addVelocity(playerB, velocityB);
     });
   };
 
