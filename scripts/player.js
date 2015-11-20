@@ -14,6 +14,7 @@ var createPlayer = function createPlayer(game, config) {
   var player = game.add.sprite(xPos, yPos, 'square');
   player.orientation = orientation;
   player.isRolling = false;
+  player.isDucking = false;
   player.scale.setTo(4, 8);
   game.physics.arcade.enable(player);
   player.body.bounce.y = 0.1;
@@ -48,11 +49,11 @@ var createPlayer = function createPlayer(game, config) {
     },
 
     duck: function duck() {
-      if (!keys.down.wasDown) {
+      if (!player.isDucking) {
         player.scale.setTo(4, 4);
         player.y += 8;
       }
-      keys.down.wasDown = true;
+      player.isDucking = true;
 
       (function roll() {
         var velocity = player.body.velocity.x;
@@ -87,14 +88,11 @@ var createPlayer = function createPlayer(game, config) {
       movement.jump();
     }
 
-    // is this bad practice? adding boolean to phaser's keys
-    if (typeof keys.down.wasDown === 'undefined') {
-      keys.down.wasDown = false;
-    }
     if (keys.down.isDown) {
       movement.duck();
-    } else if (keys.down.wasDown) {
+    } else if (player.isDucking) {
       movement.stand();
+      player.isDucking = false;
     }
 
     (function friction() {

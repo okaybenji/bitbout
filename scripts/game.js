@@ -39,9 +39,10 @@
       }
 
       var bothRolling = playerA.isRolling && playerB.isRolling;
-      var bothStanding = !playerA.isRolling && !playerB.isRolling;
+      var bothStanding = !playerA.isDucking && !playerB.isDucking;
       if (bothRolling || bothStanding) {
         (function bounce() {
+          console.log('bouncing');
           var bounceVelocity = 100;
           var velocityA = velocityB = bounceVelocity;
           if (playerA.position.x > playerB.position.x) {
@@ -51,7 +52,26 @@
           }
           addVelocity(playerA, velocityA);
           addVelocity(playerB, velocityB);
+          playerA.isRolling = false;
+          playerB.isRolling = false;
         }());
+      } else {
+        console.log('flinging');
+        var playerToMove;
+        var playerToLeave;
+        if (playerA.isStanding) {
+          playerToMove = playerA;
+          playerToLeave = playerB;
+        } else {
+          playerToMove = playerB;
+          playerToLeave = playerA;
+        }
+        if (playerToMove.position.x > playerToLeave.position.x) {
+          playerToMove.body.velocity.x = -100;
+        } else {
+          playerToMove.body.velocity.x = 100;
+        }
+        playerToMove.body.velocity.y = 100;
       }
     });
   };
