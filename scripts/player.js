@@ -13,6 +13,7 @@ var createPlayer = function createPlayer(game, config) {
 
   var player = game.add.sprite(xPos, yPos, 'square');
   player.orientation = orientation;
+  player.isRolling = false;
   player.scale.setTo(4, 8);
   game.physics.arcade.enable(player);
   player.body.bounce.y = 0.1;
@@ -47,11 +48,25 @@ var createPlayer = function createPlayer(game, config) {
     },
 
     duck: function duck() {
-      player.scale.setTo(4, 4);
       if (!keys.down.wasDown) {
+        player.scale.setTo(4, 4);
         player.y += 8;
       }
       keys.down.wasDown = true;
+
+      (function roll() {
+        var velocity = player.body.velocity.x;
+        var rollVelocity = velocity > 0 ? 100 : -100;
+        var rollDuration = 100;
+        var canRoll = Math.abs(velocity) > 50 && player.body.touching.down;
+        if (canRoll) {
+          player.isRolling = true;
+          player.body.velocity.x = rollVelocity;
+          setTimeout(function() {
+            player.isRolling = false;
+          }, rollDuration);
+        }
+      }());
     },
 
     stand: function stand() {
@@ -94,7 +109,7 @@ var createPlayer = function createPlayer(game, config) {
           player.body.velocity.x -= player.body.velocity.x / 8;
         }
       }*/
-      if (player.body.touching.down) {
+      if (player.body.touching.down && !player.isRolling) {
         if (player.body.velocity.x > 0) {
           player.body.velocity.x -= 4;
         } else if (player.body.velocity.x < 0) {

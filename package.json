@@ -5,7 +5,7 @@
   "main": "bundle.js",
   "scripts": {
     "build": "browserify scripts/game.js -o bundle.js",
-    "watch": "nodemon -e js -w scripts -x 'npm run build'"
+    "watch": "watchify scripts/game.js -o bundle.js -d"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/okaybenji/game",
   "devDependencies": {
     "browserify": "^12.0.1",
-    "nodemon": "^1.8.1"
+    "watchify": "^3.6.1"
   },
   "dependencies": {}
 }
