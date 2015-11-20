@@ -58,28 +58,37 @@
       } else {
         console.log('flinging');
         var playerToMove;
+        if (playerA.isDucking) {
+          playerToMove = playerB;
+        } else {
+          playerToMove = playerA;
+        }
+        playerToMove.isCollidable = false; // temporarily disable collisions
+        setTimeout(function() {
+          playerToMove.isCollidable = true;
+        }, 100);
+      }
+    }, function(playerA, playerB) {
+      // TODO: would be much better to leave this logic in the main callback, but for some reason it didn't work
+      // i'd rather all this did was return true or false
+      if (!playerA.isCollidable || !playerB.isCollidable) {
+        var playerToMove;
         var playerToLeave;
-        if (playerA.isStanding) {
+        if (!playerA.isCollidable) {
           playerToMove = playerA;
           playerToLeave = playerB;
         } else {
           playerToMove = playerB;
           playerToLeave = playerA;
         }
-        playerToMove.isCollidable = false; // temporarily disable collisions
-        setTimeout(function() {
-          playerToMove.isCollidable = true;
-        }, 500);
-        // TODO: argh! why doesn't this work? won't add momentum now that collisions are disabled
+        console.log('player to move position:', playerToMove.position.x);
+        console.log('player to leave position:', playerToLeave.position.x);
         if (playerToMove.position.x > playerToLeave.position.x) {
-          playerToMove.body.velocity.x = -100;
+          playerToMove.body.velocity.x = -150;
         } else {
-          playerToMove.body.velocity.x = 100;
+          playerToMove.body.velocity.x = 150;
         }
-        playerToMove.body.velocity.y = 100;
-      }
-    }, function(playerA, playerB) {
-      if (!playerA.isCollidable || !playerB.isCollidable) {
+        playerToMove.body.velocity.y = -150;
         return false;
       }
 
