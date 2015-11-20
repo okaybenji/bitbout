@@ -58,6 +58,7 @@
       } else {
         console.log('flinging');
         var playerToMove;
+        var playerToLeave;
         if (playerA.isDucking) {
           playerToMove = playerB;
         } else {
@@ -67,13 +68,7 @@
         setTimeout(function() {
           playerToMove.isCollidable = true;
         }, 100);
-      }
-    }, function(playerA, playerB) {
-      // TODO: would be much better to leave this logic in the main callback, but for some reason it didn't work
-      // i'd rather all this did was return true or false
-      if (!playerA.isCollidable || !playerB.isCollidable) {
-        var playerToMove;
-        var playerToLeave;
+
         if (!playerA.isCollidable) {
           playerToMove = playerA;
           playerToLeave = playerB;
@@ -81,17 +76,17 @@
           playerToMove = playerB;
           playerToLeave = playerA;
         }
-        console.log('player to move position:', playerToMove.position.x);
-        console.log('player to leave position:', playerToLeave.position.x);
         if (playerToMove.position.x > playerToLeave.position.x) {
           playerToMove.body.velocity.x = -150;
         } else {
           playerToMove.body.velocity.x = 150;
         }
         playerToMove.body.velocity.y = -150;
+      }
+    }, function(playerA, playerB) {
+      if (!playerA.isCollidable || !playerB.isCollidable) {
         return false;
       }
-
       return true;
     });
   };
