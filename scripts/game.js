@@ -31,7 +31,23 @@
 
   var update = function update() {
     game.physics.arcade.collide(players, platforms);
-    game.physics.arcade.collide(players, players);
+    game.physics.arcade.collide(players, players, function(playerA, playerB) {
+      // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
+      // TODO: can/should i check if they are colliding on their left/right sides so players can still bounce on each other's heads?
+      function addVelocity(sprite, velocity) {
+        sprite.body.velocity.x = velocity;
+      }
+
+      var bounceVelocity = 100;
+      var velocityA = velocityB = bounceVelocity;
+      if (playerA.position.x > playerB.position.x) {
+        velocityB *= -1;
+      } else {
+        velocityA *= -1;
+      }
+      addVelocity(playerA, velocityA);
+      addVelocity(playerB, velocityB);
+    });
   };
 
   var game = new Phaser.Game(nativeWidth, nativeHeight, Phaser.AUTO, '#game', {

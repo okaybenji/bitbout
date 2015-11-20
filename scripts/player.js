@@ -2,6 +2,7 @@ var createPlayer = function createPlayer(game, config) {
   config = config || {};
   var xPos = config.x || 4;
   var yPos = config.y || 8;
+  var orientation = config.orientation || 'left';
   config.keys = config.keys || {};
   var keys = {
     up: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.up] || 'UP'),
@@ -11,6 +12,7 @@ var createPlayer = function createPlayer(game, config) {
   };
 
   var player = game.add.sprite(xPos, yPos, 'square');
+  player.orientation = orientation;
   player.scale.setTo(4, 8);
   game.physics.arcade.enable(player);
   player.body.bounce.y = 0.1;
@@ -65,8 +67,10 @@ var createPlayer = function createPlayer(game, config) {
 
     if (keys.left.isDown && !keys.right.isDown) {
       movement.run('left');
+      player.orientation = 'left';
     } else if (keys.right.isDown && !keys.left.isDown) {
       movement.run('right');
+      player.orientation = 'right';
     }
 
     if (keys.up.isDown) {
@@ -84,6 +88,12 @@ var createPlayer = function createPlayer(game, config) {
     }
 
     (function friction() {
+      // here's an idea which solves the sliding glitch, but it doesn't feel as good
+      /*if (player.body.touching.down && !keys.left.isDown && !keys.right.isDown) {
+        if (player.body.velocity.x !== 0) {
+          player.body.velocity.x -= player.body.velocity.x / 8;
+        }
+      }*/
       if (player.body.touching.down) {
         if (player.body.velocity.x > 0) {
           player.body.velocity.x -= 4;
