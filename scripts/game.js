@@ -56,26 +56,19 @@
           playerB.isRolling = false;
         }());
       } else {
-        console.log('flinging');
         var playerToMove;
         var playerToLeave;
         if (playerA.isDucking) {
           playerToMove = playerB;
+          playerToLeave = playerA;
         } else {
           playerToMove = playerA;
+          playerToLeave = playerB;
         }
         playerToMove.isCollidable = false; // temporarily disable collisions
         setTimeout(function() {
           playerToMove.isCollidable = true;
         }, 100);
-
-        if (!playerA.isCollidable) {
-          playerToMove = playerA;
-          playerToLeave = playerB;
-        } else {
-          playerToMove = playerB;
-          playerToLeave = playerA;
-        }
         if (playerToMove.position.x > playerToLeave.position.x) {
           playerToMove.body.velocity.x = -150;
         } else {
