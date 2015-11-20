@@ -66,6 +66,11 @@
           playerToMove = playerB;
           playerToLeave = playerA;
         }
+        playerToMove.isCollidable = false; // temporarily disable collisions
+        setTimeout(function() {
+          playerToMove.isCollidable = true;
+        }, 500);
+        // TODO: argh! why doesn't this work? won't add momentum now that collisions are disabled
         if (playerToMove.position.x > playerToLeave.position.x) {
           playerToMove.body.velocity.x = -100;
         } else {
@@ -73,6 +78,12 @@
         }
         playerToMove.body.velocity.y = 100;
       }
+    }, function(playerA, playerB) {
+      if (!playerA.isCollidable || !playerB.isCollidable) {
+        return false;
+      }
+
+      return true;
     });
   };
 

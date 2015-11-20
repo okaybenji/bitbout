@@ -15,6 +15,7 @@ var createPlayer = function createPlayer(game, config) {
   player.orientation = orientation;
   player.isRolling = false;
   player.isDucking = false;
+  player.isCollidable = true;
   player.scale.setTo(4, 8);
   game.physics.arcade.enable(player);
   player.body.bounce.y = 0.1;
