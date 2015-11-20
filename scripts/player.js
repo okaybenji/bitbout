@@ -56,15 +56,9 @@ var createPlayer = function createPlayer(game, config) {
 
       (function roll() {
         var velocity = player.body.velocity.x;
-        var rollVelocity = velocity > 0 ? 100 : -100;
-        var rollDuration = 100;
         var canRoll = Math.abs(velocity) > 50 && player.body.touching.down;
         if (canRoll) {
           player.isRolling = true;
-          player.body.velocity.x = rollVelocity;
-          setTimeout(function() {
-            player.isRolling = false;
-          }, rollDuration);
         }
       }());
     },
@@ -73,6 +67,7 @@ var createPlayer = function createPlayer(game, config) {
       keys.down.wasDown = false;
       player.y -= 8;
       player.scale.setTo(4, 8);
+      player.isRolling = false;
     }
   };
 
