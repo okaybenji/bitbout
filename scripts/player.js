@@ -39,16 +39,31 @@ var createPlayer = function createPlayer(game, config) {
     },
 
     jump: function jump() {
+      // soften upward velocity when player releases jump key
+      var dampenJump = function dampenJump() {
+        var dampenToPercent = 0.5;
+        // TODO: decouple key tracking from movement
+        keys.up.onUp.addOnce(function() {
+          if (player.body.velocity.y < 0) {
+            player.body.velocity.y *= dampenToPercent;
+          }
+        });
+      };
+
       if (player.body.touching.down) {
         player.body.velocity.y = -200;
+        dampenJump();
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -240;
         player.body.velocity.x = 90;
+        dampenJump();
       } else if (player.body.touching.right) {
         player.body.velocity.y = -240;
         player.body.velocity.x = -90;
+        dampenJump();
       }
+
     },
 
     duck: function duck() {
