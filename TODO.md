@@ -1,4 +1,8 @@
 #To do
+
+### movement
+* consider adding run modifier key, and walking by default
+
 ### attack
 * make each player a group to hold their hearts
 * give players health, represented by 3 hearts floating behind them; 1/2 heart = 1 hp
