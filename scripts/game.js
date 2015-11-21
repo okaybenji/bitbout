@@ -11,7 +11,8 @@
     var utils = require('./utils.js');
     resize();
     window.onresize = utils.debounce(resize, 100);
-    game.load.image('square', 'images/square.png');
+    game.load.image('square', 'images/square.png'); // player character
+    game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
   };
 
   var create = function create() {

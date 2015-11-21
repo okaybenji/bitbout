@@ -31,6 +31,13 @@ var createPlayer = function createPlayer(game, options) {
   player.body.bounce.y = .2; // TODO: allow bounce configuration
   player.body.gravity.y = 380; // TODO: allow gravity configuration
 
+  // track health
+  player.hp = 6;
+  player.hearts = game.add.sprite(0, 0, 'hearts');
+  var bob = player.hearts.animations.add('bob');
+  player.hearts.animations.play('bob', 3, true);
+  player.addChild(player.hearts);
+
   var movement = {
     run: function run(direction) {
       var maxSpeed = 64;
