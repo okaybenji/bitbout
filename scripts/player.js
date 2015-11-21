@@ -26,6 +26,8 @@ var createPlayer = function createPlayer(game, config) {
       var maxSpeed = 64;
       var acceleration = player.body.touching.down ? 8 : 3; // players have less control in the air
 
+      player.orientation = direction;
+
       switch (direction) {
         case 'left':
           player.body.velocity.x = Math.max(player.body.velocity.x - acceleration, -maxSpeed);
@@ -57,8 +59,7 @@ var createPlayer = function createPlayer(game, config) {
       player.isDucking = true;
 
       (function roll() {
-        var velocity = player.body.velocity.x;
-        var canRoll = Math.abs(velocity) > 50 && player.body.touching.down;
+        var canRoll = Math.abs(player.body.velocity.x) > 50 && player.body.touching.down;
         if (canRoll) {
           player.isRolling = true;
         }
@@ -79,10 +80,8 @@ var createPlayer = function createPlayer(game, config) {
 
     if (keys.left.isDown && !keys.right.isDown) {
       movement.run('left');
-      player.orientation = 'left';
     } else if (keys.right.isDown && !keys.left.isDown) {
       movement.run('right');
-      player.orientation = 'right';
     }
 
     if (keys.up.isDown) {
