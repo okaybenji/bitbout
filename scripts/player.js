@@ -15,6 +15,8 @@ var createPlayer = function createPlayer(game, config) {
   player.orientation = orientation;
   player.isRolling = false;
   player.isDucking = false;
+  player.isJumping = false;
+  player.jumpTimeout;
   player.isCollidable = true;
   player.scale.setTo(4, 8);
   game.physics.arcade.enable(player);
@@ -40,7 +42,8 @@ var createPlayer = function createPlayer(game, config) {
 
     jump: function jump() {
       if (player.body.touching.down) {
-        player.body.velocity.y = -200;
+        player.body.velocity.y = -100;
+        player.isJumping = true;
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -240;
@@ -48,6 +51,14 @@ var createPlayer = function createPlayer(game, config) {
       } else if (player.body.touching.right) {
         player.body.velocity.y = -240;
         player.body.velocity.x = -90;
+      } else if (player.isJumping) {
+        if (player.jumpTimeout === undefined) {
+          player.jumpTimeout = setTimeout(function() {
+            clearTimeout(player.jumpTimeout);
+            player.isJumping = false;
+          }, 200);
+        }
+        player.body.velocity.y = -100;
       }
     },
 
