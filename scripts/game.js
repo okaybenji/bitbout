@@ -25,7 +25,7 @@
     var createPlayer = require('./player.js');
     players = game.add.group();
     players.add(createPlayer(game, {keys: { up: 'W', down: 'S', left: 'A', right: 'D' }}));
-    players.add(createPlayer(game, {position: {x: 306, y: 16}, orientation: 'left', keys: { up: 'I', down: 'K', left: 'J', right: 'L' }}));
+    players.add(createPlayer(game, {position: {x: 306, y: 8}, orientation: 'left', keys: { up: 'I', down: 'K', left: 'J', right: 'L' }}));
   };
 
   var update = function update() {

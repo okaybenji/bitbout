@@ -114,11 +114,23 @@ var createPlayer = function createPlayer(game, options) {
       if (player.hp % 2 === 0) {
         actions.die();
       }
+      actions.updateHearts();
+    },
+
+    updateHearts() {
+      var healthPercentage = player.hp / player.maxHp;
+      var cropWidth = Math.ceil(healthPercentage * heartsWidth);
+      var cropRect = new Phaser.Rectangle(0, 0, cropWidth, player.hearts.height);
+      player.hearts.crop(cropRect);
     },
 
     die: function() {
-      player.position.x = settings.position.x;
-      player.position.y = settings.position.y;
+      if (player.hp > 0) {
+        player.position.x = settings.position.x;
+        player.position.y = settings.position.y;
+        player.body.velocity.x = 0;
+        player.body.velocity.y = 0;
+      }
     }
   };
 
@@ -134,8 +146,9 @@ var createPlayer = function createPlayer(game, options) {
   player.body.gravity.y = 380; // TODO: allow gravity configuration
 
   // track health
-  player.hp = 6;
+  player.hp = player.maxHp = 6;
   player.hearts = game.add.sprite(0, 0, 'hearts');
+  var heartsWidth = player.hearts.width;
   player.hearts.setScaleMinMax(1, 1); // prevent hearts scaling w/ player
   var bob = player.hearts.animations.add('bob', [0,1,2,1], 3, true); // name, frames, framerate, loop
   player.hearts.animations.play('bob');
@@ -152,8 +165,6 @@ var createPlayer = function createPlayer(game, options) {
       } else {
         actions.takeDamage(1);
       }
-
-      console.log('hp:',player.hp);
     }
 
     if (keys.left.isDown && !keys.right.isDown) {
@@ -164,7 +175,6 @@ var createPlayer = function createPlayer(game, options) {
 
     if (keys.up.isDown) {
       actions.jump();
-      console.log(player.position.y);
     }
 
     if (keys.down.isDown) {
