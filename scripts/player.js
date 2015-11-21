@@ -1,18 +1,28 @@
-var createPlayer = function createPlayer(game, config) {
-  config = config || {};
-  var xPos = config.x || 4;
-  var yPos = config.y || 8;
-  var orientation = config.orientation || 'left';
-  config.keys = config.keys || {};
+var createPlayer = function createPlayer(game, options) {
+  
+  var defaults = {
+    x: 4,
+    y: 8,
+    orientation: 'left',
+    keys: {
+      up: 'UP',
+      down: 'DOWN',
+      left: 'LEFT',
+      right: 'RIGHT',
+    },
+  };
+  
+  var settings = Object.assign({}, defaults, options);
+
   var keys = {
-    up: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.up] || 'UP'),
-    down: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.down] || 'DOWN'),
-    left: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.left] || 'LEFT'),
-    right: game.input.keyboard.addKey(Phaser.Keyboard[config.keys.right] || 'RIGHT'),
+    up: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.up]),
+    down: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.down]),
+    left: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.left]),
+    right: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.right]),
   };
 
-  var player = game.add.sprite(xPos, yPos, 'square');
-  player.orientation = orientation;
+  var player = game.add.sprite(settings.x, settings.y, 'square');
+  player.orientation = settings.orientation;
   player.isRolling = false;
   player.isDucking = false;
   player.isCollidable = true;
