@@ -30,7 +30,15 @@
   };
 
   var update = function update() {
-    game.physics.arcade.collide(players, platforms);
+    game.physics.arcade.collide(players, platforms, null, function(player, platform) {
+      // TODO: only collide at player's feet. why doesn't this work?
+      /*console.log('player.body.touching.down', player.body.touching.down);
+      console.log('platform.body.touching.up', platform.body.touching.up);
+      if (player.body.touching.down && platform.body.touching.up) {
+        return true;
+      }
+      return false;*/
+    });
     game.physics.arcade.collide(players, players, function(playerA, playerB) {
       // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
       // TODO: can/should i check if they are colliding on their left/right sides so players can still bounce on each other's heads?
