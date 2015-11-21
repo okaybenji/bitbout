@@ -75,11 +75,11 @@
             playerToLeave = playerB;
           }
           temporarilyDisableCollision(playerToFling);
+          var flingXVelocity = 150;
           if (playerToFling.position.x > playerToLeave.position.x) {
-            playerToFling.body.velocity.x = -150;
-          } else {
-            playerToFling.body.velocity.x = 150;
+            flingXVelocity *= -1;
           }
+          playerToFling.body.velocity.x = flingXVelocity;
           playerToFling.body.velocity.y = -150;
         }());
       } else if (eitherRolling && eitherStanding) {
