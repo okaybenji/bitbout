@@ -66,9 +66,9 @@ var createPlayer = function createPlayer(game, config) {
     },
 
     stand: function stand() {
-      keys.down.wasDown = false;
       player.y -= 8;
       player.scale.setTo(4, 8);
+      player.isDucking = false;
       player.isRolling = false;
     }
   };
@@ -93,7 +93,6 @@ var createPlayer = function createPlayer(game, config) {
       movement.duck();
     } else if (player.isDucking) {
       movement.stand();
-      player.isDucking = false;
     }
 
     (function friction() {
