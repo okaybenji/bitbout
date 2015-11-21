@@ -42,16 +42,12 @@ var createPlayer = function createPlayer(game, config) {
       // soften upward velocity when player releases jump key
       var dampenJump = function dampenJump() {
         var dampenToPercent = 0.5;
-        var checkInterval = 25;
-        var timeout = setTimeout(function() {
-          // todo: decouple key tracking from movement
-          if (!keys.up.isDown && player.body.velocity.y < 0) {
+        // TODO: decouple key tracking from movement
+        keys.up.onUp.addOnce(function() {
+          if (player.body.velocity.y < 0) {
             player.body.velocity.y *= dampenToPercent;
-          } else {
-            dampenJump();
-            clearTimeout(timeout);
           }
-        }, checkInterval);
+        });
       };
 
       if (player.body.touching.down) {
