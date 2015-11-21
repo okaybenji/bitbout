@@ -34,15 +34,23 @@
     game.physics.arcade.collide(players, players, function(playerA, playerB) {
       // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
       // TODO: can/should i check if they are colliding on their left/right sides so players can still bounce on each other's heads?
-      function addVelocity(sprite, velocity) {
-        sprite.body.velocity.x = velocity;
-      }
-
       var bothRolling = playerA.isRolling && playerB.isRolling;
       var bothStanding = !playerA.isDucking && !playerB.isDucking;
+      var neitherRolling = !playerA.isRolling && !playerB.isRolling;
+      var eitherDucking = playerA.isDucking || playerB.isDucking;
+      var eitherRunning = Math.abs(playerA.body.velocity.x) > 28 || Math.abs(playerB.body.velocity.x) >= 28;
+      var eitherRolling = playerA.isRolling || playerB.isRolling;
+      var eitherStanding = !playerA.isDucking || !playerB.isDucking;
+
+      function temporarilyDisableCollision(player) {
+        player.isCollidable = false;
+        setTimeout(function() {
+          player.isCollidable = true;
+        }, 100);
+      }
+
       if (bothRolling || bothStanding) {
         (function bounce() {
-          console.log('bouncing');
           var bounceVelocity = 100;
           var velocityA = velocityB = bounceVelocity;
           if (playerA.position.x > playerB.position.x) {
@@ -50,31 +58,41 @@
           } else {
             velocityA *= -1;
           }
-          addVelocity(playerA, velocityA);
-          addVelocity(playerB, velocityB);
+          playerA.body.velocity.x = velocityA;
+          playerB.body.velocity.x = velocityB;
           playerA.isRolling = false;
           playerB.isRolling = false;
         }());
-      } else {
-        var playerToMove;
-        var playerToLeave;
-        if (playerA.isDucking) {
-          playerToMove = playerB;
-          playerToLeave = playerA;
-        } else {
-          playerToMove = playerA;
-          playerToLeave = playerB;
-        }
-        playerToMove.isCollidable = false; // temporarily disable collisions
-        setTimeout(function() {
-          playerToMove.isCollidable = true;
-        }, 100);
-        if (playerToMove.position.x > playerToLeave.position.x) {
-          playerToMove.body.velocity.x = -150;
-        } else {
-          playerToMove.body.velocity.x = 150;
-        }
-        playerToMove.body.velocity.y = -150;
+      } else if (neitherRolling && eitherRunning && eitherDucking) {
+        (function fling() {
+          var playerToFling;
+          var playerToLeave;
+          if (playerA.isDucking) {
+            playerToFling = playerB;
+            playerToLeave = playerA;
+          } else {
+            playerToFling = playerA;
+            playerToLeave = playerB;
+          }
+          temporarilyDisableCollision(playerToFling);
+          if (playerToFling.position.x > playerToLeave.position.x) {
+            playerToFling.body.velocity.x = -150;
+          } else {
+            playerToFling.body.velocity.x = 150;
+          }
+          playerToFling.body.velocity.y = -150;
+        }());
+      } else if (eitherRolling && eitherStanding) {
+        (function pop() {
+          var playerToPop;
+          if (playerA.isStanding) {
+            playerToPop = playerA;
+          } else {
+            playerToPop = playerB;
+          }
+          temporarilyDisableCollision(playerToPop);
+          playerToPop.body.velocity.y = -150;
+        }());
       }
     }, function(playerA, playerB) {
       if (!playerA.isCollidable || !playerB.isCollidable) {

@@ -1,7 +1,4 @@
 #To do
-### movement
-* if players run into each other with one standing and one crouched and rolling, give standing player upward velocity so crouching player rolls under him
-
 ### attack
 * make each player a group to hold their hearts
 * give players health, represented by 3 hearts floating behind them; 1/2 heart = 1 hp
