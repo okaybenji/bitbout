@@ -39,22 +39,35 @@ var createPlayer = function createPlayer(game, config) {
     },
 
     jump: function jump() {
+      // soften upward velocity when player releases jump key
+      var dampenJump = function dampenJump() {
+        var dampenToPercent = 0.5;
+        var checkInterval = 25;
+        var timeout = setTimeout(function() {
+          // todo: decouple key tracking from movement
+          if (!keys.up.isDown && player.body.velocity.y < 0) {
+            player.body.velocity.y *= dampenToPercent;
+          } else {
+            dampenJump();
+            clearTimeout(timeout);
+          }
+        }, checkInterval);
+      };
+
       if (player.body.touching.down) {
         player.body.velocity.y = -200;
-        setTimeout(function() {
-          // todo: uncouple key tracking from movement
-          if (!keys.up.isDown) {
-            player.body.velocity.y = 50;
-          }
-        }, 100);
+        dampenJump();
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -240;
         player.body.velocity.x = 90;
+        dampenJump();
       } else if (player.body.touching.right) {
         player.body.velocity.y = -240;
         player.body.velocity.x = -90;
+        dampenJump();
       }
+
     },
 
     duck: function duck() {
