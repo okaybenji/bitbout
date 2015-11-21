@@ -26,10 +26,10 @@ var createPlayer = function createPlayer(game, options) {
   player.isRolling = false;
   player.isDucking = false;
   player.isCollidable = true;
-  player.scale.setTo(4, 8);
+  player.scale.setTo(4, 8); // TODO: add giant mode
   game.physics.arcade.enable(player);
-  player.body.bounce.y = 0.1;
-  player.body.gravity.y = 380;
+  player.body.bounce.y = .2; // TODO: allow bounce configuration
+  player.body.gravity.y = 380; // TODO: allow gravity configuration
 
   var movement = {
     run: function run(direction) {

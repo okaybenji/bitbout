@@ -74,6 +74,10 @@
             playerToFling = playerA;
             playerToLeave = playerB;
           }
+          // TODO: check body is touching down on platform! currently allows 'canonball' attack
+          if (!playerToLeave.body.touching.down) {
+            return;
+          }
           temporarilyDisableCollision(playerToFling);
           var flingXVelocity = 150;
           if (playerToFling.position.x > playerToLeave.position.x) {
