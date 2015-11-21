@@ -1,15 +1,21 @@
 var createPlayer = function createPlayer(game, options) {
   
   var defaults = {
-    x: 4,
-    y: 8,
-    orientation: 'left',
+    position: {
+      x: 4,
+      y: 8
+    },
+    orientation: 'right',
     keys: {
       up: 'UP',
       down: 'DOWN',
       left: 'LEFT',
       right: 'RIGHT',
     },
+    scale: {
+      x: 4,
+      y: 8
+    }
   };
   
   var settings = Object.assign({}, defaults, options);
@@ -21,12 +27,12 @@ var createPlayer = function createPlayer(game, options) {
     right: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.right]),
   };
 
-  var player = game.add.sprite(settings.x, settings.y, 'square');
+  var player = game.add.sprite(settings.position.x, settings.position.y, 'square');
   player.orientation = settings.orientation;
   player.isRolling = false;
   player.isDucking = false;
   player.isCollidable = true;
-  player.scale.setTo(4, 8); // TODO: add giant mode
+  player.scale.setTo(settings.scale.x, settings.scale.y); // TODO: add giant mode
   game.physics.arcade.enable(player);
   player.body.bounce.y = .2; // TODO: allow bounce configuration
   player.body.gravity.y = 380; // TODO: allow gravity configuration
@@ -34,9 +40,18 @@ var createPlayer = function createPlayer(game, options) {
   // track health
   player.hp = 6;
   player.hearts = game.add.sprite(0, 0, 'hearts');
-  var bob = player.hearts.animations.add('bob');
+  player.hearts.setScaleMinMax(1, 1); // prevent hearts scaling w/ player
+  var bob = player.hearts.animations.add('bob', [0,1,2,1]);
   player.hearts.animations.play('bob', 3, true);
   player.addChild(player.hearts);
+
+  var updateHearts = function updateHearts() {
+    if (player.orientation === 'left') {
+      player.hearts.anchor.setTo(-1.1, 0);
+    } else {
+      player.hearts.anchor.setTo(1.1, 0);
+    }
+  };
 
   var movement = {
     run: function run(direction) {
@@ -85,8 +100,8 @@ var createPlayer = function createPlayer(game, options) {
 
     duck: function duck() {
       if (!player.isDucking) {
-        player.scale.setTo(4, 4);
-        player.y += 8;
+        player.scale.setTo(settings.scale.x, settings.scale.y / 2);
+        player.y += settings.scale.y;
       }
       player.isDucking = true;
 
@@ -99,8 +114,8 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     stand: function stand() {
-      player.y -= 8;
-      player.scale.setTo(4, 8);
+      player.y -= settings.scale.y;
+      player.scale.setTo(settings.scale.x, settings.scale.y);
       player.isDucking = false;
       player.isRolling = false;
     }
@@ -109,6 +124,7 @@ var createPlayer = function createPlayer(game, options) {
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
     game.world.wrap(player, 0, true);
+    updateHearts();
 
     if (keys.left.isDown && !keys.right.isDown) {
       movement.run('left');
