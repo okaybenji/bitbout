@@ -11,7 +11,9 @@
     var utils = require('./utils.js');
     resize();
     window.onresize = utils.debounce(resize, 100);
-    game.load.image('square', 'images/square.png'); // player character
+    game.load.image('pink', 'images/pink.png');
+    game.load.image('yellow', 'images/yellow.png');
+    game.load.image('blue', 'images/blue.png');
     game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
   };
 
@@ -24,8 +26,8 @@
     
     var createPlayer = require('./player.js');
     players = game.add.group();
-    players.add(createPlayer(game, {keys: { up: 'W', down: 'S', left: 'A', right: 'D' }}));
-    players.add(createPlayer(game, {position: {x: 306, y: 8}, orientation: 'left', keys: { up: 'I', down: 'K', left: 'J', right: 'L' }}));
+    players.add(createPlayer(game, {name: 'Blue', color: 'blue', keys: { up: 'W', down: 'S', left: 'A', right: 'D' }}));
+    players.add(createPlayer(game, {name: 'Yellow', color: 'yellow', position: {x: 306, y: 8}, orientation: 'left', keys: { up: 'I', down: 'K', left: 'J', right: 'L' }}));
   };
 
   var update = function update() {

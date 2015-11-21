@@ -15,7 +15,8 @@ var createPlayer = function createPlayer(game, options) {
     scale: {
       x: 4,
       y: 8
-    }
+    },
+    color: 'pink',
   };
 
   var settings = Object.assign({}, defaults, options);
@@ -134,7 +135,7 @@ var createPlayer = function createPlayer(game, options) {
     }
   };
 
-  var player = game.add.sprite(settings.position.x, settings.position.y, 'square');
+  var player = game.add.sprite(settings.position.x, settings.position.y, settings.color);
   player.orientation = settings.orientation;
   player.isRolling = false;
   player.isDucking = false;
