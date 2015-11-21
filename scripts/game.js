@@ -85,10 +85,10 @@
       } else if (eitherRolling && eitherStanding) {
         (function pop() {
           var playerToPop;
-          if (playerA.isStanding) {
-            playerToPop = playerA;
-          } else {
+          if (playerA.isRolling) {
             playerToPop = playerB;
+          } else {
+            playerToPop = playerA;
           }
           temporarilyDisableCollision(playerToPop);
           playerToPop.body.velocity.y = -150;
