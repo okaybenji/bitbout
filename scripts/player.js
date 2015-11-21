@@ -1,5 +1,5 @@
 var createPlayer = function createPlayer(game, options) {
-  
+
   var defaults = {
     position: {
       x: 4,
@@ -17,7 +17,7 @@ var createPlayer = function createPlayer(game, options) {
       y: 8
     }
   };
-  
+
   var settings = Object.assign({}, defaults, options);
 
   var keys = {
@@ -27,37 +27,10 @@ var createPlayer = function createPlayer(game, options) {
     right: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.right]),
   };
 
-  var player = game.add.sprite(settings.position.x, settings.position.y, 'square');
-  player.orientation = settings.orientation;
-  player.isRolling = false;
-  player.isDucking = false;
-  player.isCollidable = true;
-  player.scale.setTo(settings.scale.x, settings.scale.y); // TODO: add giant mode
-  game.physics.arcade.enable(player);
-  player.body.bounce.y = .2; // TODO: allow bounce configuration
-  player.body.gravity.y = 380; // TODO: allow gravity configuration
-
-  // track health
-  player.hp = 6;
-  player.hearts = game.add.sprite(0, 0, 'hearts');
-  player.hearts.setScaleMinMax(1, 1); // prevent hearts scaling w/ player
-  var bob = player.hearts.animations.add('bob', [0,1,2,1]);
-  player.hearts.animations.play('bob', 3, true);
-  player.addChild(player.hearts);
-
-  var updateHearts = function updateHearts() {
-    if (player.orientation === 'left') {
-      player.hearts.anchor.setTo(-1.1, 0);
-    } else {
-      player.hearts.anchor.setTo(1.1, 0);
-    }
-  };
-
-  var movement = {
+  var actions = {
     run: function run(direction) {
       var maxSpeed = 64;
       var acceleration = player.body.touching.down ? 8 : 3; // players have less control in the air
-
       player.orientation = direction;
 
       switch (direction) {
@@ -68,13 +41,27 @@ var createPlayer = function createPlayer(game, options) {
           player.body.velocity.x = Math.min(player.body.velocity.x + acceleration, maxSpeed);
           break;
       }
+
+      actions.orientHearts(direction);
+    },
+
+    orientHearts: function orientHearts(direction) {
+      var heartDistance = 1.1; // how close hearts float by player
+      switch (direction) {
+        case 'left':
+          player.hearts.anchor.setTo(-heartDistance, 0);
+          break;
+        case 'right':
+          player.hearts.anchor.setTo(heartDistance, 0);
+          break;
+      }
     },
 
     jump: function jump() {
       // soften upward velocity when player releases jump key
       var dampenJump = function dampenJump() {
         var dampenToPercent = 0.5;
-        // TODO: decouple key tracking from movement
+        // TODO: decouple key tracking from actions
         keys.up.onUp.addOnce(function() {
           if (player.body.velocity.y < 0) {
             player.body.velocity.y *= dampenToPercent;
@@ -95,7 +82,6 @@ var createPlayer = function createPlayer(game, options) {
         player.body.velocity.x = -90;
         dampenJump();
       }
-
     },
 
     duck: function duck() {
@@ -118,31 +104,76 @@ var createPlayer = function createPlayer(game, options) {
       player.scale.setTo(settings.scale.x, settings.scale.y);
       player.isDucking = false;
       player.isRolling = false;
+    },
+
+    takeDamage: function takeDamage(amount) {
+      player.hp -= amount;
+      if (player.hp < 0) {
+        player.hp = 0;
+      }
+      if (player.hp % 2 === 0) {
+        actions.die();
+      }
+    },
+
+    die: function() {
+      player.position.x = settings.position.x;
+      player.position.y = settings.position.y;
     }
   };
 
+  var player = game.add.sprite(settings.position.x, settings.position.y, 'square');
+  player.orientation = settings.orientation;
+  player.isRolling = false;
+  player.isDucking = false;
+  player.isCollidable = true;
+  player.scale.setTo(settings.scale.x, settings.scale.y); // TODO: add giant mode
+  game.physics.arcade.enable(player);
+  player.body.collideWorldBounds = true;
+  player.body.bounce.y = .2; // TODO: allow bounce configuration
+  player.body.gravity.y = 380; // TODO: allow gravity configuration
+
+  // track health
+  player.hp = 6;
+  player.hearts = game.add.sprite(0, 0, 'hearts');
+  player.hearts.setScaleMinMax(1, 1); // prevent hearts scaling w/ player
+  var bob = player.hearts.animations.add('bob', [0,1,2,1], 3, true); // name, frames, framerate, loop
+  player.hearts.animations.play('bob');
+  player.addChild(player.hearts);
+  actions.orientHearts(player.orientation);
+
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
-    game.world.wrap(player, 0, true);
-    updateHearts();
+    // kill player if he falls off the screen
+    if (player.position.y > 180) { // TODO: how to access native height from game.js?
+      // if player was already down half a heart, he'll only lose 1/2 heart
+      if (player.hp % 2 === 0) {
+        actions.takeDamage(2);
+      } else {
+        actions.takeDamage(1);
+      }
+
+      console.log('hp:',player.hp);
+    }
 
     if (keys.left.isDown && !keys.right.isDown) {
-      movement.run('left');
+      actions.run('left');
     } else if (keys.right.isDown && !keys.left.isDown) {
-      movement.run('right');
+      actions.run('right');
     }
 
     if (keys.up.isDown) {
-      movement.jump();
+      actions.jump();
+      console.log(player.position.y);
     }
 
     if (keys.down.isDown) {
-      movement.duck();
+      actions.duck();
     } else if (player.isDucking) {
-      movement.stand();
+      actions.stand();
     }
 
-    (function friction() {
+    (function applyFriction() {
       // here's an idea which solves the sliding glitch, but it doesn't feel as good
       /*if (player.body.touching.down && !keys.left.isDown && !keys.right.isDown) {
         if (player.body.velocity.x !== 0) {

@@ -17,9 +17,7 @@
 
   var create = function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    // work-around for phaser's shoddy world wrap
-    var worldMargin = 16;
-    game.world.setBounds(-worldMargin, -worldMargin, nativeWidth + worldMargin * 2, nativeHeight + worldMargin * 2);
+    game.world.setBounds(0, -nativeHeight, nativeWidth, nativeHeight * 3); // allow anything as tall as world to fall off-screen up or down
     
     var buildPlatforms = require('./map.js');
     platforms = buildPlatforms(game);
