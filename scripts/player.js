@@ -1,5 +1,4 @@
 var createPlayer = function createPlayer(game, options) {
-
   var defaults = {
     position: {
       x: 4,
@@ -45,7 +44,8 @@ var createPlayer = function createPlayer(game, options) {
 
       actions.orientHearts(direction);
     },
-
+    
+    // TODO: fix left hearts position when hp is less than max
     orientHearts: function orientHearts(direction) {
       var heartDistance = 1.1; // how close hearts float by player
       switch (direction) {
