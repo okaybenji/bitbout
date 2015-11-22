@@ -131,20 +131,27 @@ var createPlayer = function createPlayer(game, options) {
         player.position.y = settings.position.y;
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
+      } else {
+        // TODO: detangle this
+        var checkForGameOver = require('./game.js');
+        checkForGameOver();
       }
     }
   };
 
   var player = game.add.sprite(settings.position.x, settings.position.y, settings.color);
+  player.name = settings.name;
   player.orientation = settings.orientation;
-  player.isRolling = false;
-  player.isDucking = false;
-  player.isCollidable = true;
   player.scale.setTo(settings.scale.x, settings.scale.y); // TODO: add giant mode
+
   game.physics.arcade.enable(player);
   player.body.collideWorldBounds = true;
   player.body.bounce.y = .2; // TODO: allow bounce configuration
   player.body.gravity.y = 380; // TODO: allow gravity configuration
+
+  player.isRolling = false;
+  player.isDucking = false;
+  player.isCollidable = true;
 
   // track health
   player.hp = player.maxHp = 6;
@@ -159,7 +166,7 @@ var createPlayer = function createPlayer(game, options) {
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
     // kill player if he falls off the screen
-    if (player.position.y > 180) { // TODO: how to access native height from game.js?
+    if (player.position.y > 180 && player.hp !== 0) { // TODO: how to access native height from game.js?
       // if player was already down half a heart, he'll only lose 1/2 heart
       if (player.hp % 2 === 0) {
         actions.takeDamage(2);
