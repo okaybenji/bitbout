@@ -1,10 +1,23 @@
 
 * {
+  box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
   image-rendering: pixelated;
+  font-smooth: never; /* TODO: disabling font smoothing doesn't seem to be working */
+  -webkit-font-smoothing : none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   margin: 0;
+}
+
+@font-face {
+  font-family: 'Hellovetica';
+  src: url('../fonts/hellovetica.ttf') format('truetype');
+}
+
+/* get font to load for use in phaser */
+#fontPreload {
+  position: absolute;
+  left: -100vw;
 }
