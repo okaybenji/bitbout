@@ -69,9 +69,14 @@ var create = function create() {
 var update = function update() {
 
   game.physics.arcade.collide(players, platforms);
+  // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
   game.physics.arcade.collide(players, players, function(playerA, playerB) {
-    // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
-    // TODO: can/should i check if they are colliding on their left/right sides so players can still bounce on each other's heads?
+    // let's not knock anybody around if something's on one of these dude's heads
+    // prevents cannonball attacks and the like, and allows standing on heads
+    if (playerA.body.touching.up || playerB.body.touching.up) {
+      return;
+    }
+    
     var bothRolling = playerA.isRolling && playerB.isRolling;
     var bothStanding = !playerA.isDucking && !playerB.isDucking;
     var neitherRolling = !playerA.isRolling && !playerB.isRolling;
@@ -111,10 +116,6 @@ var update = function update() {
         } else {
           playerToFling = playerA;
           playerToLeave = playerB;
-        }
-        // TODO: check body is touching down on platform! currently allows 'canonball' attack
-        if (!playerToLeave.body.touching.down) {
-          return;
         }
         temporarilyDisableCollision(playerToFling);
         var flingXVelocity = 150;
