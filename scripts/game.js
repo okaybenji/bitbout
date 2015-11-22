@@ -16,7 +16,7 @@ var checkForGameOver = function checkForGameOver() {
   if (alivePlayers.length === 1) {
     // TODO: why is this font still anti-aliased?
     var style = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
-    var message = 'Game over! ' + alivePlayers[0] + ' wins!\nRefresh to restart'; // TODO: allow pressing any key to restart
+    var message = 'Game over!  ' + alivePlayers[0] + '  wins!\nRefresh  to  restart'; // TODO: allow pressing any key to restart
     game.add.text(0, 0, message, style)
       .setTextBounds(0, 0, nativeWidth, nativeHeight);
   }
