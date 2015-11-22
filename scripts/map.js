@@ -6,14 +6,14 @@ var buildPlatforms = function buildPlatforms(game) {
                            [48, 154,], [208, 154]];
 
   platformPositions.forEach(function(position) {
-    var platform = platforms.create(position[0], position[1], 'square');
+    var platform = platforms.create(position[0], position[1], 'pink');
     platform.scale.setTo(24, 4);
     platform.body.immovable = true;
   });
 
   var walls = [];
-  walls.push(platforms.create(-16, 32, 'square'));
-  walls.push(platforms.create(304, 32, 'square'));
+  walls.push(platforms.create(-16, 32, 'pink'));
+  walls.push(platforms.create(304, 32, 'pink'));
   walls.forEach(function(wall) {
     wall.scale.setTo(16, 74);
     wall.body.immovable = true;
