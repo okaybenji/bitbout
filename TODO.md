@@ -10,7 +10,17 @@
 * make a menu
 * allow restarting the game
 * allow using controllers
+* dying on platform leaves dead body
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
+* reach out to pixel artist about doing sprites and animations
+* program animations for 2-4 players upon spawning to auto-run to random starting platforms
+
+### sound effects
+* jump
+* attack
+* take damage
+* die
+* bgm
 
 ### phaser
 * there appears to be a bug in phaser's physics.arcade.collide's processCallback; it should pass colliding objects as args 1 and 2 in the same order as collideCallback. logging the objects' positions shows two different (correct) positions in collideCallback, but shows the same positions in processCallback.
