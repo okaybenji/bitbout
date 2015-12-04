@@ -51,10 +51,14 @@ var createPlayer = function createPlayer(game, options) {
       }
 
       player.loadTexture('white');
-      setTimeout(function endAttack() {
+      setTimeout(actions.endAttack, duration);
+    },
+
+    endAttack: function endAttack() {
+      if (player.isAttacking) {
         player.loadTexture(settings.color);
         player.isAttacking = false;
-      }, duration);
+      }
     },
 
     run: function run(direction) {
@@ -162,6 +166,9 @@ var createPlayer = function createPlayer(game, options) {
 
     die: function() {
       if (player.hp > 0) {
+        actions.endAttack();
+        player.lastAttacked = 0;
+
         player.position.x = settings.position.x;
         player.position.y = settings.position.y;
         player.body.velocity.x = 0;
