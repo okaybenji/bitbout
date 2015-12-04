@@ -29,6 +29,7 @@ var preload = function preload() {
   game.load.image('pink', 'images/pink.png');
   game.load.image('yellow', 'images/yellow.png');
   game.load.image('blue', 'images/blue.png');
+  game.load.image('white', 'images/white.png');
   game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
 };
 
@@ -46,7 +47,7 @@ var create = function create() {
     name: 'Blue',
     color: 'blue',
     keys: {
-      up: 'W', down: 'S', left: 'A', right: 'D'
+      up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
     },
   };
 
@@ -58,9 +59,9 @@ var create = function create() {
     },
     orientation: 'left',
     keys: {
-      up: 'I', down: 'K', left: 'J', right: 'L'
+      up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
     },
-  }
+  };
 
   players.add(createPlayer(game, player1));
   players.add(createPlayer(game, player2));
@@ -70,13 +71,58 @@ var update = function update() {
 
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
-  game.physics.arcade.collide(players, players, function(playerA, playerB) {
-    // let's not knock anybody around if something's on one of these dude's heads
-    // prevents cannonball attacks and the like, and allows standing on heads
-    if (playerA.body.touching.up || playerB.body.touching.up) {
-      return;
+  game.physics.arcade.collide(players, players, function handlePlayerCollision(playerA, playerB) {
+    function temporarilyDisableCollision(player) {
+      player.isCollidable = false;
+      setTimeout(function() {
+        player.isCollidable = true;
+      }, 100);
     }
-    
+
+    function bounce() {
+      var bounceVelocity = 100;
+      var velocityA = velocityB = bounceVelocity;
+      if (playerA.position.x > playerB.position.x) {
+        velocityB *= -1;
+      } else {
+        velocityA *= -1;
+      }
+      playerA.body.velocity.x = velocityA;
+      playerB.body.velocity.x = velocityB;
+      playerA.isRolling = false;
+      playerB.isRolling = false;
+    }
+
+    function fling() {
+      var playerToFling;
+      var playerToLeave;
+      if (playerA.isDucking) {
+        playerToFling = playerB;
+        playerToLeave = playerA;
+      } else {
+        playerToFling = playerA;
+        playerToLeave = playerB;
+      }
+      temporarilyDisableCollision(playerToFling);
+      var flingXVelocity = 150;
+      if (playerToFling.position.x > playerToLeave.position.x) {
+        flingXVelocity *= -1;
+      }
+      playerToFling.body.velocity.x = flingXVelocity;
+      playerToFling.body.velocity.y = -150;
+    }
+
+    function pop() {
+      var playerToPop;
+      if (playerA.isRolling) {
+        playerToPop = playerB;
+      } else {
+        playerToPop = playerA;
+      }
+      temporarilyDisableCollision(playerToPop);
+      playerToPop.body.velocity.y = -150;
+    }
+
     var bothRolling = playerA.isRolling && playerB.isRolling;
     var bothStanding = !playerA.isDucking && !playerB.isDucking;
     var neitherRolling = !playerA.isRolling && !playerB.isRolling;
@@ -85,60 +131,34 @@ var update = function update() {
     var eitherRolling = playerA.isRolling || playerB.isRolling;
     var eitherStanding = !playerA.isDucking || !playerB.isDucking;
 
-    function temporarilyDisableCollision(player) {
-      player.isCollidable = false;
-      setTimeout(function() {
-        player.isCollidable = true;
-      }, 100);
+    switch (true) {
+      case bothRolling || bothStanding:
+        bounce();
+        break;
+      case neitherRolling && eitherRunning && eitherDucking:
+        fling();
+        break;
+      case eitherRolling && eitherStanding:
+        pop();
+        break;
     }
 
-    if (bothRolling || bothStanding) {
-      (function bounce() {
-        var bounceVelocity = 100;
-        var velocityA = velocityB = bounceVelocity;
-        if (playerA.position.x > playerB.position.x) {
-          velocityB *= -1;
-        } else {
-          velocityA *= -1;
-        }
-        playerA.body.velocity.x = velocityA;
-        playerB.body.velocity.x = velocityB;
-        playerA.isRolling = false;
-        playerB.isRolling = false;
-      }());
-    } else if (neitherRolling && eitherRunning && eitherDucking) {
-      (function fling() {
-        var playerToFling;
-        var playerToLeave;
-        if (playerA.isDucking) {
-          playerToFling = playerB;
-          playerToLeave = playerA;
-        } else {
-          playerToFling = playerA;
-          playerToLeave = playerB;
-        }
-        temporarilyDisableCollision(playerToFling);
-        var flingXVelocity = 150;
-        if (playerToFling.position.x > playerToLeave.position.x) {
-          flingXVelocity *= -1;
-        }
-        playerToFling.body.velocity.x = flingXVelocity;
-        playerToFling.body.velocity.y = -150;
-      }());
-    } else if (eitherRolling && eitherStanding) {
-      (function pop() {
-        var playerToPop;
-        if (playerA.isRolling) {
-          playerToPop = playerB;
-        } else {
-          playerToPop = playerA;
-        }
-        temporarilyDisableCollision(playerToPop);
-        playerToPop.body.velocity.y = -150;
-      }());
+    // if only one of the touching players is attacking...
+    if (playerA.isAttacking !== playerB.isAttacking) {
+      var victim = playerA.isAttacking ? playerB : playerA;
+      if (playerA.orientation !== playerB.orientation) {
+        victim.actions.takeDamage(1);
+      } else {
+        victim.actions.takeDamage(2); // attacked from behind for double damage
+      }
     }
-  }, function(playerA, playerB) {
-    if (!playerA.isCollidable || !playerB.isCollidable) {
+
+  }, function allowPlayerCollision(playerA, playerB) {
+    /* don't allow collision if either player isn't collidable.
+       also, let's not knock anybody around if something's on one of these dude's heads.
+       prevents cannonball attacks and the like, and allows standing on heads. */
+    var eitherHasHeadwear = playerA.body.touching.up || playerB.body.touching.up;
+    if (!playerA.isCollidable || !playerB.isCollidable || eitherHasHeadwear) {
       return false;
     }
     return true;

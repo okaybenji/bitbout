@@ -25,9 +25,43 @@ var createPlayer = function createPlayer(game, options) {
     down: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.down]),
     left: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.left]),
     right: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.right]),
+    attack: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.attack]),
   };
 
   var actions = {
+    attack: function attack() {
+      var duration = 200;
+      var interval = 400;
+      var velocity = 200;
+
+      var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking;
+      if (!canAttack) {
+        return;
+      }
+
+      player.isAttacking = true;
+      player.lastAttacked = Date.now();
+
+      switch(player.orientation) {
+        case 'left':
+          player.body.velocity.x = -velocity;
+          break;
+        case 'right':
+          player.body.velocity.x = velocity;
+          break;
+      }
+
+      player.loadTexture('white');
+      setTimeout(actions.endAttack, duration);
+    },
+
+    endAttack: function endAttack() {
+      if (player.isAttacking) {
+        player.loadTexture(settings.color);
+        player.isAttacking = false;
+      }
+    },
+
     run: function run(direction) {
       var maxSpeed = 64;
       var acceleration = player.body.touching.down ? 8 : 3; // players have less control in the air
@@ -86,6 +120,10 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     duck: function duck() {
+      if (player.isAttacking) {
+        return;
+      }
+
       if (!player.isDucking) {
         player.scale.setTo(settings.scale.x, settings.scale.y / 2);
         player.y += settings.scale.y;
@@ -108,7 +146,13 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     takeDamage: function takeDamage(amount) {
+      // prevent taking more damage than hp remaining in a current heart
+      if (amount > 1 && (player.hp - amount) % 2 !== 0) {
+        amount = 1;
+      }
+
       player.hp -= amount;
+
       if (player.hp < 0) {
         player.hp = 0;
       }
@@ -127,6 +171,9 @@ var createPlayer = function createPlayer(game, options) {
 
     die: function() {
       if (player.hp > 0) {
+        actions.endAttack();
+        player.lastAttacked = 0;
+
         player.position.x = settings.position.x;
         player.position.y = settings.position.y;
         player.body.velocity.x = 0;
@@ -151,10 +198,14 @@ var createPlayer = function createPlayer(game, options) {
 
   player.isRolling = false;
   player.isDucking = false;
+  player.isAttacking = false;
+  player.lastAttacked = 0;
   player.isCollidable = true;
 
+  player.actions = actions;
+
   // track health
-  player.hp = player.maxHp = 6;
+  player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
   player.hearts = game.add.sprite(0, 0, 'hearts');
   var heartsWidth = player.hearts.width;
   player.hearts.setScaleMinMax(1, 1); // prevent hearts scaling w/ player
@@ -167,12 +218,7 @@ var createPlayer = function createPlayer(game, options) {
   player.update = function() {
     // kill player if he falls off the screen
     if (player.position.y > 180 && player.hp !== 0) { // TODO: how to access native height from game.js?
-      // if player was already down half a heart, he'll only lose 1/2 heart
-      if (player.hp % 2 === 0) {
-        actions.takeDamage(2);
-      } else {
-        actions.takeDamage(1);
-      }
+      actions.takeDamage(2);
     }
 
     if (keys.left.isDown && !keys.right.isDown) {
@@ -189,6 +235,10 @@ var createPlayer = function createPlayer(game, options) {
       actions.duck();
     } else if (player.isDucking) {
       actions.stand();
+    }
+
+    if (keys.attack.isDown) {
+      actions.attack();
     }
 
     (function applyFriction() {
