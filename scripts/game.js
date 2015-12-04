@@ -143,34 +143,16 @@ var update = function update() {
         break;
     }
 
-    (function handleAttack() {
-      var victim;
-      // if only one of the touching players is attacking...
-      if (playerA.isAttacking !== playerB.isAttacking) {
-        victim = playerA.isAttacking ? playerB : playerA;
-        if (playerA.orientation !== playerB.orientation) {
-          victim.actions.takeDamage(1);
-        } else {
-          victim.actions.takeDamage(2); // attacked from behind for double damage
-        }
-      } else if (playerA.isAttacking && playerB.isAttacking && (playerA.orientation === playerB.orientation)) {
-        // if they're both attacking and facing the same orientation, damage the player furthest in that direction 2x (attacked from behind)
-        if (playerA.orientation === 'left') {
-          if (playerA.position.x < playerB.position.x) {
-            victim = playerA;
-          } else {
-            victim = playerB;
-          }
-        } else {
-          if (playerA.position.x < playerB.position.x) {
-            victim = playerB;
-          } else {
-            victim = playerA;
-          }
-        }
-        victim.actions.takeDamage(2);
+    // if only one of the touching players is attacking...
+    if (playerA.isAttacking !== playerB.isAttacking) {
+      var victim = playerA.isAttacking ? playerB : playerA;
+      if (playerA.orientation !== playerB.orientation) {
+        victim.actions.takeDamage(1);
+      } else {
+        victim.actions.takeDamage(2); // attacked from behind for double damage
       }
-    }());
+    }
+
   }, function allowPlayerCollision(playerA, playerB) {
     /* don't allow collision if either player isn't collidable.
        also, let's not knock anybody around if something's on one of these dude's heads.
