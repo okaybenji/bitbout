@@ -7,8 +7,8 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
+* fix positioning of hearts when health not full
 * make a menu
-* allow restarting the game
 * allow using controllers
 * dying on platform leaves dead body
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/

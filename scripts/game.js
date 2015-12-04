@@ -1,6 +1,6 @@
 var nativeWidth = 320;
 var nativeHeight = 180;
-var platforms, players;
+var platforms, players, text;
 
 var resize = function resize() {
   document.body.style.zoom = window.innerWidth / nativeWidth;
@@ -14,11 +14,8 @@ var checkForGameOver = function checkForGameOver() {
     }
   });
   if (alivePlayers.length === 1) {
-    // TODO: why is this font still anti-aliased?
-    var style = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
-    var message = 'Game over!  ' + alivePlayers[0] + '  wins!\nRefresh  to  restart'; // TODO: allow pressing any key to restart
-    game.add.text(0, 0, message, style)
-      .setTextBounds(0, 0, nativeWidth, nativeHeight);
+    text.setText('Game over!  ' + alivePlayers[0] + '  wins!\nClick  to  restart');
+    text.visible = true;
   }
 };
 
@@ -40,8 +37,23 @@ var create = function create() {
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
 
-  var createPlayer = require('./player.js');
+  // TODO: why is this font still anti-aliased?
+  var style = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
+  text = game.add.text(0, 0, '', style);
+  text.setTextBounds(0, 0, nativeWidth, nativeHeight);
+
   players = game.add.group();
+  restart();
+};
+
+var restart = function() {
+  text.visible = false;
+  // TODO: why does this seem to occasionally only eliminate one of the players?
+  players.forEach(function eliminatePlayer(player) {
+    player.destroy();
+  });
+
+  var createPlayer = require('./player.js');
 
   var player1 = {
     name: 'Blue',
@@ -68,6 +80,7 @@ var create = function create() {
 };
 
 var update = function update() {
+  game.input.onDown.addOnce(restart, this);
 
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?

@@ -1,9 +1,9 @@
 var buildPlatforms = function buildPlatforms(game) {
   var platforms = game.add.group();
   platforms.enableBody = true;
-  var platformPositions = [[48, 64], [208, 64], 
-                               [128, 104],
-                           [48, 154,], [208, 154]];
+  var platformPositions = [[48, 64], [224, 64],
+                               [136, 104],
+                           [48, 154,], [224, 154]];
 
   platformPositions.forEach(function(position) {
     var platform = platforms.create(position[0], position[1], 'pink');
