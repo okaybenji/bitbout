@@ -4,8 +4,7 @@
 * consider adding run modifier key, and walking by default
 
 ### attack
-* add attack button which adds forward velocity and flashes characters white; while white, attacking characters on contact with other players do 1 damage to non-attacking players facing them and 2 damage to players not facing them, whether attacking or not
-* a player may not attack while crouched, and may not crouch while attacking
+* player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
 * make a menu

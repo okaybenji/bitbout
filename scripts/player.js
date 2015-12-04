@@ -34,7 +34,8 @@ var createPlayer = function createPlayer(game, options) {
       var interval = 400;
       var velocity = 200;
 
-      if (Date.now() < player.lastAttacked + interval) {
+      var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking;
+      if (!canAttack) {
         return;
       }
 
@@ -119,6 +120,10 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     duck: function duck() {
+      if (player.isAttacking) {
+        return;
+      }
+
       if (!player.isDucking) {
         player.scale.setTo(settings.scale.x, settings.scale.y / 2);
         player.y += settings.scale.y;
