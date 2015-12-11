@@ -3,14 +3,16 @@
 ### movement
 * consider adding run modifier key, and walking by default
 * somewhere along the way, the game stopped allowing players to stand on each others' heads... fix this
+* air movement left/right seems to kill attack momentum
 
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
+* for some reason, the restart method is spawning clones...
+* allow pressing any key to restart
 * fix positioning of hearts when health not full
 * make a menu
-* allow using controllers
 * dying on platform leaves dead body
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * reach out to pixel artist about doing sprites and animations

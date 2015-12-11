@@ -174,8 +174,13 @@ var createPlayer = function createPlayer(game, options) {
         actions.endAttack();
         player.lastAttacked = 0;
 
-        player.position.x = settings.position.x;
-        player.position.y = settings.position.y;
+        var respawnPosition = {
+          x: Math.random() > 0.5 ? 4 : 306,
+          y: 8
+        };
+
+        player.position.x = respawnPosition.x;
+        player.position.y = respawnPosition.y;
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
       } else {

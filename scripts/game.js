@@ -26,6 +26,9 @@ var preload = function preload() {
   game.load.image('pink', 'images/pink.png');
   game.load.image('yellow', 'images/yellow.png');
   game.load.image('blue', 'images/blue.png');
+  game.load.image('orange', 'images/orange.png');
+  game.load.image('purple', 'images/purple.png');
+  game.load.image('green', 'images/green.png');
   game.load.image('white', 'images/white.png');
   game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
 };
@@ -60,26 +63,51 @@ var restart = function() {
   var player1 = {
     name: 'Blue',
     color: 'blue',
-    keys: {
-      up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
+    gamepad: game.input.gamepad.pad1,
+    position: {
+      x: 72, y: 44
     },
   };
 
   var player2 = {
     name: 'Yellow',
     color: 'yellow',
+    gamepad: game.input.gamepad.pad2,
     position: {
-      x: 306, y: 8
+      x: 248, y: 44
     },
     orientation: 'left',
+  };
+
+  var player3 = {
+    name: 'Green',
+    color: 'green',
+    gamepad: game.input.gamepad.pad3,
+    keys: {
+      up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
+    },
+    position: {
+      x: 72, y: 136
+    },
+  };
+
+  var player4 = {
+    name: 'Purple',
+    color: 'purple',
+    gamepad: game.input.gamepad.pad4,
     keys: {
       up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
     },
-    gamepad: game.input.gamepad.pad2,
+    position: {
+      x: 248, y: 136
+    },
+    orientation: 'left',
   };
 
   players.add(createPlayer(game, player1));
   players.add(createPlayer(game, player2));
+  players.add(createPlayer(game, player3));
+  players.add(createPlayer(game, player4));
 };
 
 var update = function update() {
