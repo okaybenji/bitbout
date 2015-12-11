@@ -16,6 +16,7 @@ var createPlayer = function createPlayer(game, options) {
       y: 8
     },
     color: 'pink',
+    gamepad: game.input.gamepad.pad1,
   };
 
   var settings = Object.assign({}, defaults, options);
@@ -27,6 +28,10 @@ var createPlayer = function createPlayer(game, options) {
     right: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.right]),
     attack: game.input.keyboard.addKey(Phaser.Keyboard[settings.keys.attack]),
   };
+
+  var gamepad = settings.gamepad;
+
+  var upWasDown = false; // track input change for variable jump height
 
   var actions = {
     attack: function attack() {
@@ -93,30 +98,25 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     jump: function jump() {
-      // soften upward velocity when player releases jump key
-      var dampenJump = function dampenJump() {
-        var dampenToPercent = 0.5;
-        // TODO: decouple key tracking from actions
-        keys.up.onUp.addOnce(function() {
-          if (player.body.velocity.y < 0) {
-            player.body.velocity.y *= dampenToPercent;
-          }
-        });
-      };
-
       if (player.body.touching.down) {
         player.body.velocity.y = -200;
-        dampenJump();
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -240;
         player.body.velocity.x = 90;
-        dampenJump();
       } else if (player.body.touching.right) {
         player.body.velocity.y = -240;
         player.body.velocity.x = -90;
-        dampenJump();
       }
+    },
+
+    dampenJump: function dampenJump() {
+      // soften upward velocity when player releases jump key
+        var dampenToPercent = 0.5;
+
+        if (player.body.velocity.y < 0) {
+          player.body.velocity.y *= dampenToPercent;
+        }
     },
 
     duck: function duck() {
@@ -162,7 +162,7 @@ var createPlayer = function createPlayer(game, options) {
       actions.updateHearts();
     },
 
-    updateHearts() {
+    updateHearts: function() {
       var healthPercentage = player.hp / player.maxHp;
       var cropWidth = Math.ceil(healthPercentage * heartsWidth);
       var cropRect = new Phaser.Rectangle(0, 0, cropWidth, player.hearts.height);
@@ -193,7 +193,7 @@ var createPlayer = function createPlayer(game, options) {
 
   game.physics.arcade.enable(player);
   player.body.collideWorldBounds = true;
-  player.body.bounce.y = .2; // TODO: allow bounce configuration
+  player.body.bounce.y = 0.2; // TODO: allow bounce configuration
   player.body.gravity.y = 380; // TODO: allow gravity configuration
 
   player.isRolling = false;
@@ -221,23 +221,55 @@ var createPlayer = function createPlayer(game, options) {
       actions.takeDamage(2);
     }
 
-    if (keys.left.isDown && !keys.right.isDown) {
+    var input = {
+      left:   (keys.left.isDown && !keys.right.isDown) ||
+              (gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) && !gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT)) ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1 ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X) < -0.1,
+      right:  (keys.right.isDown && !keys.left.isDown) ||
+              (gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT) && !gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT)) ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1 ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X) > 0.1,
+      up:     keys.up.isDown ||
+              gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1 ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_Y) < -0.1 ||
+              gamepad.isDown(Phaser.Gamepad.XBOX360_A),
+      down:   keys.down.isDown ||
+              gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_DOWN) ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.1 ||
+              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_Y) > 0.1,
+      attack: keys.attack.isDown ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_X) ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_Y) ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_B) ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_LEFT_BUMPER) ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_LEFT_TRIGGER) ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER) ||
+              gamepad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER),
+    };
+
+    if (input.left) {
       actions.run('left');
-    } else if (keys.right.isDown && !keys.left.isDown) {
+    } else if (input.right) {
       actions.run('right');
     }
 
-    if (keys.up.isDown) {
+    if (input.up) {
+      upWasDown = true;
       actions.jump();
+    } else if (upWasDown) {
+      upWasDown = false;
+      actions.dampenJump();
     }
 
-    if (keys.down.isDown) {
+    if (input.down) {
       actions.duck();
     } else if (player.isDucking) {
       actions.stand();
     }
 
-    if (keys.attack.isDown) {
+    if (input.attack) {
       actions.attack();
     }
 

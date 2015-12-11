@@ -37,9 +37,11 @@ var create = function create() {
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
 
+  game.input.gamepad.start();
+
   // TODO: why is this font still anti-aliased?
-  var style = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
-  text = game.add.text(0, 0, '', style);
+  var fontStyle = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
+  text = game.add.text(0, 0, '', fontStyle);
   text.setTextBounds(0, 0, nativeWidth, nativeHeight);
 
   players = game.add.group();
@@ -73,6 +75,7 @@ var restart = function() {
     keys: {
       up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
     },
+    gamepad: game.input.gamepad.pad2,
   };
 
   players.add(createPlayer(game, player1));
