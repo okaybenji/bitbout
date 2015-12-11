@@ -250,7 +250,6 @@ var createPlayer = function createPlayer(game, options) {
     };
 
     if (input.left) {
-      console.log(Phaser.Gamepad.toString());
       actions.run('left');
     } else if (input.right) {
       actions.run('right');
