@@ -111,7 +111,7 @@ var restart = function() {
 };
 
 var update = function update() {
-  game.input.onDown.addOnce(restart, this);
+  game.input.onDown.addOnce(restart, this); // restart game on mouse click
 
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
