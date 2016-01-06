@@ -3,6 +3,7 @@
 ### movement
 * consider adding run modifier key, and walking by default
 * somewhere along the way, the game stopped allowing players to stand on each others' heads... fix this
+* disable analog stick jumping (it's too awkward)
 
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
