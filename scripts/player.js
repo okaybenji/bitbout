@@ -246,8 +246,6 @@ var createPlayer = function createPlayer(game, options) {
               gamepad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X) > 0.1,
       up:     keys.up.isDown ||
               gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) ||
-              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1 ||
-              gamepad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_Y) < -0.1 ||
               gamepad.isDown(Phaser.Gamepad.XBOX360_A),
       down:   keys.down.isDown ||
               gamepad.isDown(Phaser.Gamepad.XBOX360_DPAD_DOWN) ||
