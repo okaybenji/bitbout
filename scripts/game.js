@@ -116,6 +116,13 @@ var update = function update() {
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
   game.physics.arcade.collide(players, players, function handlePlayerCollision(playerA, playerB) {
+     /* let's not knock anybody around if something's on one of these dudes'/dudettes' heads.
+     prevents cannonball attacks and the like, and allows standing on heads.
+     note: still need to collide in order to test touching.up, so don't move this to allowPlayerCollision! */
+    if (playerA.body.touching.up || playerB.body.touching.up) {
+      return;
+    }
+
     function temporarilyDisableCollision(player) {
       player.isCollidable = false;
       setTimeout(function() {
@@ -198,11 +205,8 @@ var update = function update() {
     }
 
   }, function allowPlayerCollision(playerA, playerB) {
-    /* don't allow collision if either player isn't collidable.
-       also, let's not knock anybody around if something's on one of these dude's heads.
-       prevents cannonball attacks and the like, and allows standing on heads. */
-    var eitherHasHeadwear = playerA.body.touching.up || playerB.body.touching.up;
-    if (!playerA.isCollidable || !playerB.isCollidable || eitherHasHeadwear) {
+    // don't allow collision if either player isn't collidable.
+    if (!playerA.isCollidable || !playerB.isCollidable) {
       return false;
     }
     return true;

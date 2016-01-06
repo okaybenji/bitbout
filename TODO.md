@@ -2,7 +2,7 @@
 
 ### movement
 * consider adding run modifier key, and walking by default
-* somewhere along the way, the game stopped allowing players to stand on each others' heads... fix this
+* fix velocity occasionally not dropping to 0 over time
 * test disabled analog stick jumping
 
 ### attack
