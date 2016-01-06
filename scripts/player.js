@@ -74,10 +74,19 @@ var createPlayer = function createPlayer(game, options) {
 
       switch (direction) {
         case 'left':
-          player.body.velocity.x = Math.max(player.body.velocity.x - acceleration, -maxSpeed);
+          // if player is going faster than max running speed (due to attack, etc), slow them down over time
+          if (player.body.velocity.x < -maxSpeed) {
+            player.body.velocity.x += acceleration;
+          } else {
+            player.body.velocity.x = Math.max(player.body.velocity.x - acceleration, -maxSpeed);
+          }
           break;
         case 'right':
-          player.body.velocity.x = Math.min(player.body.velocity.x + acceleration, maxSpeed);
+          if (player.body.velocity.x > maxSpeed) {
+            player.body.velocity.x -= acceleration;
+          } else {
+            player.body.velocity.x = Math.min(player.body.velocity.x + acceleration, maxSpeed);
+          }
           break;
       }
 
