@@ -11,7 +11,7 @@
 * allow pressing any key to restart
 * fix positioning of hearts when health not full
 * make a menu
-* dying on platform leaves dead body every time (not just when hearts are all gone)
+* consider: dying on platform leaves dead body every time (not just when hearts are all gone)
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * reach out to pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
