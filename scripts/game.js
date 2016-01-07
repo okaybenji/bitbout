@@ -9,7 +9,7 @@ var resize = function resize() {
 var checkForGameOver = function checkForGameOver() {
   var alivePlayers = [];
   players.children.forEach(function(player) {
-    if (player.hp > 0) {
+    if (!player.isDead) {
       alivePlayers.push(player.name);
     }
   });

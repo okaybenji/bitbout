@@ -31,15 +31,13 @@ var createPlayer = function createPlayer(game, options) {
 
   var gamepad = settings.gamepad;
 
-  var upWasDown = false; // track input change for variable jump height
-
   var actions = {
     attack: function attack() {
       var duration = 200;
       var interval = 400;
       var velocity = 200;
 
-      var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking;
+      var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isDead;
       if (!canAttack) {
         return;
       }
@@ -129,7 +127,7 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     duck: function duck() {
-      if (player.isAttacking) {
+      if (player.isAttacking || player.isDead) {
         return;
       }
 
@@ -193,6 +191,7 @@ var createPlayer = function createPlayer(game, options) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
       } else {
+        player.isDead = true;
         // knock player on his/her side
         player.scale.setTo(settings.scale.y, settings.scale.x);
         // TODO: detangle this
@@ -212,9 +211,11 @@ var createPlayer = function createPlayer(game, options) {
   player.body.bounce.y = 0.2; // TODO: allow bounce configuration
   player.body.gravity.y = 380; // TODO: allow gravity configuration
 
+  player.upWasDown = false; // track input change for variable jump height
   player.isRolling = false;
   player.isDucking = false;
   player.isAttacking = false;
+  player.isDead = false;
   player.lastAttacked = 0;
   player.isCollidable = true;
 
@@ -270,10 +271,10 @@ var createPlayer = function createPlayer(game, options) {
     }
 
     if (input.up) {
-      upWasDown = true;
+      player.upWasDown = true;
       actions.jump();
-    } else if (upWasDown) {
-      upWasDown = false;
+    } else if (player.upWasDown) {
+      player.upWasDown = false;
       actions.dampenJump();
     }
 
