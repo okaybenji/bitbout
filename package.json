@@ -21,5 +21,7 @@
     "browserify": "^12.0.1",
     "watchify": "^3.6.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "subpoly": "^0.1.0"
+  }
 }

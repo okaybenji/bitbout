@@ -11,18 +11,16 @@
 * allow pressing any key to restart
 * fix positioning of hearts when health not full
 * make a menu
-* dying on platform leaves dead body every time (not just when hearts are all gone)
+* consider: dying on platform leaves dead body every time (not just when hearts are all gone)
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * reach out to pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
 ### sound effects
-* jump
-* attack
 * take damage
-* die
 * bgm
+* update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser
 * there appears to be a bug in phaser's physics.arcade.collide's processCallback; it should pass colliding objects as args 1 and 2 in the same order as collideCallback. logging the objects' positions shows two different (correct) positions in collideCallback, but shows the same positions in processCallback.

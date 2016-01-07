@@ -1,6 +1,6 @@
 var nativeWidth = 320;
 var nativeHeight = 180;
-var platforms, players, text;
+var platforms, players, text, sfx;
 
 var resize = function resize() {
   document.body.style.zoom = window.innerWidth / nativeWidth;
@@ -22,8 +22,11 @@ var checkForGameOver = function checkForGameOver() {
 
 var preload = function preload() {
   var utils = require('./utils.js');
+  sfx = require('./sfx.js');
+
   resize();
   window.onresize = utils.debounce(resize, 100);
+
   game.load.image('pink', 'images/pink.png');
   game.load.image('yellow', 'images/yellow.png');
   game.load.image('blue', 'images/blue.png');
@@ -130,6 +133,8 @@ var update = function update() {
     }
 
     function bounce() {
+      sfx.bounce();
+
       var bounceVelocity = 100;
       var velocityA = velocityB = bounceVelocity;
       if (playerA.position.x > playerB.position.x) {

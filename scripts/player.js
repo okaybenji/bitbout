@@ -32,6 +32,8 @@ var createPlayer = function createPlayer(game, options) {
 
   var gamepad = settings.gamepad;
 
+  var sfx = require('./sfx.js');
+
   var actions = {
     attack: function attack() {
       var duration = 200;
@@ -45,6 +47,8 @@ var createPlayer = function createPlayer(game, options) {
 
       player.isAttacking = true;
       player.lastAttacked = Date.now();
+
+      sfx.attack();
 
       switch(player.orientation) {
         case 'left':
@@ -108,13 +112,16 @@ var createPlayer = function createPlayer(game, options) {
     jump: function jump() {
       if (player.body.touching.down) {
         player.body.velocity.y = -200;
+        sfx.jump();
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -240;
         player.body.velocity.x = 90;
+        sfx.jump();
       } else if (player.body.touching.right) {
         player.body.velocity.y = -240;
         player.body.velocity.x = -90;
+        sfx.jump();
       }
     },
 
@@ -178,6 +185,8 @@ var createPlayer = function createPlayer(game, options) {
     },
 
     die: function() {
+      sfx.die();
+
       if (player.hp > 0) {
         actions.endAttack();
         player.lastAttacked = 0;
