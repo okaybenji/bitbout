@@ -2,7 +2,7 @@
 
 ### movement
 * consider adding run modifier key, and walking by default
-* fix velocity occasionally not dropping to 0 over time
+* maybe fixed velocity occasionally not dropping to 0 over time... keep an eye on it
 
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not

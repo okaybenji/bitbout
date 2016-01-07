@@ -269,6 +269,15 @@ var createPlayer = function createPlayer(game, options) {
       actions.run('left');
     } else if (input.right) {
       actions.run('right');
+    } else if (player.body.touching.down && !player.isRolling) {
+      // apply friction
+      if (Math.abs(player.body.velocity.x) < 4) {
+        player.body.velocity.x *= 0.5; // quickly bring slow-moving players to a stop
+      } else if (player.body.velocity.x > 0) {
+        player.body.velocity.x -= 4;
+      } else if (player.body.velocity.x < 0) {
+        player.body.velocity.x += 4;
+      }
     }
 
     if (input.up) {
@@ -288,22 +297,6 @@ var createPlayer = function createPlayer(game, options) {
     if (input.attack) {
       actions.attack();
     }
-
-    (function applyFriction() {
-      // here's an idea which solves the sliding glitch, but it doesn't feel as good
-      /*if (player.body.touching.down && !keys.left.isDown && !keys.right.isDown) {
-        if (player.body.velocity.x !== 0) {
-          player.body.velocity.x -= player.body.velocity.x / 8;
-        }
-      }*/
-      if (player.body.touching.down && !player.isRolling) {
-        if (player.body.velocity.x > 0) {
-          player.body.velocity.x -= 4;
-        } else if (player.body.velocity.x < 0) {
-          player.body.velocity.x += 4;
-        }
-      }
-    }());
   };
 
   return player;
