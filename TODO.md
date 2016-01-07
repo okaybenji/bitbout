@@ -3,13 +3,11 @@
 ### movement
 * consider adding run modifier key, and walking by default
 * fix velocity occasionally not dropping to 0 over time
-* test disabled analog stick jumping
 
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
-* for some reason, the restart method is spawning clones... fix this
 * allow pressing any key to restart
 * fix positioning of hearts when health not full
 * make a menu

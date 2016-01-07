@@ -14,8 +14,9 @@ var checkForGameOver = function checkForGameOver() {
     }
   });
   if (alivePlayers.length === 1) {
-    text.setText('Game over!  ' + alivePlayers[0] + '  wins!\nRefresh  to  restart');
+    text.setText('Game over!  ' + alivePlayers[0] + '  wins!\nClick  to  restart');
     text.visible = true;
+    game.input.onDown.addOnce(restart, this); // restart game on mouse click
   }
 };
 
@@ -53,10 +54,10 @@ var create = function create() {
 
 var restart = function() {
   text.visible = false;
-  // TODO: why does this seem to occasionally only eliminate one of the players?
-  players.forEach(function eliminatePlayer(player) {
-    player.destroy();
-  });
+
+  while (players.children.length > 0) {
+    players.children[0].destroy();
+  }
 
   var createPlayer = require('./player.js');
 
@@ -111,8 +112,6 @@ var restart = function() {
 };
 
 var update = function update() {
-  //game.input.onDown.addOnce(restart, this); // restart game on mouse click
-
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
   game.physics.arcade.collide(players, players, function handlePlayerCollision(playerA, playerB) {
