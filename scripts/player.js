@@ -193,6 +193,8 @@ var createPlayer = function createPlayer(game, options) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
       } else {
+        // knock player on his/her side
+        player.scale.setTo(settings.scale.y, settings.scale.x);
         // TODO: detangle this
         var checkForGameOver = require('./game.js');
         checkForGameOver();
