@@ -18,11 +18,9 @@
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
 ### sound effects
-* jump
-* attack
 * take damage
-* die
 * bgm
+* update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser
 * there appears to be a bug in phaser's physics.arcade.collide's processCallback; it should pass colliding objects as args 1 and 2 in the same order as collideCallback. logging the objects' positions shows two different (correct) positions in collideCallback, but shows the same positions in processCallback.
