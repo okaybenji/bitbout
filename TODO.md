@@ -17,6 +17,7 @@
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * reach out to pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
+* consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
 ### sound effects
 * jump
