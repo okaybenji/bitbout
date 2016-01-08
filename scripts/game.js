@@ -214,7 +214,8 @@ var update = function update() {
 
   }, function allowPlayerCollision(playerA, playerB) {
     // don't allow collision if either player isn't collidable.
-    if (!playerA.isCollidable || !playerB.isCollidable) {
+    // also disallow if player is in limbo below the screen :]
+    if (!playerA.isCollidable || !playerB.isCollidable || playerA.position.y > 320 || playerB.position.y > 320) {
       return false;
     }
     return true;
