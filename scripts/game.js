@@ -149,6 +149,8 @@ var update = function update() {
     }
 
     function fling() {
+      sfx.bounce();
+
       var playerToFling;
       var playerToLeave;
       if (playerA.isDucking) {
@@ -168,6 +170,8 @@ var update = function update() {
     }
 
     function pop() {
+      sfx.bounce();
+
       var playerToPop;
       if (playerA.isRolling) {
         playerToPop = playerB;
