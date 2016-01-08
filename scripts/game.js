@@ -1,6 +1,6 @@
 var nativeWidth = 320;
 var nativeHeight = 180;
-var clouds, platforms, players, text, sfx;
+var platforms, players, text, sfx;
 
 var resize = function resize() {
   document.body.style.zoom = window.innerWidth / nativeWidth;
@@ -53,6 +53,10 @@ var create = function create() {
   game.stage.backgroundColor = 0x4DD8FF;
   game.add.tileSprite(0, 0, 320, 180, 'suns');
   clouds = game.add.tileSprite(0, 0, 320, 180, 'clouds');
+  // scroll the clouds
+  game.time.events.loop(Phaser.Timer.QUARTER, function() {
+    clouds.tilePosition.x -= 1;
+  }, this);
 
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
@@ -129,9 +133,6 @@ var restart = function() {
 };
 
 var update = function update() {
-
-  // scroll the clouds
-  clouds.tilePosition.x -= 1;
 
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
