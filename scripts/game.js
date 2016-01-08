@@ -1,6 +1,6 @@
 var nativeWidth = 320;
 var nativeHeight = 180;
-var platforms, players, text, sfx;
+var platforms, platformsFg, players, text, sfx;
 
 var resize = function resize() {
   document.body.style.zoom = window.innerWidth / nativeWidth;
@@ -38,11 +38,11 @@ var preload = function preload() {
   game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
 
   // background images
-  game.load.image('bg', 'images/bg.png');
   game.load.image('suns', 'images/suns.png');
   game.load.image('clouds', 'images/clouds.png');
   game.load.image('platforms', 'images/platforms.png');
   game.load.image('platformsFg', 'images/platformsFg.png'); // grass to go in front of players
+  game.stage.backgroundColor = 0x4DD8FF;
 };
 
 var create = function create() {
@@ -50,7 +50,6 @@ var create = function create() {
   game.world.setBounds(0, -nativeHeight, nativeWidth, nativeHeight * 3); // allow anything as tall as world to fall off-screen up or down
 
   // bg
-  game.stage.backgroundColor = 0x4DD8FF;
   game.add.sprite(0, 0, 'suns');
   clouds = game.add.tileSprite(0, 0, 320, 180, 'clouds'); // TODO: any way to turn off anti-aliasing on tileSprites?
   // scroll the clouds
@@ -61,7 +60,7 @@ var create = function create() {
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
   game.add.sprite(0, 0, 'platforms');
-  
+  platformsFg = game.add.sprite(0, 0, 'platformsFg');
 
   game.input.gamepad.start();
 
@@ -132,7 +131,8 @@ var restart = function() {
   players.add(createPlayer(game, player3));
   players.add(createPlayer(game, player4));
   
-  game.add.sprite(0, 0, 'platformsFg'); // TODO: fix this -- should not be adding the sprite every time, but need to depth sort above players
+  // ensure foreground depth sorts in front of players
+  game.world.swap(game.world.children[game.world.children.length - 1], platformsFg);
 };
 
 var update = function update() {
