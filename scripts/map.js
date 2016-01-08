@@ -6,7 +6,7 @@ var buildPlatforms = function buildPlatforms(game) {
                            [48, 154,], [224, 154]];
 
   platformPositions.forEach(function(position) {
-    var platform = platforms.create(position[0], position[1], 'pink');
+    var platform = platforms.create(position[0], position[1], 'clear'); // set to pink for debugging
     platform.scale.setTo(24, 4);
     platform.body.immovable = true;
   });

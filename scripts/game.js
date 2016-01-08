@@ -28,13 +28,12 @@ var preload = function preload() {
   window.onresize = utils.debounce(resize, 100);
 
   // color blocks
+  game.load.image('clear', 'images/clear.png');
+  game.load.image('white', 'images/white.png');
   game.load.image('pink', 'images/pink.png');
   game.load.image('yellow', 'images/yellow.png');
-  game.load.image('blue', 'images/blue.png');
   game.load.image('orange', 'images/orange.png');
   game.load.image('purple', 'images/purple.png');
-  game.load.image('green', 'images/green.png');
-  game.load.image('white', 'images/white.png');
 
   game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
 
@@ -43,6 +42,7 @@ var preload = function preload() {
   game.load.image('suns', 'images/suns.png');
   game.load.image('clouds', 'images/clouds.png');
   game.load.image('platforms', 'images/platforms.png');
+  game.load.image('platformsFg', 'images/platformsFg.png'); // grass to go in front of players
 };
 
 var create = function create() {
@@ -61,6 +61,7 @@ var create = function create() {
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
   game.add.tileSprite(0, 0, 320, 180, 'platforms');
+  
 
   game.input.gamepad.start();
 
@@ -130,6 +131,8 @@ var restart = function() {
   players.add(createPlayer(game, player2));
   players.add(createPlayer(game, player3));
   players.add(createPlayer(game, player4));
+  
+  game.add.tileSprite(0, 0, 320, 180, 'platformsFg');
 };
 
 var update = function update() {
