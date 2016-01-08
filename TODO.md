@@ -6,21 +6,25 @@
 ### titles
 * fix disabling anti-aliasing on text
 
+### levels
+* make more of these
+
 ### misc
 * allow pressing any key to restart
 * fix positioning of hearts when health not full
 * make a menu
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * credit whoever the forum user was who inspired your cloud look
-* reach out to pixel artist about doing sprites and animations
+* reach out to chasm pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
 ### graphics
-* why are the platforms all anti-aliasy?
+* can anti-aliasing on clouds be removed? (see *phaser* below)
 
-### sound effects
-* bgm
+### sound
+* make some 16-bit sfx (or build/acquire an FM websynth!) http://www.taktech.org/takm/WebFMSynth/
+* add and make more bgm
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser
