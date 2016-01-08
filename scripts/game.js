@@ -1,6 +1,6 @@
 var nativeWidth = 320;
 var nativeHeight = 180;
-var platforms, players, text, sfx;
+var clouds, platforms, players, text, sfx;
 
 var resize = function resize() {
   document.body.style.zoom = window.innerWidth / nativeWidth;
@@ -27,6 +27,7 @@ var preload = function preload() {
   resize();
   window.onresize = utils.debounce(resize, 100);
 
+  // color blocks
   game.load.image('pink', 'images/pink.png');
   game.load.image('yellow', 'images/yellow.png');
   game.load.image('blue', 'images/blue.png');
@@ -34,15 +35,28 @@ var preload = function preload() {
   game.load.image('purple', 'images/purple.png');
   game.load.image('green', 'images/green.png');
   game.load.image('white', 'images/white.png');
+
   game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
+
+  // background images
+  game.load.image('bg', 'images/bg.png');
+  game.load.image('suns', 'images/suns.png');
+  game.load.image('clouds', 'images/clouds.png');
+  game.load.image('platforms', 'images/platforms.png');
 };
 
 var create = function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.world.setBounds(0, -nativeHeight, nativeWidth, nativeHeight * 3); // allow anything as tall as world to fall off-screen up or down
 
+  // bg
+  game.stage.backgroundColor = 0x4DD8FF;
+  game.add.tileSprite(0, 0, 320, 180, 'suns');
+  clouds = game.add.tileSprite(0, 0, 320, 180, 'clouds');
+
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
+  game.add.tileSprite(0, 0, 320, 180, 'platforms');
 
   game.input.gamepad.start();
 
@@ -65,8 +79,8 @@ var restart = function() {
   var createPlayer = require('./player.js');
 
   var player1 = {
-    name: 'Blue',
-    color: 'blue',
+    name: 'Orange',
+    color: 'orange',
     gamepad: game.input.gamepad.pad1,
     position: {
       x: 72, y: 44
@@ -84,8 +98,8 @@ var restart = function() {
   };
 
   var player3 = {
-    name: 'Green',
-    color: 'green',
+    name: 'Pink',
+    color: 'pink',
     gamepad: game.input.gamepad.pad3,
     keys: {
       up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
@@ -115,6 +129,10 @@ var restart = function() {
 };
 
 var update = function update() {
+
+  // scroll the clouds
+  clouds.tilePosition.x -= 1;
+
   game.physics.arcade.collide(players, platforms);
   // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
   game.physics.arcade.collide(players, players, function handlePlayerCollision(playerA, playerB) {

@@ -15,6 +15,9 @@
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
+### graphics
+* why are the platforms all anti-aliasy?
+
 ### sound effects
 * bgm
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
