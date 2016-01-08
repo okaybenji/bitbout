@@ -1,18 +1,21 @@
 var sfx = (function sfx() {
   Polysynth = require('subpoly');
 
-  var audioCtx = new AudioContext();
+  var audioCtx;
+  if (typeof AudioContext !== "undefined") {
+    audioCtx = new AudioContext();
+  } else {
+    audioCtx = new webkitAudioContext();
+  }
 
   var pulse = new Polysynth(audioCtx, {
     waveform: 'square',
-    release: 0.1,
+    release: 0.01,
     numVoices: 4
   });
   
   function getNow(voice) {
     var now = voice.audioCtx.currentTime;
-//    voice.amp.gain.cancelScheduledValues(now);
-//    voice.amp.gain.setValueAtTime(voice.amp.gain.value, now);
     return now;
   };
   

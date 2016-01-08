@@ -14,7 +14,7 @@ var checkForGameOver = function checkForGameOver() {
     }
   });
   if (alivePlayers.length === 1) {
-    text.setText('Game over!  ' + alivePlayers[0] + '  wins!\nClick  to  restart');
+    text.setText(alivePlayers[0] + '  wins!\nClick  to  restart');
     text.visible = true;
     game.input.onDown.addOnce(restart, this); // restart game on mouse click
   }
