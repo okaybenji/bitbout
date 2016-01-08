@@ -51,8 +51,8 @@ var create = function create() {
 
   // bg
   game.stage.backgroundColor = 0x4DD8FF;
-  game.add.tileSprite(0, 0, 320, 180, 'suns');
-  clouds = game.add.tileSprite(0, 0, 320, 180, 'clouds');
+  game.add.sprite(0, 0, 'suns');
+  clouds = game.add.tileSprite(0, 0, 320, 180, 'clouds'); // TODO: any way to turn off anti-aliasing on tileSprites?
   // scroll the clouds
   game.time.events.loop(Phaser.Timer.QUARTER, function() {
     clouds.tilePosition.x -= 1;
@@ -60,13 +60,13 @@ var create = function create() {
 
   var buildPlatforms = require('./map.js');
   platforms = buildPlatforms(game);
-  game.add.tileSprite(0, 0, 320, 180, 'platforms');
+  game.add.sprite(0, 0, 'platforms');
   
 
   game.input.gamepad.start();
 
   // TODO: why is this font still anti-aliased?
-  var fontStyle = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
+  var fontStyle = { font: "12px Hellovetica", fill: "#111", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
   text = game.add.text(0, 0, '', fontStyle);
   text.setTextBounds(0, 0, nativeWidth, nativeHeight);
 
@@ -132,7 +132,7 @@ var restart = function() {
   players.add(createPlayer(game, player3));
   players.add(createPlayer(game, player4));
   
-  game.add.tileSprite(0, 0, 320, 180, 'platformsFg');
+  game.add.sprite(0, 0, 'platformsFg'); // TODO: fix this -- should not be adding the sprite every time, but need to depth sort above players
 };
 
 var update = function update() {
