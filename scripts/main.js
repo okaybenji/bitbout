@@ -24,17 +24,14 @@ var main = {
 
     game.state.add('splash', require('./states/splash.js')(game));
     game.state.add('play', require('./states/play.js')(game));
-    game.state.add('menu', require('./states/menu.js')(game));
-    game.state.add('credits', require('./states/credits.js'));
 
-    game.state.start('menu');
+    game.state.start('splash');
   }
 };
 
 var game = new Phaser.Game(320, 180, Phaser.AUTO, 'game', {
   preload: main.preload,
-  create: main.create,
-  update: main.update,
+  create: main.create
 }, false, false); // disable anti-aliasing
 
 game.state.add('main', main);

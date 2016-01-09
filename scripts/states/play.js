@@ -24,16 +24,8 @@ var Play = function(game) {
       self.text.setTextBounds(0, 0, game.width, game.height);
       
       // menu
-      self.menu = game.add.text(0, 0, 'Start', fontStyle);
-      self.menu.setTextBounds(0, 0, game.width, game.height);
-      self.menu.inputEnabled = true;
-      self.menu.events.onInputUp.add(function() {
-        self.menu.visible = false;
-        console.log('closed menu');
-      });
-      self.menu.events.onInputOver.add(function(target) {
-        target.fill = "#FEFFD5";
-      });
+      var buildMenu = require('../menu.js');
+      self.menu = buildMenu(game, fontStyle);
 
       self.players = game.add.group();
       self.restart();
