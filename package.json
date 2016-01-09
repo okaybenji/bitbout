@@ -4,8 +4,8 @@
   "description": "a game.",
   "main": "bundle.js",
   "scripts": {
-    "build": "browserify scripts/game.js -o bundle.js",
-    "watch": "watchify scripts/game.js -o bundle.js -d"
+    "build": "browserify scripts/main.js -o bundle.js",
+    "watch": "watchify scripts/main.js -o bundle.js -d"
   },
   "repository": {
     "type": "git",
