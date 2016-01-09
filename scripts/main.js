@@ -13,6 +13,9 @@ var main = {
     // allow anything up to height of world to fall off-screen up or down
     game.world.setBounds(0, -game.width, game.width, game.height * 3);
     
+    // prevent game pausing when it loses focus
+    game.stage.disableVisibilityChange = true;
+    
     game.load.image('logo', 'images/white.png'); // pre-load logo for splash screen
   },
 
@@ -21,9 +24,10 @@ var main = {
 
     game.state.add('splash', require('./states/splash.js')(game));
     game.state.add('play', require('./states/play.js')(game));
+    game.state.add('menu', require('./states/menu.js')(game));
     game.state.add('credits', require('./states/credits.js'));
 
-    game.state.start('splash');
+    game.state.start('menu');
   }
 };
 

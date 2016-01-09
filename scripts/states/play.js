@@ -1,40 +1,42 @@
 var Play = function(game) {
   var play = {
-    checkForGameOver: function checkForGameOver() {
-      var alivePlayers = [];
-      this.players.children.forEach(function(player) {
-        if (!player.isDead) {
-          alivePlayers.push(player.name);
-        }
-      });
-      if (alivePlayers.length === 1) {
-        this.text.setText(alivePlayers[0] + '  wins!\nClick  to  restart');
-        this.text.visible = true;
-        game.input.onDown.addOnce(this.restart, this); // restart game on mouse click
-      }
-    },
-
     preload: function preload() {
 
     },
 
     create: function create() {
+      var self = this;
+      
       game.physics.startSystem(Phaser.Physics.ARCADE);
 
       var buildPlatforms = require('../map.js');
-      this.platforms = buildPlatforms(game);
+      self.platforms = buildPlatforms(game);
 
-      this.sfx = require('../sfx.js');
+      self.sfx = require('../sfx.js');
 
       game.input.gamepad.start();
 
       // TODO: why is this font still anti-aliased?
       var fontStyle = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
-      this.text = game.add.text(0, 0, '', fontStyle);
-      this.text.setTextBounds(0, 0, game.width, game.height);
+      
+      // game over message
+      self.text = game.add.text(0, 0, '', fontStyle);
+      self.text.setTextBounds(0, 0, game.width, game.height);
+      
+      // menu
+      self.menu = game.add.text(0, 0, 'Start', fontStyle);
+      self.menu.setTextBounds(0, 0, game.width, game.height);
+      self.menu.inputEnabled = true;
+      self.menu.events.onInputUp.add(function() {
+        self.menu.visible = false;
+        console.log('closed menu');
+      });
+      self.menu.events.onInputOver.add(function(target) {
+        target.fill = "#FEFFD5";
+      });
 
-      this.players = game.add.group();
-      this.restart();
+      self.players = game.add.group();
+      self.restart();
     },
 
     restart: function restart() {
@@ -84,10 +86,24 @@ var Play = function(game) {
           orientation: 'left',
       }];
       
-      var createPlayer = require('../player.js');
-      function addPlayer(player) {
-        self.players.add(createPlayer(game, player, self.checkForGameOver.bind(self)));
-      }
+      
+      var addPlayer = function addPlayer(player) {
+        var checkForGameOver = function checkForGameOver() {
+          var alivePlayers = [];
+          self.players.children.forEach(function(player) {
+            if (!player.isDead) {
+              alivePlayers.push(player.name);
+            }
+          });
+          if (alivePlayers.length === 1) {
+            self.text.setText(alivePlayers[0] + '  wins!\nClick  to  restart');
+            self.text.visible = true;
+            game.input.onDown.addOnce(self.restart, self); // restart game on mouse click
+          }
+        };
+        var createPlayer = require('../player.js');
+        self.players.add(createPlayer(game, player, checkForGameOver));
+      };
       players.forEach(addPlayer);
     },
 
