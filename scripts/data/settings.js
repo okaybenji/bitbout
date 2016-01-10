@@ -9,7 +9,7 @@ var settings = {
   },
   stage: {
     options: ['Atari', 'Alpha C'],
-    selected: 'Alpha',
+    selected: 'Alpha C',
   }
 };
 
