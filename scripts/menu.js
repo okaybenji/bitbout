@@ -3,7 +3,8 @@ var buildMenu = function buildMenu(game, restart) {
   var itemHeight = 20;
   var gamepad = game.input.gamepad.pad1;
 
-  var maxPlayers = 4;
+  var numPlayers, maxPlayers;
+  numPlayers = maxPlayers = 4;
 
   var fontHighlight = require('./data/font.js');
   var fontNormal = Object.assign({}, fontHighlight);
@@ -93,13 +94,13 @@ var buildMenu = function buildMenu(game, restart) {
 
   var menu = [{
     name: 'Players',
-    value: maxPlayers,
+    value: numPlayers,
     action: function() {
-      this.value++;
-      if (this.value > maxPlayers) {
-        this.value = 2;
+      numPlayers++;
+      if (numPlayers > maxPlayers) {
+        numPlayers = 2;
       }
-      restart(this.value);
+      restart(numPlayers);
     },
     selected: true
   }, {
@@ -116,7 +117,10 @@ var buildMenu = function buildMenu(game, restart) {
     }
   }, {
     name: 'Start',
-    action: toggleMenu
+    action: function() {
+      restart(numPlayers);
+      toggleMenu();
+    }
   }];
 
   menu = menu.map(function(item, i) {
