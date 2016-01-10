@@ -10,6 +10,8 @@
 * allow pressing any key to restart
 * fix positioning of hearts when health not full
 * make a menu
+* add spectators that push players into arena on spawn.
+* add power-ups, like maybe one that does 2x damage (and can knock a player down 2 hearts). these will be tossed in by spectators.
 * credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * reach out to pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
@@ -19,7 +21,8 @@
 * while in menu, run demo with currently selected settings (selected num players duking it out on selected stage, etc.)
 
 ### sound effects
-* bgm
+* make some 16-bit sfx (or build/acquire an FM websynth!) http://www.taktech.org/takm/WebFMSynth/
+* add and make more bgm
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser

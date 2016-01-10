@@ -185,6 +185,10 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     die: function() {
+      if (player.isDead) {
+        return;
+      }
+
       sfx.die();
 
       if (player.hp > 0) {
