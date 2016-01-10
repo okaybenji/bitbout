@@ -22,6 +22,10 @@ var Splash = function(game) {
       game.input.onDown.addOnce(function() {
         game.state.start('play');
       }, this); // start game on mouse click
+      
+      setTimeout(function() {
+        game.state.start('play');
+      }, 200);
     }
   };
   
