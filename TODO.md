@@ -1,5 +1,8 @@
 #To do
 
+### movement
+* add run. hold x (xbox) to run. (y, b, triggers will still be attack buttons).
+
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
