@@ -16,68 +16,29 @@ var Play = function(game) {
 
       game.input.gamepad.start();
 
-      // TODO: why is this font still anti-aliased?
-      var fontStyle = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
-      
       // game over message
-      self.text = game.add.text(0, 0, '', fontStyle);
+      var font = require('../data/font.js');
+      self.text = game.add.text(0, 0, '', font);
       self.text.setTextBounds(0, 0, game.width, game.height);
       
       // menu
       var buildMenu = require('../menu.js');
-      self.menu = buildMenu(game, fontStyle);
+      self.menu = buildMenu(game, self.restart.bind(self)); // come up with better way to do this
 
       self.players = game.add.group();
       self.restart();
     },
 
-    restart: function restart() {
+    restart: function restart(numPlayers) {
       var self = this;
+      var players = require('../data/players.js')(game);
+      numPlayers = numPlayers || 4;
       
       self.text.visible = false;
 
       while (self.players.children.length > 0) {
         self.players.children[0].destroy();
       }
-
-      var players = [{
-          name: 'Blue',
-          color: 'blue',
-          gamepad: game.input.gamepad.pad1,
-          position: {
-            x: 72, y: 44
-          },
-        }, {
-          name: 'Yellow',
-          color: 'yellow',
-          gamepad: game.input.gamepad.pad2,
-          position: {
-            x: 248, y: 44
-          },
-          orientation: 'left',
-        }, {
-          name: 'Green',
-          color: 'green',
-          gamepad: game.input.gamepad.pad3,
-          keys: {
-            up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
-          },
-          position: {
-            x: 72, y: 136
-          },
-        }, {
-          name: 'Purple',
-          color: 'purple',
-          gamepad: game.input.gamepad.pad4,
-          keys: {
-            up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
-          },
-          position: {
-            x: 248, y: 136
-          },
-          orientation: 'left',
-      }];
-      
       
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
@@ -96,7 +57,11 @@ var Play = function(game) {
         var createPlayer = require('../player.js');
         self.players.add(createPlayer(game, player, checkForGameOver));
       };
-      players.forEach(addPlayer);
+
+      //players.forEach(addPlayer);
+      for (var i=0; i<numPlayers; i++) {
+        addPlayer(players[i]);
+      }
     },
 
     update: function update() {
