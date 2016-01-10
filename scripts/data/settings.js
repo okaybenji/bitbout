@@ -4,11 +4,11 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['A', 'B', 'C'],
-    selected: 'A',
+    options: ['A', 'B', 'None'],
+    selected: 'None',
   },
   stage: {
-    options: ['Alpha'],
+    options: ['Atari', 'Alpha C'],
     selected: 'Alpha',
   }
 };
