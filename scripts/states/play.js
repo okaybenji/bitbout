@@ -29,10 +29,10 @@ var Play = function(game) {
       self.restart();
     },
 
-    restart: function restart(numPlayers) {
+    restart: function restart() {
       var self = this;
       var players = require('../data/players.js')(game);
-      numPlayers = numPlayers || 4;
+      var settings = require('../data/settings');
       
       self.text.visible = false;
 
@@ -59,7 +59,7 @@ var Play = function(game) {
       };
 
       //players.forEach(addPlayer);
-      for (var i=0; i<numPlayers; i++) {
+      for (var i=0; i<settings.playerCount.selected; i++) {
         addPlayer(players[i]);
       }
     },

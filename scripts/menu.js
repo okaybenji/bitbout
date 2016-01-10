@@ -1,14 +1,21 @@
 var buildMenu = function buildMenu(game, restart) {
   var menuOpen = true;
   var itemHeight = 20;
-  var gamepad = game.input.gamepad.pad1;
+  var gamepad = game.input.gamepad.pad1; // TODO: add check for gamepad; display msg that it is req'd if not there
 
-  var numPlayers, maxPlayers;
-  numPlayers = maxPlayers = 4;
+  var settings = require('./data/settings.js');
 
   var fontHighlight = require('./data/font.js');
-  var fontNormal = Object.assign({}, fontHighlight);
-  fontNormal.fill = '#777';
+  var fontNormal = Object.assign({}, fontHighlight, {fill: '#777'});
+
+  var selectFirstItem = function() {
+    var selectedIndex = getSelectedIndex();
+    if (selectedIndex !== 0) {
+      menu[selectedIndex].selected = false;
+      menu[0].selected = true;
+      renderMenu();
+    }
+  };
 
   var toggleMenu = function() {
     menu.forEach(function(item) {
@@ -16,13 +23,7 @@ var buildMenu = function buildMenu(game, restart) {
         item.text.visible = false;
       } else {
         item.text.visible = true;
-        // select first menu item
-        var selectedIndex = getSelectedIndex();
-        if (selectedIndex !== 0) {
-          menu[selectedIndex].selected = false;
-          menu[0].selected = true;
-          updateMenu();
-        }
+        selectFirstItem();
       }
     });
 
@@ -40,7 +41,7 @@ var buildMenu = function buildMenu(game, restart) {
   };
 
   var getSelectedItem = function() {
-    return menu.reduce(function(acc, item, i) {
+    return menu.reduce(function(acc, item) {
       if (item.selected) {
         return item;
       } else {
@@ -58,7 +59,7 @@ var buildMenu = function buildMenu(game, restart) {
     menu[selectedIndex].selected = false;
     menu[prevIndex].selected = true;
 
-    updateMenu();
+    renderMenu();
   };
   
   var nextItem = function() {
@@ -70,7 +71,7 @@ var buildMenu = function buildMenu(game, restart) {
     menu[selectedIndex].selected = false;
     menu[nextIndex].selected = true;
 
-    updateMenu();
+    renderMenu();
   };
 
   var activateItem = function() {
@@ -82,50 +83,50 @@ var buildMenu = function buildMenu(game, restart) {
     item.action();
   };
 
-  var updateMenu = function() {
+  var renderMenu = function() {
     menu.forEach(function(item) {
       if (item.selected) {
         item.text.setStyle(fontHighlight);
       } else {
         item.text.setStyle(fontNormal);
       }
+      var text = item.name + (item.setting ? ': ' + item.setting.selected.toString() : ''); // TODO: why won't this display numeric settings?
+      item.text.setText(text);
     });
+  };
+
+  var cycleSetting = function() {
+    var optionIndex = this.setting.options.indexOf(this.setting.selected);
+    optionIndex++;
+    if (optionIndex === this.setting.options.length) {
+      optionIndex = 0;
+    }
+    this.setting.selected = this.setting.options[optionIndex];
+    renderMenu();
+    restart();
   };
 
   var menu = [{
     name: 'Players',
-    value: numPlayers,
-    action: function() {
-      numPlayers++;
-      if (numPlayers > maxPlayers) {
-        numPlayers = 2;
-      }
-      restart(numPlayers);
-    },
+    setting: settings.playerCount,
+    action: cycleSetting,
     selected: true
   }, {
     name: 'BGM',
-    value: 'A',
-    action: function() {
-      console.log('No BGM yet...');
-    }
+    setting: settings.bgm,
+    action: cycleSetting
   }, {
     name: 'Stage',
-    value: 'Alpha',
-    action: function() {
-      console.log('Only one stage so far...');
-    }
+    setting: settings.stage,
+    action: cycleSetting
   }, {
     name: 'Start',
     action: function() {
-      restart(numPlayers);
+      restart();
       toggleMenu();
     }
-  }];
-
-  menu = menu.map(function(item, i) {
-    var text = item.name + (item.value ? ': ' + item.value.toString() : '');
-    item.text = game.add.text(0, 0, text);
+  }].map(function(item, i) {
+    item.text = game.add.text(0, 0, '');
     item.text.setTextBounds(0, i * itemHeight, game.width, game.height);
     return item;
   });
@@ -140,7 +141,7 @@ var buildMenu = function buildMenu(game, restart) {
   upButton.onDown.add(prevItem);
   selectButton.onDown.add(activateItem);
 
-  updateMenu();
+  renderMenu();
   return menu;
 };
 
