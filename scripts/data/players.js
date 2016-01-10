@@ -1,7 +1,7 @@
 var Players = function(game) {
     var players = [{
-      name: 'Blue',
-      color: 'blue',
+      name: 'Orange',
+      color: 'orange',
       gamepad: game.input.gamepad.pad1,
       position: {
         x: 72, y: 44
@@ -15,8 +15,8 @@ var Players = function(game) {
       },
       orientation: 'left',
     }, {
-      name: 'Green',
-      color: 'green',
+      name: 'Pink',
+      color: 'pink',
       gamepad: game.input.gamepad.pad3,
       keys: {
         up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'

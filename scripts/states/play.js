@@ -13,8 +13,6 @@ var Play = function(game) {
         clouds.tilePosition.x -= 1;
       }, this);
 
-      var buildPlatforms = require('../map.js');
-      self.platforms = buildPlatforms(game);
       game.add.sprite(0, 0, 'platforms');
       this.platformsFg = game.add.sprite(0, 0, 'platformsFg');
 
@@ -40,8 +38,12 @@ var Play = function(game) {
       var self = this;
       var players = require('../data/players.js')(game);
       var settings = require('../data/settings');
-      
-      self.text.visible = false;
+      var buildPlatforms = require('../map.js');
+
+      if (self.platforms) {
+        self.platforms.destroy();
+      }
+      self.platforms = buildPlatforms(game);
 
       while (self.players.children.length > 0) {
         self.players.children[0].destroy();

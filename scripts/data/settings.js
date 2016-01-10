@@ -1,3 +1,5 @@
+var stages = require('./stages');
+
 var settings = {
   playerCount: {
     options: [2, 3, 4],
@@ -8,7 +10,9 @@ var settings = {
     selected: 'None',
   },
   stage: {
-    options: ['Atari', 'Alpha C'],
+    options: stages.map(function(stage) {
+      return stage.name;
+    }),
     selected: 'Alpha C',
   }
 };
