@@ -27,6 +27,9 @@ var preload = function preload() {
   resize();
   window.onresize = utils.debounce(resize, 100);
 
+  // prevent game pausing when it loses focus
+  game.stage.disableVisibilityChange = true;
+
   game.load.image('pink', 'images/pink.png');
   game.load.image('yellow', 'images/yellow.png');
   game.load.image('blue', 'images/blue.png');

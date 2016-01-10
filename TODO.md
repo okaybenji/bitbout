@@ -16,7 +16,8 @@
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
 ### sound effects
-* bgm
+* make some 16-bit sfx (or build/acquire an FM websynth!) http://www.taktech.org/takm/WebFMSynth/
+* add and make more bgm
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser
