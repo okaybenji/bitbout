@@ -20,13 +20,23 @@ var buildMenu = function buildMenu(game, restart) {
     }
   };
 
+  var selectStart = function selectStart() {
+    var startIndex = menu.length - 1;
+    var selectedIndex = getSelectedIndex();
+    if (selectedIndex !== startIndex) {
+      menu[selectedIndex].selected = false;
+      menu[startIndex].selected = true;
+      renderMenu();
+    }
+  };
+
   var toggleMenu = function toggleMenu() {
     menu.forEach(function(item) {
       if (menuOpen) {
         item.text.visible = false;
       } else {
         item.text.visible = true;
-        selectFirstItem();
+        selectStart();
       }
     });
 

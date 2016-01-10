@@ -49,9 +49,11 @@ var Play = function(game) {
             }
           });
           if (alivePlayers.length === 1) {
-            self.text.setText(alivePlayers[0] + '  wins!\nClick  to  restart');
+            self.text.setText(alivePlayers[0] + '  wins!\nPress start');
             self.text.visible = true;
-            game.input.onDown.addOnce(self.restart, self); // restart game on mouse click
+            game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(function() {
+              self.text.visible = false; // just hides text (menu will open itself)
+            });
           }
         };
         var createPlayer = require('../player.js');

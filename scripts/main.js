@@ -5,7 +5,6 @@ var resize = function resize() {
 var main = {
   preload: function preload() {
     var utils = require('./utils.js');
-    //this.sfx = require('./sfx.js');
 
     resize();
     window.onresize = utils.debounce(resize, 100);
@@ -16,7 +15,7 @@ var main = {
     // prevent game pausing when it loses focus
     game.stage.disableVisibilityChange = true;
     
-    game.load.image('logo', 'images/white.png'); // pre-load logo for splash screen
+    game.load.image('purple', 'images/purple.png');
   },
 
   create: function create() {
