@@ -8,6 +8,9 @@ var buildMenu = function buildMenu(game, restart) {
   var fontHighlight = require('./data/font.js');
   var fontNormal = Object.assign({}, fontHighlight, {fill: '#777'});
 
+  var title = game.add.text(0, -itemHeight, 'Options', fontHighlight);
+  title.setTextBounds(0, 0, game.width, game.height);
+
   var selectFirstItem = function selectFirstItem() {
     var selectedIndex = getSelectedIndex();
     if (selectedIndex !== 0) {
@@ -27,7 +30,7 @@ var buildMenu = function buildMenu(game, restart) {
       }
     });
 
-    menuOpen = !menuOpen;
+    title.visible = menuOpen = !menuOpen;
   };
 
   var getSelectedIndex = function getSelectedIndex() {
