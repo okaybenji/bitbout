@@ -3,19 +3,6 @@ var Play = function(game) {
     create: function create() {
       var self = this;
 
-      game.stage.backgroundColor = 0x4DD8FF;
-
-      // bg
-      game.add.sprite(0, 0, 'suns');
-      clouds = game.add.tileSprite(0, 0, 320, 180, 'clouds'); // TODO: any way to turn off anti-aliasing on tileSprites?
-      // scroll the clouds
-      game.time.events.loop(Phaser.Timer.QUARTER, function() {
-        clouds.tilePosition.x -= 1;
-      }, this);
-
-      game.add.sprite(0, 0, 'platforms');
-      this.platformsFg = game.add.sprite(0, 0, 'platformsFg');
-
       self.sfx = require('../sfx.js');
 
       // game over message
@@ -24,10 +11,10 @@ var Play = function(game) {
       self.text.setTextBounds(0, 0, game.width, game.height);
       
       // menu
+      // TODO: find a good method of keeping the menu on top. maybe set up a group before the menu and add everything that's not a menu to that group?
       var buildMenu = require('../menu.js');
       self.menu = buildMenu(game, self.restart.bind(self)); // come up with better way to do this
 
-      self.players = game.add.group();
       self.restart();
   
       game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -38,17 +25,33 @@ var Play = function(game) {
       var self = this;
       var players = require('../data/players.js')(game);
       var settings = require('../data/settings');
-      var buildPlatforms = require('../map.js');
+      var stageBuilder = require('../stageBuilder.js')(game);
 
-      if (self.platforms) {
-        self.platforms.destroy();
-      }
-      self.platforms = buildPlatforms(game);
+      var destroyGroup = function destroyGroup(group) {
+        console.log('destroying group:', group);
+        if (!group) {
+          return;
+        }
 
-      while (self.players.children.length > 0) {
-        self.players.children[0].destroy();
+        while (group.children.length > 0) {
+          group.children[0].destroy();
+        }
+
+        group.destroy();
       }
-      
+
+      destroyGroup(self.players);
+      destroyGroup(self.platforms);
+      destroyGroup(self.backgrounds);
+      if (self.foreground) {
+        self.foreground.destroy();
+      }
+
+      self.platforms = stageBuilder.buildPlatforms();
+      self.backgrounds = stageBuilder.buildBackgrounds();
+
+      self.players = game.add.group();
+
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
           var alivePlayers = [];
@@ -74,8 +77,7 @@ var Play = function(game) {
         addPlayer(players[i]);
       }
 
-      // ensure foreground depth sorts in front of players
-      game.world.swap(game.world.children[game.world.children.length - 1], this.platformsFg);
+      self.foreground = stageBuilder.buildForeground();
     },
 
     update: function update() {

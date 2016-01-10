@@ -23,11 +23,20 @@ var Splash = function(game) {
 
       game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
 
-      // background images
-      game.load.image('suns', 'images/suns.png');
+      // TODO: why doesn't this load images for me?
+      var stages = require('../data/stages.js');
+      /*stages.forEach(function(stage) {
+        var images = [].concat(stage.assets.background, stage.assets.foreground, stage.assets.scrolling);
+        console.log('images:', images);
+        images.forEach(function(image) {
+          game.load.image(image.name, 'images/' + image.name + '.png');
+        });
+      });*/
+
+      game.load.image('ground', 'images/ground.png');
+      game.load.image('foreground', 'images/foreground.png');
       game.load.image('clouds', 'images/clouds.png');
-      game.load.image('platforms', 'images/platforms.png');
-      game.load.image('platformsFg', 'images/platformsFg.png'); // grass to go in front of players
+      game.load.image('suns', 'images/suns.png');
     },
 
     create: function() {

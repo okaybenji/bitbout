@@ -11,6 +11,7 @@
 
 ### levels
 * make more of these
+* at one point, accidentally put clouds in foreground. the ridges gave a really cool natural temporary hiding fog effect, while the transparency ensured the game would still be playable. make a level like this on purpose!
 
 ### misc
 * allow pressing any key to restart
