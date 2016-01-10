@@ -8,7 +8,7 @@ var buildMenu = function buildMenu(game, restart) {
   var fontHighlight = require('./data/font.js');
   var fontNormal = Object.assign({}, fontHighlight, {fill: '#777'});
 
-  var selectFirstItem = function() {
+  var selectFirstItem = function selectFirstItem() {
     var selectedIndex = getSelectedIndex();
     if (selectedIndex !== 0) {
       menu[selectedIndex].selected = false;
@@ -17,7 +17,7 @@ var buildMenu = function buildMenu(game, restart) {
     }
   };
 
-  var toggleMenu = function() {
+  var toggleMenu = function toggleMenu() {
     menu.forEach(function(item) {
       if (menuOpen) {
         item.text.visible = false;
@@ -30,7 +30,7 @@ var buildMenu = function buildMenu(game, restart) {
     menuOpen = !menuOpen;
   };
 
-  var getSelectedIndex = function() {
+  var getSelectedIndex = function getSelectedIndex() {
     return menu.reduce(function(acc, item, i) {
       if (item.selected) {
         return i;
@@ -40,7 +40,7 @@ var buildMenu = function buildMenu(game, restart) {
     }, 0);
   };
 
-  var getSelectedItem = function() {
+  var getSelectedItem = function getSelectedItem() {
     return menu.reduce(function(acc, item) {
       if (item.selected) {
         return item;
@@ -50,7 +50,7 @@ var buildMenu = function buildMenu(game, restart) {
     });
   };
 
-  var prevItem = function() {
+  var prevItem = function prevItem() {
     var selectedIndex = getSelectedIndex();
     var prevIndex = selectedIndex - 1;
     if (prevIndex === -1) {
@@ -62,7 +62,7 @@ var buildMenu = function buildMenu(game, restart) {
     renderMenu();
   };
   
-  var nextItem = function() {
+  var nextItem = function nextItem() {
     var selectedIndex = getSelectedIndex();
     var nextIndex = selectedIndex + 1;
     if (nextIndex === menu.length) {
@@ -74,7 +74,7 @@ var buildMenu = function buildMenu(game, restart) {
     renderMenu();
   };
 
-  var activateItem = function() {
+  var activateItem = function activateItem() {
     if (!menuOpen) {
       return;
     }
@@ -83,7 +83,7 @@ var buildMenu = function buildMenu(game, restart) {
     item.action();
   };
 
-  var renderMenu = function() {
+  var renderMenu = function renderMenu() {
     menu.forEach(function(item) {
       if (item.selected) {
         item.text.setStyle(fontHighlight);
@@ -95,7 +95,7 @@ var buildMenu = function buildMenu(game, restart) {
     });
   };
 
-  var cycleSetting = function() {
+  var cycleSetting = function cycleSetting() {
     var optionIndex = this.setting.options.indexOf(this.setting.selected);
     optionIndex++;
     if (optionIndex === this.setting.options.length) {
