@@ -13,7 +13,11 @@ var utils = {
 		timeout = setTimeout(later, wait);
 		if (callNow) func.apply(context, args);
 	};
-  }
+  },
+
+  center: function(entity) {
+    entity.anchor.setTo(0.5);
+  },
 };
 
 module.exports = utils;

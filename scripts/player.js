@@ -1,4 +1,4 @@
-var createPlayer = function createPlayer(game, options) {
+var createPlayer = function createPlayer(game, options, onDeath) {
   var defaults = {
     position: {
       x: 4,
@@ -208,9 +208,8 @@ var createPlayer = function createPlayer(game, options) {
         player.isDead = true;
         // knock player on his/her side
         player.scale.setTo(settings.scale.y, settings.scale.x);
-        // TODO: detangle this
-        var checkForGameOver = require('./game.js');
-        checkForGameOver();
+        // TODO: this could probably be better architected
+        onDeath();
       }
     }
   };

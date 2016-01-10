@@ -17,6 +17,9 @@
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
 
+### menu
+* while in menu, run demo with currently selected settings (selected num players duking it out on selected stage, etc.)
+
 ### sound effects
 * make some 16-bit sfx (or build/acquire an FM websynth!) http://www.taktech.org/takm/WebFMSynth/
 * add and make more bgm
