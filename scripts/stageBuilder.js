@@ -36,10 +36,9 @@ var stageBuilder = function stageBuilder(game) {
       var bg;
       if (layer.scrolling) {
         bg = game.add.tileSprite(0, 0, game.width, game.height, layer.image);
-        // need a way to cancel this loop, or maybe just have the same entities on each level and change their texture?
-        /*game.time.events.loop(Phaser.Timer.QUARTER, function() {
+        backgrounds.loop = game.time.events.loop(Phaser.Timer.QUARTER, function() {
           bg.tilePosition.x -=1;
-        }, this);*/
+        }, this);
       } else {
         bg = game.add.sprite(0, 0, layer.image);
       }

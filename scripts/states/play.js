@@ -26,6 +26,7 @@ var Play = function(game) {
       var settings = require('../data/settings');
       var stageBuilder = require('../stageBuilder.js')(game);
 
+      // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
         if (!group) {
           return;
@@ -41,6 +42,10 @@ var Play = function(game) {
       destroyGroup(self.players);
       destroyGroup(self.platforms);
       destroyGroup(self.backgrounds);
+      // TODO: ugh, clean this up!
+      if (self.backgrounds && self.backgrounds.loop) {
+        game.time.events.remove(self.backgrounds.loop);
+      }
       if (self.foreground) {
         self.foreground.destroy();
       }
