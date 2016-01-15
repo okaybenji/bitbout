@@ -12,12 +12,10 @@ var Play = function(game) {
       self.text.setTextBounds(0, 0, game.width, game.height);
       
       // menu
-      // TODO: find a good method of keeping the menu on top. maybe set up a group before the menu and add everything that's not a menu to that group?
       var buildMenu = require('../menu.js');
-      self.menu = buildMenu(game, self.restart.bind(self)); // come up with better way to do this
+      self.menu = buildMenu(game, self.restart.bind(self)); // TODO: come up with better way to let menu restart game
 
       self.restart();
-  
       game.physics.startSystem(Phaser.Physics.ARCADE);
       game.input.gamepad.start();
     },
