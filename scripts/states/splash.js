@@ -18,7 +18,6 @@ var Splash = function(game) {
       game.load.image('yellow', 'images/yellow.png');
       game.load.image('blue', 'images/blue.png');
       game.load.image('orange', 'images/orange.png');
-      //game.load.image('purple', 'images/purple.png');
       game.load.image('green', 'images/green.png');
 
       game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
@@ -40,13 +39,17 @@ var Splash = function(game) {
     },
 
     create: function() {
-      game.input.onDown.addOnce(function() {
+      var startGame = function startGame() {
+        clearTimeout(timeout);
         game.state.start('play');
-      }, this); // start game on mouse click
+      };
       
-      setTimeout(function() {
-        game.state.start('play');
-      }, 200);
+      // start game after a delay...
+      var timeout = setTimeout(startGame, 2000);
+
+      // ...or when start is pressed
+      // TODO: add check for gamepad; display msg that it is req'd if not there
+      game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(startGame);
     }
   };
   

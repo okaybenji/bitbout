@@ -1,7 +1,7 @@
 var buildMenu = function buildMenu(game, restart) {
   var menuOpen = true;
   var itemHeight = 20;
-  var gamepad = game.input.gamepad.pad1; // TODO: add check for gamepad; display msg that it is req'd if not there
+  var gamepad = game.input.gamepad.pad1;
 
   var settings = require('./data/settings.js');
 
