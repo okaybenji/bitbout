@@ -6,6 +6,9 @@ var Players = function(game) {
       position: {
         x: 72, y: 44
       },
+      keys: {
+        up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
+      },
     }, {
       name: 'Yellow',
       color: 'yellow',
@@ -18,23 +21,23 @@ var Players = function(game) {
       name: 'Pink',
       color: 'pink',
       gamepad: game.input.gamepad.pad3,
-      keys: {
-        up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
-      },
       position: {
         x: 72, y: 136
+      },
+      keys: {
+        up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
       },
     }, {
       name: 'Purple',
       color: 'purple',
       gamepad: game.input.gamepad.pad4,
-      keys: {
-        up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
-      },
       position: {
         x: 248, y: 136
       },
       orientation: 'left',
+      keys: {
+        up: 'T', down: 'G', left: 'F', right: 'H', attack: 'R'
+      },
   }];
   
   return players;

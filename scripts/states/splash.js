@@ -47,11 +47,13 @@ var Splash = function(game) {
       };
       
       // start game after a delay...
-      var timeout = setTimeout(startGame, 0); // TODO: increase delay...
+      var timeout = setTimeout(startGame, 100); // TODO: increase delay...
 
-      // ...or when start is pressed
-      // TODO: add check for gamepad; display msg that it is req'd if not there
-      game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
+      // ...or when start/enter is pressed
+      game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
+      if (game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
+        game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
+      }
     }
   };
   

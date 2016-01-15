@@ -142,15 +142,26 @@ var buildMenu = function buildMenu(game, restart) {
   });
   menu.isOpen = true;
 
-  var startButton = gamepad.getButton(Phaser.Gamepad.XBOX360_START);
-  var downButton = gamepad.getButton(Phaser.Gamepad.XBOX360_DPAD_DOWN);
-  var upButton = gamepad.getButton(Phaser.Gamepad.XBOX360_DPAD_UP);
-  var selectButton = gamepad.getButton(Phaser.Gamepad.XBOX360_A);
+  // gamepad controls
+  if (game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
+    var startButton = gamepad.getButton(Phaser.Gamepad.XBOX360_START);
+    var downButton = gamepad.getButton(Phaser.Gamepad.XBOX360_DPAD_DOWN);
+    var upButton = gamepad.getButton(Phaser.Gamepad.XBOX360_DPAD_UP);
+    var selectButton = gamepad.getButton(Phaser.Gamepad.XBOX360_A);
 
-  startButton.onDown.add(toggleMenu);
-  downButton.onDown.add(nextItem);
-  upButton.onDown.add(prevItem);
-  selectButton.onDown.add(activateItem);
+    startButton.onDown.add(toggleMenu);
+    downButton.onDown.add(nextItem);
+    upButton.onDown.add(prevItem);
+    selectButton.onDown.add(activateItem);
+  }
+
+  //keyboard controls
+  // TODO: update menu system to handle RIGHT as activate and LEFT as active in reverse
+  // e.g. left increases player count, right decreases it
+  game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(toggleMenu);
+  game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(nextItem);
+  game.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(prevItem);
+  game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(activateItem);
 
   renderMenu();
   return menu;

@@ -10,7 +10,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       down: 'DOWN',
       left: 'LEFT',
       right: 'RIGHT',
-      attack: 'ENTER'
+      attack: 'SHIFT'
     },
     scale: {
       x: 4,
