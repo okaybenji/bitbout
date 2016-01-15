@@ -41,15 +41,17 @@ var Splash = function(game) {
     create: function() {
       var startGame = function startGame() {
         clearTimeout(timeout);
-        game.state.start('play');
+        if (game.state.current === 'splash') {
+          game.state.start('play');
+        }
       };
       
       // start game after a delay...
-      var timeout = setTimeout(startGame, 2000);
+      var timeout = setTimeout(startGame, 0); // TODO: increase delay...
 
       // ...or when start is pressed
       // TODO: add check for gamepad; display msg that it is req'd if not there
-      game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(startGame);
+      game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
     }
   };
   

@@ -4,6 +4,7 @@ var Play = function(game) {
       var self = this;
 
       self.sfx = require('../sfx.js');
+      self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over message
       var font = require('../data/font.js');
@@ -28,7 +29,6 @@ var Play = function(game) {
       var stageBuilder = require('../stageBuilder.js')(game);
 
       var destroyGroup = function destroyGroup(group) {
-        console.log('destroying group:', group);
         if (!group) {
           return;
         }
@@ -49,11 +49,18 @@ var Play = function(game) {
 
       self.platforms = stageBuilder.buildPlatforms();
       self.backgrounds = stageBuilder.buildBackgrounds();
+      self.subUi.add(self.platforms);
+      self.subUi.add(self.backgrounds);
 
       self.players = game.add.group();
+      self.subUi.add(self.players);
 
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
+          if (self.menu.isOpen) {
+            return; // we're not really playing a game yet :) this has some problems, though...
+          }
+
           var alivePlayers = [];
           self.players.children.forEach(function(player) {
             if (!player.isDead) {
@@ -78,6 +85,7 @@ var Play = function(game) {
       }
 
       self.foreground = stageBuilder.buildForeground();
+      self.subUi.add(self.foreground);
     },
 
     update: function update() {

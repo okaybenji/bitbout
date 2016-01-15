@@ -1,4 +1,3 @@
-// TODO: why is this font still anti-aliased?
-var font = { font: "12px Hellovetica", fill: "#eee", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
+var font = { font: "20px Helvetica", fill: "#ED1C24", align: "center", boundsAlignH: "center", boundsAlignV: "middle" };
 
 module.exports = font;

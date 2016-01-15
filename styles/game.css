@@ -12,8 +12,8 @@
 }
 
 @font-face {
-  font-family: 'Hellovetica';
-  src: url('../fonts/hellovetica.ttf') format('truetype');
+  font-family: 'Helvetica';
+  src: url('../fonts/Helvetica.otf') format('opentype');
 }
 
 /* get font to load for use in phaser */
