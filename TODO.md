@@ -7,7 +7,13 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### titles
-* fix disabling anti-aliasing on text
+* fix disabling anti-aliasing on text (is this a chrome issue?)
+* maybe add a menu color setting to stage data so you can just use #EEE on dark levels and #111 on bright ones
+* make (and use) a cool pixel-y font
+
+### levels
+* make more of these
+* at one point, accidentally put clouds in foreground. the ridges gave a really cool natural temporary hiding fog effect, while the transparency ensured the game would still be playable. make a level like this on purpose!
 
 ### misc
 * allow pressing any key to restart
@@ -15,10 +21,13 @@
 * make a menu
 * add spectators that push players into arena on spawn.
 * add power-ups, like maybe one that does 2x damage (and can knock a player down 2 hearts). these will be tossed in by spectators.
-* credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
-* reach out to pixel artist about doing sprites and animations
+* credit whoever the forum user was who inspired your cloud look
+* reach out to chasm pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
 * consider adding period of invulnerability on spawn like on west prototype (player alpha pulses, player.isCollidable = false)
+
+### graphics
+* can anti-aliasing on clouds be removed? (see *phaser* below)
 
 ### menu
 * while in menu, run demo with currently selected settings (selected num players duking it out on selected stage, etc.)
@@ -31,3 +40,4 @@
 ### phaser
 * there appears to be a bug in phaser's physics.arcade.collide's processCallback; it should pass colliding objects as args 1 and 2 in the same order as collideCallback. logging the objects' positions shows two different (correct) positions in collideCallback, but shows the same positions in processCallback.
 * phaser's worldWrap is sort of broken in that moving a sprite offscreen down or to the right wraps smoothly, 1 pixel at a time, while moving it up or to the left just pops the entire sprite onto the screen at once. (i may have the directions wrong, haven't tested this today and going off memory.)
+* tileSprites get anti-aliased even when other sprites don't

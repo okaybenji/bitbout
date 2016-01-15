@@ -1,14 +1,11 @@
 var buildMenu = function buildMenu(game, restart) {
-  var menuOpen = true;
   var itemHeight = 20;
-  var gamepad = game.input.gamepad.pad1; // TODO: add check for gamepad; display msg that it is req'd if not there
-
+  var gamepad = game.input.gamepad.pad1;
   var settings = require('./data/settings.js');
-
   var fontHighlight = require('./data/font.js');
   var fontNormal = Object.assign({}, fontHighlight, {fill: '#777'});
 
-  var title = game.add.text(0, -itemHeight, 'Options', fontHighlight);
+  var title = game.add.text(0, -itemHeight, 'OPTIONS', fontHighlight);
   title.setTextBounds(0, 0, game.width, game.height);
 
   var selectFirstItem = function selectFirstItem() {
@@ -32,7 +29,7 @@ var buildMenu = function buildMenu(game, restart) {
 
   var toggleMenu = function toggleMenu() {
     menu.forEach(function(item) {
-      if (menuOpen) {
+      if (menu.isOpen) {
         item.text.visible = false;
       } else {
         item.text.visible = true;
@@ -40,7 +37,7 @@ var buildMenu = function buildMenu(game, restart) {
       }
     });
 
-    title.visible = menuOpen = !menuOpen;
+    title.visible = menu.isOpen = !menu.isOpen;
   };
 
   var getSelectedIndex = function getSelectedIndex() {
@@ -88,7 +85,7 @@ var buildMenu = function buildMenu(game, restart) {
   };
 
   var activateItem = function activateItem() {
-    if (!menuOpen) {
+    if (!menu.isOpen) {
       return;
     }
 
@@ -143,6 +140,7 @@ var buildMenu = function buildMenu(game, restart) {
     item.text.setTextBounds(0, i * itemHeight, game.width, game.height);
     return item;
   });
+  menu.isOpen = true;
 
   var startButton = gamepad.getButton(Phaser.Gamepad.XBOX360_START);
   var downButton = gamepad.getButton(Phaser.Gamepad.XBOX360_DPAD_DOWN);

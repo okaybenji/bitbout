@@ -15,6 +15,7 @@ var main = {
     // prevent game pausing when it loses focus
     game.stage.disableVisibilityChange = true;
     
+    // assets used in splash screen intro animation
     game.load.image('purple', 'images/purple.png');
   },
 

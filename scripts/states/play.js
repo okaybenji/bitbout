@@ -1,20 +1,10 @@
 var Play = function(game) {
   var play = {
-    preload: function preload() {
-
-    },
-
     create: function create() {
       var self = this;
-      
-      game.physics.startSystem(Phaser.Physics.ARCADE);
-
-      var buildPlatforms = require('../map.js');
-      self.platforms = buildPlatforms(game);
 
       self.sfx = require('../sfx.js');
-
-      game.input.gamepad.start();
+      self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over message
       var font = require('../data/font.js');
@@ -23,25 +13,57 @@ var Play = function(game) {
       
       // menu
       var buildMenu = require('../menu.js');
-      self.menu = buildMenu(game, self.restart.bind(self)); // come up with better way to do this
+      self.menu = buildMenu(game, self.restart.bind(self)); // TODO: come up with better way to let menu restart game
 
-      self.players = game.add.group();
       self.restart();
+      game.physics.startSystem(Phaser.Physics.ARCADE);
+      game.input.gamepad.start();
     },
 
     restart: function restart() {
       var self = this;
       var players = require('../data/players.js')(game);
       var settings = require('../data/settings');
-      
-      self.text.visible = false;
+      var stageBuilder = require('../stageBuilder.js')(game);
 
-      while (self.players.children.length > 0) {
-        self.players.children[0].destroy();
+      // destroy and rebuild stage and players
+      var destroyGroup = function destroyGroup(group) {
+        if (!group) {
+          return;
+        }
+
+        while (group.children.length > 0) {
+          group.children[0].destroy();
+        }
+
+        group.destroy();
       }
-      
+
+      destroyGroup(self.players);
+      destroyGroup(self.platforms);
+      destroyGroup(self.backgrounds);
+      // TODO: ugh, clean this up!
+      if (self.backgrounds && self.backgrounds.loop) {
+        game.time.events.remove(self.backgrounds.loop);
+      }
+      if (self.foreground) {
+        self.foreground.destroy();
+      }
+
+      self.platforms = stageBuilder.buildPlatforms();
+      self.backgrounds = stageBuilder.buildBackgrounds();
+      self.subUi.add(self.platforms);
+      self.subUi.add(self.backgrounds);
+
+      self.players = game.add.group();
+      self.subUi.add(self.players);
+
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
+          if (self.menu.isOpen) {
+            return; // we're not really playing a game yet :) this has some problems, though...
+          }
+
           var alivePlayers = [];
           self.players.children.forEach(function(player) {
             if (!player.isDead) {
@@ -64,6 +86,9 @@ var Play = function(game) {
       for (var i=0; i<settings.playerCount.selected; i++) {
         addPlayer(players[i]);
       }
+
+      self.foreground = stageBuilder.buildForeground();
+      self.subUi.add(self.foreground);
     },
 
     update: function update() {
