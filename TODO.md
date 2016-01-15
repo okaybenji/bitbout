@@ -7,7 +7,9 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### titles
-* fix disabling anti-aliasing on text
+* fix disabling anti-aliasing on text (is this a chrome issue?)
+* maybe add a menu color setting to stage data so you can just use #EEE on dark levels and #111 on bright ones
+* make (and use) a cool pixel-y font
 
 ### levels
 * make more of these
@@ -19,7 +21,6 @@
 * make a menu
 * add spectators that push players into arena on spawn.
 * add power-ups, like maybe one that does 2x damage (and can knock a player down 2 hearts). these will be tossed in by spectators.
-* credit cal henderson for the hellovetica font from http://www.iamcal.com/misc/fonts/
 * credit whoever the forum user was who inspired your cloud look
 * reach out to chasm pixel artist about doing sprites and animations
 * program animations for 2-4 players upon spawning to auto-run to random starting platforms
