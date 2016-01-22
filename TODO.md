@@ -31,7 +31,7 @@
 * while in menu, run demo with currently selected settings (selected num players duking it out on selected stage, etc.)
 
 ### music
-* figure out how to handle loading... at least have a loading screen. maybe load music tracks in BG after game starts?
+* figure out how to handle loading... at least have a loading screen. maybe load music tracks in BG after game starts? (or just implement MIDI and use a synth to generate the music in real-time! then you'll have like 0 load-time.)
 * add/make more bgm
 
 ### sound effects
