@@ -20,6 +20,17 @@ var Play = function(game) {
       game.input.gamepad.start();
     },
 
+    resetMusic: function(settings) {
+      // play music
+      if (this.music) {
+        this.music.stop();
+      }
+      if (settings.bgm.selected !== 'None') {
+        this.music = game.add.audio(settings.bgm.selected);
+        this.music.loopFull();
+      }
+    },
+
     restart: function restart() {
       var self = this;
       var players = require('../data/players.js')(game);
@@ -28,14 +39,7 @@ var Play = function(game) {
       var stageBuilder = require('../stageBuilder.js')(game);
       var stage = utils.getStage();
 
-      // play music
-      if (self.music) {
-        self.music.stop();
-      }
-      if (settings.bgm.selected !== 'None') {
-        self.music = game.add.audio(settings.bgm.selected);
-        self.music.loopFull();
-      }
+      self.resetMusic(settings);
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
@@ -53,6 +57,7 @@ var Play = function(game) {
       destroyGroup(self.players);
       destroyGroup(self.platforms);
       destroyGroup(self.backgrounds);
+
       // TODO: ugh, clean this up!
       if (self.backgrounds && self.backgrounds.loop) {
         game.time.events.remove(self.backgrounds.loop);
