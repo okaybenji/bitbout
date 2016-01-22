@@ -31,7 +31,7 @@ var stages = [{
   name: 'Atari B',
   backgroundColor: '#000',
   platforms: {
-    positions: [[12, 172], [60, 172], [108, 172], [156, 172], [204, 172], [252, 172], [260, 172]], // had a little hole here... better check the math on the platform widths/locations
+    positions: [[12, 172], [60, 172], [108, 172], [156, 172], [204, 172], [252, 172], [260, 172]], // TODO: had a little hole here... better check the math on the platform widths/locations
     color: 'green'
   },
   backgrounds: [],

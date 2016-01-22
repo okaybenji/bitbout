@@ -4,10 +4,9 @@ var buildMenu = function buildMenu(game, restart) {
   var utils = require('./utils.js');
   var settings = require('./data/settings.js');
   var font = require('./data/font.js');
-  var fontHighlight = Object.assign({}, font, {fill: utils.getStage().uiColor});
   var fontNormal = Object.assign({}, font, {fill: '#777'});
 
-  var title = game.add.text(0, -itemHeight, 'OPTIONS', fontHighlight);
+  var title = game.add.text(0, -itemHeight, 'OPTIONS', font);
   title.setTextBounds(0, 0, game.width, game.height);
 
   var selectFirstItem = function selectFirstItem() {
@@ -96,7 +95,7 @@ var buildMenu = function buildMenu(game, restart) {
   };
 
   var renderMenu = function renderMenu() {
-    fontHighlight = Object.assign({}, font, {fill: utils.getStage().uiColor});
+    var fontHighlight = Object.assign({}, font, {fill: utils.getStage().uiColor});
     title.setStyle(fontHighlight);
     menu.forEach(function(item) {
       if (item.selected) {
