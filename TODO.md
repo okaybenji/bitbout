@@ -16,9 +16,7 @@
 * at one point, accidentally put clouds in foreground. the ridges gave a really cool natural temporary hiding fog effect, while the transparency ensured the game would still be playable. make a level like this on purpose!
 
 ### misc
-* allow pressing any key to restart
 * fix positioning of hearts when health not full
-* make a menu
 * add spectators that push players into arena on spawn.
 * add power-ups, like maybe one that does 2x damage (and can knock a player down 2 hearts). these will be tossed in by spectators.
 * credit whoever the forum user was who inspired your cloud look
@@ -34,7 +32,7 @@
 
 ### sound effects
 * make some 16-bit sfx (or build/acquire an FM websynth!) http://www.taktech.org/takm/WebFMSynth/
-* add and make more bgm
+* add/make more bgm
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser

@@ -82,6 +82,7 @@ var Play = function(game) {
           if (alivePlayers.length === 1) {
             self.text.setText(alivePlayers[0] + '  wins!\nPress start');
             self.text.visible = true;
+            // TODO: accept keyboard input as well
             game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(function() {
               self.text.visible = false; // just hides text (menu will open itself)
             });
