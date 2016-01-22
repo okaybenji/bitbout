@@ -6,7 +6,7 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['A', 'B', 'None'],
+    options: ['A', 'None'],
     selected: 'None',
   },
   stage: {
