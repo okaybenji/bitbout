@@ -16,6 +16,7 @@
 * at one point, accidentally put clouds in foreground. the ridges gave a really cool natural temporary hiding fog effect, while the transparency ensured the game would still be playable. make a level like this on purpose!
 
 ### misc
+* add groups for background, player, and foreground layers so that players and stage can be changed independently.
 * fix positioning of hearts when health not full
 * add spectators that push players into arena on spawn.
 * add power-ups, like maybe one that does 2x damage (and can knock a player down 2 hearts). these will be tossed in by spectators.

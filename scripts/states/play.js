@@ -13,7 +13,7 @@ var Play = function(game) {
       
       // menu
       var buildMenu = require('../menu.js');
-      self.menu = buildMenu(game, self.restart.bind(self)); // TODO: come up with better way to let menu restart game
+      self.menu = buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
 
       self.restart();
       game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -38,8 +38,6 @@ var Play = function(game) {
       var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
       var stage = utils.getStage();
-
-      self.resetMusic(settings);
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
