@@ -24,6 +24,7 @@ var Play = function(game) {
       var self = this;
       var players = require('../data/players.js')(game);
       var settings = require('../data/settings');
+      var stages = require('../data/stages');
       var stageBuilder = require('../stageBuilder.js')(game);
 
       // play music
@@ -74,7 +75,7 @@ var Play = function(game) {
           }
 
           var alivePlayers = [];
-          self.players.children.forEach(function(player) {
+          self.players.children.forEach(function(player, i) {
             if (!player.isDead) {
               alivePlayers.push(player.name);
             }
@@ -89,12 +90,16 @@ var Play = function(game) {
           }
         };
         var createPlayer = require('../player.js');
-        self.players.add(createPlayer(game, player, checkForGameOver));
+        var newPlayer = self.players.add(createPlayer(game, player, checkForGameOver));
+        var stage = stages.filter(function(stage) {
+          return stage.name === settings.stage.selected;
+        })[0];
+        newPlayer.position = stage.spawnPoints[i];
       };
 
       //players.forEach(addPlayer);
       for (var i=0; i<settings.playerCount.selected; i++) {
-        addPlayer(players[i]);
+        addPlayer(players[i], i);
       }
 
       self.foreground = stageBuilder.buildForeground();
