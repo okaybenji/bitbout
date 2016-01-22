@@ -30,9 +30,12 @@
 ### menu
 * while in menu, run demo with currently selected settings (selected num players duking it out on selected stage, etc.)
 
+### music
+* figure out how to handle loading... at least have a loading screen. maybe load music tracks in BG after game starts?
+* add/make more bgm
+
 ### sound effects
 * make some 16-bit sfx (or build/acquire an FM websynth!) http://www.taktech.org/takm/WebFMSynth/
-* add/make more bgm
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
 ### phaser

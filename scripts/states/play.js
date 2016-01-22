@@ -26,6 +26,7 @@ var Play = function(game) {
       var settings = require('../data/settings');
       var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
+      var stage = utils.getStage();
 
       // play music
       if (self.music) {
@@ -81,6 +82,8 @@ var Play = function(game) {
             }
           });
           if (alivePlayers.length === 1) {
+            var font = Object.assign({}, require('../data/font.js'), {fill: stage.uiColor});
+            self.text.setStyle(font);
             self.text.setText(alivePlayers[0] + '  wins!\nPress start');
             self.text.visible = true;
             // TODO: accept keyboard input as well
@@ -91,7 +94,7 @@ var Play = function(game) {
         };
         var createPlayer = require('../player.js');
         var newPlayer = self.players.add(createPlayer(game, player, checkForGameOver));
-        var pos = utils.getStage().spawnPoints[i];
+        var pos = stage.spawnPoints[i];
         newPlayer.position.x = pos.x;
         newPlayer.position.y = pos.y;
       };

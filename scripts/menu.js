@@ -4,7 +4,6 @@ var buildMenu = function buildMenu(game, restart) {
   var utils = require('./utils.js');
   var settings = require('./data/settings.js');
   var font = require('./data/font.js');
-  var fontNormal = Object.assign({}, font, {fill: '#777'});
 
   var title = game.add.text(0, -itemHeight, 'OPTIONS', font);
   title.setTextBounds(0, 0, game.width, game.height);
@@ -101,7 +100,7 @@ var buildMenu = function buildMenu(game, restart) {
       if (item.selected) {
         item.text.setStyle(fontHighlight);
       } else {
-        item.text.setStyle(fontNormal);
+        item.text.setStyle(font);
       }
       var text = item.name + (item.setting ? ': ' + item.setting.selected.toString() : '');
       item.text.setText(text);
