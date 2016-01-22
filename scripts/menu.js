@@ -1,11 +1,12 @@
 var buildMenu = function buildMenu(game, restart) {
   var itemHeight = 20;
   var gamepad = game.input.gamepad.pad1;
+  var utils = require('./utils.js');
   var settings = require('./data/settings.js');
-  var fontHighlight = require('./data/font.js');
-  var fontNormal = Object.assign({}, fontHighlight, {fill: '#777'});
+  var font = require('./data/font.js');
+  var fontNormal = Object.assign({}, font, {fill: '#777'});
 
-  var title = game.add.text(0, -itemHeight, 'OPTIONS', fontHighlight);
+  var title = game.add.text(0, -itemHeight, 'OPTIONS', font);
   title.setTextBounds(0, 0, game.width, game.height);
 
   var selectFirstItem = function selectFirstItem() {
@@ -94,13 +95,15 @@ var buildMenu = function buildMenu(game, restart) {
   };
 
   var renderMenu = function renderMenu() {
+    var fontHighlight = Object.assign({}, font, {fill: utils.getStage().uiColor});
+    title.setStyle(fontHighlight);
     menu.forEach(function(item) {
       if (item.selected) {
         item.text.setStyle(fontHighlight);
       } else {
         item.text.setStyle(fontNormal);
       }
-      var text = item.name + (item.setting ? ': ' + item.setting.selected.toString() : ''); // TODO: why won't this display numeric settings?
+      var text = item.name + (item.setting ? ': ' + item.setting.selected.toString() : '');
       item.text.setText(text);
     });
   };

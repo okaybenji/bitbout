@@ -24,6 +24,7 @@ var Play = function(game) {
       var self = this;
       var players = require('../data/players.js')(game);
       var settings = require('../data/settings');
+      var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
 
       // play music
@@ -74,7 +75,7 @@ var Play = function(game) {
           }
 
           var alivePlayers = [];
-          self.players.children.forEach(function(player) {
+          self.players.children.forEach(function(player, i) {
             if (!player.isDead) {
               alivePlayers.push(player.name);
             }
@@ -82,18 +83,22 @@ var Play = function(game) {
           if (alivePlayers.length === 1) {
             self.text.setText(alivePlayers[0] + '  wins!\nPress start');
             self.text.visible = true;
+            // TODO: accept keyboard input as well
             game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(function() {
               self.text.visible = false; // just hides text (menu will open itself)
             });
           }
         };
         var createPlayer = require('../player.js');
-        self.players.add(createPlayer(game, player, checkForGameOver));
+        var newPlayer = self.players.add(createPlayer(game, player, checkForGameOver));
+        var pos = utils.getStage().spawnPoints[i];
+        newPlayer.position.x = pos.x;
+        newPlayer.position.y = pos.y;
       };
 
       //players.forEach(addPlayer);
       for (var i=0; i<settings.playerCount.selected; i++) {
-        addPlayer(players[i]);
+        addPlayer(players[i], i);
       }
 
       self.foreground = stageBuilder.buildForeground();

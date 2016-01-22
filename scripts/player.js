@@ -1,9 +1,5 @@
 var createPlayer = function createPlayer(game, options, onDeath) {
   var defaults = {
-    position: {
-      x: 4,
-      y: 8
-    },
     orientation: 'right',
     keys: {
       up: 'UP',
@@ -214,7 +210,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     }
   };
 
-  var player = game.add.sprite(settings.position.x, settings.position.y, settings.color);
+  var player = game.add.sprite(0, 0, settings.color);
   player.name = settings.name;
   player.orientation = settings.orientation;
   player.scale.setTo(settings.scale.x, settings.scale.y); // TODO: add giant mode
