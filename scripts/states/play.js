@@ -26,6 +26,15 @@ var Play = function(game) {
       var settings = require('../data/settings');
       var stageBuilder = require('../stageBuilder.js')(game);
 
+      // play music
+      if (self.music) {
+        self.music.stop();
+      }
+      if (settings.bgm.selected !== 'None') {
+        self.music = game.add.audio(settings.bgm.selected);
+        self.music.loopFull();
+      }
+
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
         if (!group) {
