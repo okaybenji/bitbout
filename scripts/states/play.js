@@ -24,7 +24,7 @@ var Play = function(game) {
       var self = this;
       var players = require('../data/players.js')(game);
       var settings = require('../data/settings');
-      var stages = require('../data/stages');
+      var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
 
       // play music
@@ -91,10 +91,9 @@ var Play = function(game) {
         };
         var createPlayer = require('../player.js');
         var newPlayer = self.players.add(createPlayer(game, player, checkForGameOver));
-        var stage = stages.filter(function(stage) {
-          return stage.name === settings.stage.selected;
-        })[0];
-        newPlayer.position = stage.spawnPoints[i];
+        var pos = utils.getStage().spawnPoints[i];
+        newPlayer.position.x = pos.x;
+        newPlayer.position.y = pos.y;
       };
 
       //players.forEach(addPlayer);

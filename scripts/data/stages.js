@@ -15,6 +15,7 @@ var stages = [{
   }],
   foreground: 'foreground',
   spawnPoints: [{x: 72, y: 44}, {x: 242, y: 44}, {x: 72, y: 136}, {x: 242, y: 136}],
+  uiColor: '#D66122'
 }, {
   name: 'Atari A',
   backgroundColor: '#000',
@@ -25,6 +26,7 @@ var stages = [{
   backgrounds: [],
   foreground: 'clear',
   spawnPoints: [{x: 72, y: 44}, {x: 242, y: 44}, {x: 44, y: 88}, {x: 272, y: 88}],
+  uiColor: '#EEE'
 }, {
   name: 'Atari B',
   backgroundColor: '#000',
@@ -35,6 +37,7 @@ var stages = [{
   backgrounds: [],
   foreground: 'clear',
   spawnPoints: [{x: 48, y: 144}, {x: 96, y: 144}, {x: 204, y: 144}, {x: 252, y: 144}],
+  uiColor: '#EEE'
 }];
 
 module.exports = stages;

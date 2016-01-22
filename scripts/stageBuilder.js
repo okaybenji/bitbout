@@ -1,9 +1,7 @@
 var stageBuilder = function stageBuilder(game) {
   var settings = require('./data/settings.js');
-  var stages = require('./data/stages.js');
-  var stage = stages.filter(function(stage) {
-    return stage.name === settings.stage.selected;
-  })[0];
+  var utils = require('./utils.js');
+  var stage = utils.getStage();
 
   game.stage.backgroundColor = stage.backgroundColor;
 
