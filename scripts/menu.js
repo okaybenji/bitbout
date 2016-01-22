@@ -1,4 +1,4 @@
-var buildMenu = function buildMenu(game, restart) {
+var buildMenu = function buildMenu(game, state) {
   var itemHeight = 20;
   var gamepad = game.input.gamepad.pad1;
   var utils = require('./utils.js');
@@ -115,26 +115,34 @@ var buildMenu = function buildMenu(game, restart) {
     }
     this.setting.selected = this.setting.options[optionIndex];
     renderMenu();
-    restart();
   };
 
   var menu = [{
     name: 'Players',
     setting: settings.playerCount,
-    action: cycleSetting,
+    action: function() {
+      cycleSetting.call(this);
+      state.restart();
+    },
     selected: true
   }, {
     name: 'BGM',
     setting: settings.bgm,
-    action: cycleSetting
+    action: function() {
+      cycleSetting.call(this);
+      state.resetMusic(settings);
+    },
   }, {
     name: 'Stage',
     setting: settings.stage,
-    action: cycleSetting
+    action: function() {
+      cycleSetting.call(this);
+      state.restart();
+    },
   }, {
     name: 'Start',
     action: function() {
-      restart();
+      state.restart();
       toggleMenu();
     }
   }].map(function(item, i) {
