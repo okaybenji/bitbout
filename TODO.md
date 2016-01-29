@@ -8,7 +8,6 @@
 
 ### titles
 * fix disabling anti-aliasing on text (is this a chrome issue?)
-* maybe add a menu color setting to stage data so you can just use #EEE on dark levels and #111 on bright ones
 * make (and use) a cool pixel-y font
 
 ### levels
@@ -16,6 +15,7 @@
 * at one point, accidentally put clouds in foreground. the ridges gave a really cool natural temporary hiding fog effect, while the transparency ensured the game would still be playable. make a level like this on purpose!
 
 ### misc
+* consider requiring everything in one place and using dependency injection everywhere else
 * add groups for background, player, and foreground layers so that players and stage can be changed independently.
 * fix positioning of hearts when health not full
 * add spectators that push players into arena on spawn.
@@ -32,7 +32,7 @@
 * while in menu, run demo with currently selected settings (selected num players duking it out on selected stage, etc.)
 
 ### music
-* figure out how to handle loading... at least have a loading screen. maybe load music tracks in BG after game starts? (or just implement MIDI and use a synth to generate the music in real-time! then you'll have like 0 load-time.)
+* figure out how to handle loading... at least have a loading screen. maybe load music tracks in BG after game starts? or stream the audio? (or just implement MIDI and use a synth to generate the music in real-time! then you'll have like 0 load-time.)
 * add/make more bgm
 
 ### sound effects
