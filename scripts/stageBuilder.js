@@ -12,15 +12,15 @@ var stageBuilder = function stageBuilder(game) {
     var platformPositions = stage.platforms.positions;
     platformPositions.forEach(function(position) {
       var platform = platforms.create(position[0], position[1], stage.platforms.color);
-      platform.scale.setTo(24, 4);
+      platform.scale.setTo(5, 1);
       platform.body.immovable = true;
     });
 
     var walls = [];
-    walls.push(platforms.create(-16, 32, stage.platforms.color));
-    walls.push(platforms.create(304, 32, stage.platforms.color));
+    walls.push(platforms.create(-3, 6, stage.platforms.color));
+    walls.push(platforms.create(61, 6, stage.platforms.color));
     walls.forEach(function(wall) {
-      wall.scale.setTo(16, 74);
+      wall.scale.setTo(3, 15);
       wall.body.immovable = true;
     });
     

@@ -1,3 +1,51 @@
+/**
+ * Creates a deep copy of an array (for non-destructive manipulation).
+ */
+var copyArray = function(array) {
+  if (!Array.isArray(array)) {
+    return array;
+  }
+
+  var copy = array.slice(0);
+  for (var i=0, ii=copy.length; i<ii; i++) {
+    copy[i] = copyArray(copy[i]);
+  }
+
+  return copy;
+};
+
+/**
+ * Applies passed function to passed number or all numbers in passed array or object's properties.
+ * Non-destructive. Returns new value.
+ * @param {Mixed} x object, array, or number e.g. allPays
+ * @param {Function} ftn
+ * @return {Mixed} processed object, array, or number
+ */
+var applyMath = function(x, ftn) {
+  var a; // this will hold copy of x prevent side effects
+
+  if (typeof x === 'number') {
+    a = x;
+    a = ftn(a);
+  } else if (Array.isArray(x)) { // since arrays are objects, too
+    a = copyArray(x);
+    a = a.map(function(y) {
+      return applyMath(y, ftn);
+    });
+  } else if (typeof x === 'object') {
+    a = Object.assign({}, x);
+    for (var key in a) {
+      if (a.hasOwnProperty(key)) {
+        a[key] = applyMath(a[key], ftn);
+      }
+    }
+  } else {
+    return x;
+  }
+
+  return a;
+};
+
 var stages = [{
   name: 'Alpha C',
   backgroundColor: '#4DD8FF',
@@ -39,5 +87,12 @@ var stages = [{
   spawnPoints: [{x: 48, y: 144}, {x: 96, y: 144}, {x: 204, y: 144}, {x: 252, y: 144}],
   uiColor: '#28F129'
 }];
+
+stages = applyMath(stages, function(x) {
+  return Math.round(x / 5);
+});
+
+//var fs = require('fs');
+//fs.writeFile('./stages.json', JSON.stringify(stages, null, 2), function (err) {});
 
 module.exports = stages;

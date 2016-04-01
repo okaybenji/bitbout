@@ -1,5 +1,5 @@
 var buildMenu = function buildMenu(game, state) {
-  var itemHeight = 20;
+  var itemHeight = 8;
   var gamepad = game.input.gamepad.pad1;
   var utils = require('./utils.js');
   var settings = require('./data/settings.js');

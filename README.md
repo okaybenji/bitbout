@@ -7,6 +7,9 @@ Written with [Phaser](http://github.com/photonstorm/phaser), with [Subpoly](http
 2. Build with **`npm run build`** or auto-build when scripts change with **`npm run watch`**
 
 ## Game Controls
+
+Supports **PS4** DualShock 4 and **Xbox One** controllers!
+
 **Orange**: Gamepad 1, or move with `W S A D` and attack with `Q`<br>
 **Yellow**: Gamepad 2, or move with `UP DOWN LEFT RIGHT` and attack with `SHIFT`<br>
 **Pink**: Gamepad 3, or move with `I K J L` and attack with `U`<br>

@@ -29,7 +29,7 @@ var main = {
   }
 };
 
-var game = new Phaser.Game(320, 180, Phaser.AUTO, 'game', {
+var game = new Phaser.Game(64, 64, Phaser.AUTO, 'game', {
   preload: main.preload,
   create: main.create
 }, false, false); // disable anti-aliasing

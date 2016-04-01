@@ -9,8 +9,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       attack: 'SHIFT'
     },
     scale: {
-      x: 4,
-      y: 8
+      x: 1,
+      y: 2
     },
     color: 'pink',
     gamepad: game.input.gamepad.pad1,
