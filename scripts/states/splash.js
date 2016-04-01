@@ -1,13 +1,7 @@
 var Splash = function(game) {
   var splash = {
     init: function() {
-      var sfx = require('../sfx.js');
-
-      // intro animation
-      sfx.jump();
-      var dude = game.add.sprite(game.world.centerX, 100, 'purple');
-      dude.scale.setTo(8, 16);
-      game.add.tween(dude).to({y: 0}, 200, 'Linear').start();
+      // TODO: intro animation
     },
 
     preload: function() {
@@ -21,21 +15,6 @@ var Splash = function(game) {
       game.load.image('green', 'images/green.png');
 
       game.load.spritesheet('hearts', 'images/hearts.png', 9, 5); // player health
-
-      // TODO: why doesn't this load images for me?
-      var stages = require('../data/stages.js');
-      /*stages.forEach(function(stage) {
-        var images = [].concat(stage.assets.background, stage.assets.foreground, stage.assets.scrolling);
-        console.log('images:', images);
-        images.forEach(function(image) {
-          game.load.image(image.name, 'images/' + image.name + '.png');
-        });
-      });*/
-
-      game.load.image('ground', 'images/ground.png');
-      game.load.image('foreground', 'images/foreground.png');
-      game.load.image('clouds', 'images/clouds.png');
-      game.load.image('suns', 'images/suns.png');
     },
 
     create: function() {
@@ -47,13 +26,13 @@ var Splash = function(game) {
       };
       
       // start game after a delay...
-      var timeout = setTimeout(startGame, 100); // TODO: increase delay...
+      var timeout = setTimeout(startGame, 0); // TODO: increase delay...
 
       // ...or when start/enter is pressed
-      game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
+      /*game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
       if (game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
         game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
-      }
+      }*/
     }
   };
   

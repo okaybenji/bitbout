@@ -28,6 +28,10 @@ var utils = {
     })[0];
     return stage;
   },
+
+  getRandomArrayElement: function(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  },
 };
 
 module.exports = utils;

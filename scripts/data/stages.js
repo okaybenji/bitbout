@@ -1,6 +1,6 @@
 var stages = [{
-  "name": "Alpha C",
-  "backgroundColor": "#4DD8FF",
+  "name": "A",
+  "backgroundColor": "#000",
   "platforms": {
     "positions": [
       [10, 13],
@@ -9,25 +9,20 @@ var stages = [{
       [10, 31],
       [45, 31]
     ],
-    "color": "clear"
+    "color": "green"
   },
-  "backgrounds": [
-    { "image": "suns" },
-    { "image": "clouds",
-      "scrolling": true },
-    { "image": "ground" }
-  ],
-  "foreground": "foreground",
+  "backgrounds": [],
+  "foreground": "clear",
   "spawnPoints": [
     { "x": 14, "y": 9 },
     { "x": 48, "y": 9 },
     { "x": 14, "y": 27 },
     { "x": 48, "y": 27 }
   ],
-  "uiColor": "#D66122"
+  "uiColor": "#28F129"
 },
 {
-  "name": "Atari A",
+  "name": "B",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -53,7 +48,7 @@ var stages = [{
   "uiColor": "#28D6F1"
 },
 {
-  "name": "Atari B",
+  "name": "C",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [

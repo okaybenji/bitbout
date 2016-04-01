@@ -191,11 +191,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         actions.endAttack();
         player.lastAttacked = 0;
 
-        var respawnPosition = {
-          x: Math.random() > 0.5 ? 1 : 61,
-          y: 1
-        };
-
+        var utils = require('./utils');
+        var respawnPosition = utils.getRandomArrayElement(utils.getStage().spawnPoints);
         player.position.x = respawnPosition.x;
         player.position.y = respawnPosition.y;
         player.body.velocity.x = 0;

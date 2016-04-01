@@ -39,9 +39,27 @@ var buildMenu = function buildMenu(game, state) {
     }
   }];
 
-  game.input.keyboard.addKey(Phaser.Keyboard.P).onDown.add(menu[0].action.bind(menu[0]));
-  game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(menu[1].action.bind(menu[1]));
-  game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(menu[2].action.bind(menu[2]));
+  var changePlayerCount = menu[0].action.bind(menu[0]);
+  var changeStage = menu[1].action.bind(menu[1]);
+  var restart = menu[2].action.bind(menu[2]);
+
+  game.input.keyboard.addKey(Phaser.Keyboard.P).onDown.add(changePlayerCount);
+  game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(changeStage);
+  game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(restart);
+  if (game.input.gamepad.supported && game.input.gamepad.active) {
+    if (game.input.gamepad.pad1.connected) {
+      game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
+    }
+    if (game.input.gamepad.pad2.connected) {
+      game.input.gamepad.pad2.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
+    }
+    if (game.input.gamepad.pad3.connected) {
+      game.input.gamepad.pad3.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
+    }
+    if (game.input.gamepad.pad4.connected) {
+      game.input.gamepad.pad4.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
+    }
+  }
 
   return menu;
 };
