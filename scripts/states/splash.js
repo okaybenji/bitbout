@@ -36,9 +36,6 @@ var Splash = function(game) {
       game.load.image('foreground', 'images/foreground.png');
       game.load.image('clouds', 'images/clouds.png');
       game.load.image('suns', 'images/suns.png');
-
-      // music
-      game.load.audio('A', ['music/loop.m4a']);
     },
 
     create: function() {

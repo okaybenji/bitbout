@@ -13,7 +13,7 @@ var Play = function(game) {
       
       // menu
       var buildMenu = require('../menu.js');
-      self.menu = buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
+      buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
 
       self.restart();
       game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -74,10 +74,6 @@ var Play = function(game) {
 
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
-          if (self.menu.isOpen) {
-            return; // we're not really playing a game yet :) this has some problems, though...
-          }
-
           var alivePlayers = [];
           self.players.children.forEach(function(player, i) {
             if (!player.isDead) {
@@ -87,12 +83,12 @@ var Play = function(game) {
           if (alivePlayers.length === 1) {
             var font = Object.assign({}, require('../data/font.js'), {fill: stage.uiColor});
             self.text.setStyle(font);
-            self.text.setText(alivePlayers[0] + '  wins!\nPress start');
+            self.text.setText(alivePlayers[0] + '  wins!\n');
             self.text.visible = true;
-            // TODO: accept keyboard input as well
-            game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(function() {
-              self.text.visible = false; // just hides text (menu will open itself)
-            });
+            setTimeout(function() {
+              self.text.visible = false;
+              self.restart();
+            }, 3000);
           }
         };
         var createPlayer = require('../player.js');
