@@ -134,7 +134,7 @@ var Play = function(game) {
         function bounce() {
           self.sfx.bounce();
 
-          var bounceVelocity = 100;
+          var bounceVelocity = 50;
           var velocityA, velocityB;
           velocityA = velocityB = bounceVelocity;
           if (playerA.position.x > playerB.position.x) {
@@ -161,12 +161,12 @@ var Play = function(game) {
             playerToLeave = playerB;
           }
           temporarilyDisableCollision(playerToFling);
-          var flingXVelocity = 150;
+          var flingXVelocity = 75;
           if (playerToFling.position.x > playerToLeave.position.x) {
             flingXVelocity *= -1;
           }
           playerToFling.body.velocity.x = flingXVelocity;
-          playerToFling.body.velocity.y = -150;
+          playerToFling.body.velocity.y = -75;
         }
 
         function pop() {
@@ -179,7 +179,7 @@ var Play = function(game) {
             playerToPop = playerA;
           }
           temporarilyDisableCollision(playerToPop);
-          playerToPop.body.velocity.y = -150;
+          playerToPop.body.velocity.y = -75;
         }
 
         var bothRolling = playerA.isRolling && playerB.isRolling;

@@ -34,7 +34,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     attack: function attack() {
       var duration = 200;
       var interval = 400;
-      var velocity = 200;
+      var velocity = 100;
 
       var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isDead;
       if (!canAttack) {
@@ -67,7 +67,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     run: function run(direction) {
-      var maxSpeed = 64;
+      var maxSpeed = 32;
       var acceleration = player.body.touching.down ? 8 : 3; // players have less control in the air
       player.orientation = direction;
 
@@ -107,16 +107,16 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
     jump: function jump() {
       if (player.body.touching.down) {
-        player.body.velocity.y = -200;
+        player.body.velocity.y = -100;
         sfx.jump();
       // wall jumps
       } else if (player.body.touching.left) {
-        player.body.velocity.y = -240;
-        player.body.velocity.x = 90;
+        player.body.velocity.y = -120;
+        player.body.velocity.x = 45;
         sfx.jump();
       } else if (player.body.touching.right) {
-        player.body.velocity.y = -240;
-        player.body.velocity.x = -90;
+        player.body.velocity.y = -120;
+        player.body.velocity.x = -45;
         sfx.jump();
       }
     },
@@ -142,7 +142,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.isDucking = true;
 
       (function roll() {
-        var canRoll = Math.abs(player.body.velocity.x) > 50 && player.body.touching.down;
+        var canRoll = Math.abs(player.body.velocity.x) > 25 && player.body.touching.down;
         if (canRoll) {
           player.isRolling = true;
         }
@@ -192,8 +192,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.lastAttacked = 0;
 
         var respawnPosition = {
-          x: Math.random() > 0.5 ? 4 : 306,
-          y: 8
+          x: Math.random() > 0.5 ? 1 : 61,
+          y: 1
         };
 
         player.position.x = respawnPosition.x;
@@ -243,7 +243,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
     // kill player if he falls off the screen
-    if (player.position.y > 180 && player.hp !== 0) { // TODO: how to access native height from game.js?
+    if (player.position.y > 64 && player.hp !== 0) { // TODO: how to access native height from game.js?
       actions.takeDamage(2);
     }
 
@@ -279,12 +279,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       actions.run('right');
     } else if (player.body.touching.down && !player.isRolling) {
       // apply friction
-      if (Math.abs(player.body.velocity.x) < 4) {
+      if (Math.abs(player.body.velocity.x) < 2) {
         player.body.velocity.x *= 0.5; // quickly bring slow-moving players to a stop
       } else if (player.body.velocity.x > 0) {
-        player.body.velocity.x -= 4;
+        player.body.velocity.x -= 2;
       } else if (player.body.velocity.x < 0) {
-        player.body.velocity.x += 4;
+        player.body.velocity.x += 2;
       }
     }
 
