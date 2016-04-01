@@ -125,14 +125,14 @@ var buildMenu = function buildMenu(game, state) {
       state.restart();
     },
     selected: true
-  }, {
+  }, /*{
     name: 'BGM',
     setting: settings.bgm,
     action: function() {
       cycleSetting.call(this);
       state.resetMusic(settings);
     },
-  }, {
+  },*/ {
     name: 'Stage',
     setting: settings.stage,
     action: function() {
