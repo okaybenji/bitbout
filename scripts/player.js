@@ -88,21 +88,6 @@ var createPlayer = function createPlayer(game, options, onDeath) {
           }
           break;
       }
-
-      actions.orientHearts(direction);
-    },
-    
-    // TODO: fix left hearts position when hp is less than max
-    orientHearts: function orientHearts(direction) {
-      var heartDistance = 1.1; // how close hearts float by player
-      switch (direction) {
-        case 'left':
-          player.hearts.anchor.setTo(-heartDistance, 0);
-          break;
-        case 'right':
-          player.hearts.anchor.setTo(heartDistance, 0);
-          break;
-      }
     },
 
     jump: function jump() {
@@ -151,13 +136,13 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
     stand: function stand() {
       player.y -= settings.scale.y;
-      player.scale.setTo(settings.scale.x, settings.scale.y);
+      actions.setHeight();
       player.isDucking = false;
       player.isRolling = false;
     },
 
     takeDamage: function takeDamage(amount) {
-      // prevent taking more damage than hp remaining in a current heart
+      // prevent taking more damage than hp remaining in current life
       if (amount > 1 && (player.hp - amount) % 2 !== 0) {
         amount = 1;
       }
@@ -170,14 +155,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       if (player.hp % 2 === 0) {
         actions.die();
       }
-      actions.updateHearts();
+      actions.setHeight();
     },
 
-    updateHearts: function() {
-      var healthPercentage = player.hp / player.maxHp;
-      var cropWidth = Math.ceil(healthPercentage * heartsWidth);
-      var cropRect = new Phaser.Rectangle(0, 0, cropWidth, player.hearts.height);
-      player.hearts.crop(cropRect);
+    setHeight: function() {
+      var newPlayerHeight = Math.round(player.hp / 2);
+      player.scale.setTo(settings.scale.x, newPlayerHeight);
     },
 
     die: function() {
@@ -201,8 +184,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.isDead = true;
         // knock player on his/her side
         player.scale.setTo(settings.scale.y, settings.scale.x);
-        // TODO: this could probably be better architected
-        onDeath();
+        onDeath(); // TODO: this could probably be better architected
       }
     }
   };
@@ -210,7 +192,11 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var player = game.add.sprite(0, 0, settings.color);
   player.name = settings.name;
   player.orientation = settings.orientation;
-  player.scale.setTo(settings.scale.x, settings.scale.y); // TODO: add giant mode
+
+  // track health
+  player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
+  player.actions = actions;
+  player.actions.setHeight(); // TODO: add giant mode
 
   game.physics.arcade.enable(player);
   player.body.collideWorldBounds = true;
@@ -225,17 +211,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.lastAttacked = 0;
   player.isCollidable = true;
 
-  player.actions = actions;
 
-  // track health
-  player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
-  player.hearts = game.add.sprite(0, 0, 'hearts');
-  var heartsWidth = player.hearts.width;
-  player.hearts.setScaleMinMax(1, 1); // prevent hearts scaling w/ player
-  var bob = player.hearts.animations.add('bob', [0,1,2,1], 3, true); // name, frames, framerate, loop
-  player.hearts.animations.play('bob');
-  player.addChild(player.hearts);
-  actions.orientHearts(player.orientation);
 
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
