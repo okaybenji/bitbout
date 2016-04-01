@@ -17,12 +17,16 @@ var stageBuilder = function stageBuilder(game) {
     });
 
     var walls = [];
-    walls.push(platforms.create(-3, 0, stage.platforms.color));
-    walls.push(platforms.create(61, 0, stage.platforms.color));
+    walls.push(platforms.create(-3, -3, stage.platforms.color));
+    walls.push(platforms.create(61, -3, stage.platforms.color));
     walls.forEach(function(wall) {
-      wall.scale.setTo(3, 32);
+      wall.scale.setTo(3, 35);
       wall.body.immovable = true;
     });
+
+    var ceiling = platforms.create(0, -12, stage.platforms.color);
+    ceiling.scale.setTo(32, 3);
+    ceiling.body.immovable = true;
     
     return platforms;
   };
