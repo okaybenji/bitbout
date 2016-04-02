@@ -15,6 +15,7 @@ var Splash = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
+      game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
     },
 
     create: function() {

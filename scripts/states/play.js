@@ -6,11 +6,10 @@ var Play = function(game) {
       self.sfx = require('../sfx.js');
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
-      // game over message
-      var font = require('../data/font.js');
-      self.text = game.add.text(0, 0, '', font);
-      self.text.setTextBounds(0, 0, game.width, game.height);
-      
+      // game over victory message, e.g. PINK WINS
+      self.victoryMsg = game.add.sprite(9, 24, 'victoryMsg');
+      self.victoryMsg.visible = false;
+
       // menu
       var buildMenu = require('../menu.js');
       buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
@@ -81,12 +80,11 @@ var Play = function(game) {
             }
           });
           if (alivePlayers.length === 1) {
-            var font = Object.assign({}, require('../data/font.js'), {fill: stage.uiColor});
-            self.text.setStyle(font);
-            self.text.setText(alivePlayers[0] + '  wins!\n');
-            self.text.visible = true;
+            var playerIndex = players.map(function(player) { return player.name }).indexOf(alivePlayers[0]);
+            self.victoryMsg.frame = playerIndex;
+            self.victoryMsg.visible = true;
             setTimeout(function() {
-              self.text.visible = false;
+              self.victoryMsg.visible = false;
               self.restart();
             }, 3000);
           }
