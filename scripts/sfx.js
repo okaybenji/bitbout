@@ -84,6 +84,26 @@ var sfx = (function sfx() {
       });
       
       dieTimeouts.push(setTimeout(voice.stop, duration * pitches.length));
+    },
+    permadie: function() {
+      console.log('permadying');
+      while (dieTimeouts.length) {
+        clearTimeout(dieTimeouts.pop());
+      }
+
+      var voice = pulse.voices[3];
+      var pitches = [220, 196, 185];
+      var duration = 200;
+
+      voice.start();
+
+      pitches.forEach(function(pitch, i) {
+        dieTimeouts.push(setTimeout(function() {
+          voice.pitch(pitch);
+        }, i * duration));
+      });
+
+      dieTimeouts.push(setTimeout(voice.stop, duration * pitches.length));
     }
   };
   

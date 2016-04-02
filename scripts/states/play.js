@@ -76,7 +76,7 @@ var Play = function(game) {
         var checkForGameOver = function checkForGameOver() {
           var alivePlayers = [];
           self.players.children.forEach(function(player, i) {
-            if (!player.isDead) {
+            if (!player.isPermadead) {
               alivePlayers.push(player.name);
             }
           });

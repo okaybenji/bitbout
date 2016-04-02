@@ -36,7 +36,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       var interval = 400;
       var velocity = 100;
 
-      var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isDead;
+      var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isPermadead;
       if (!canAttack) {
         return;
       }
@@ -116,11 +116,11 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     duck: function duck() {
-      if (player.isAttacking || player.isDead) {
+      if (player.isAttacking || player.isPermadead) {
         return;
       }
 
-      if (!player.isDucking) {
+      if (!player.isDucking && player.hp > 2) {
         player.scale.setTo(settings.scale.x, settings.scale.y / 2);
         player.y += settings.scale.y;
       }
@@ -135,8 +135,10 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     stand: function stand() {
-      player.y -= settings.scale.y;
-      actions.setHeight();
+      if (player.hp > 2) {
+        player.y -= settings.scale.y;
+      }
+      actions.applyHealthEffects();
       player.isDucking = false;
       player.isRolling = false;
     },
@@ -155,22 +157,24 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       if (player.hp % 2 === 0) {
         actions.die();
       }
-      actions.setHeight();
+      actions.applyHealthEffects();
     },
 
-    setHeight: function() {
-      var newPlayerHeight = Math.round(player.hp / 2);
+    applyHealthEffects: function() {
+      var newPlayerHeight = Math.max(Math.round(player.hp / 2), 1);
       player.scale.setTo(settings.scale.x, newPlayerHeight);
+
+      var newPlayerAlpha = player.hp % 2 === 0 ? 1 : 0.75;
+      player.alpha = newPlayerAlpha;
     },
 
     die: function() {
-      if (player.isDead) {
+      if (player.isPermadead) {
         return;
       }
 
-      sfx.die();
-
       if (player.hp > 0) {
+        sfx.die();
         actions.endAttack();
         player.lastAttacked = 0;
 
@@ -181,9 +185,9 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
       } else {
-        player.isDead = true;
-        // knock player on his/her side
-        player.scale.setTo(settings.scale.y, settings.scale.x);
+        sfx.permadie();
+        player.loadTexture('white');
+        player.isPermadead = true;
         onDeath(); // TODO: this could probably be better architected
       }
     }
@@ -196,7 +200,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   // track health
   player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
   player.actions = actions;
-  player.actions.setHeight(); // TODO: add giant mode
+  player.actions.applyHealthEffects(); // TODO: add giant mode
 
   game.physics.arcade.enable(player);
   player.body.collideWorldBounds = true;
@@ -207,7 +211,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.isRolling = false;
   player.isDucking = false;
   player.isAttacking = false;
-  player.isDead = false;
+  player.isPermadead = false;
   player.lastAttacked = 0;
   player.isCollidable = true;
 
