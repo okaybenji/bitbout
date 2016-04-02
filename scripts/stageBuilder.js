@@ -20,7 +20,7 @@ var stageBuilder = function stageBuilder(game) {
     walls.push(platforms.create(-3, -3, stage.platforms.color));
     walls.push(platforms.create(61, -3, stage.platforms.color));
     walls.forEach(function(wall) {
-      wall.scale.setTo(3, 35);
+      wall.scale.setTo(3, 38);
       wall.body.immovable = true;
     });
 
