@@ -10,14 +10,3 @@
   -webkit-user-select: none;
   margin: 0;
 }
-
-@font-face {
-  font-family: 'Helvetica';
-  src: url('../fonts/Helvetica.otf') format('opentype');
-}
-
-/* get font to load for use in phaser */
-#fontPreload {
-  position: absolute;
-  left: -100vw;
-}
