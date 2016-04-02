@@ -1,5 +1,5 @@
 # GAME
-### A competitive, single-screen, local competitive platformer
+### A single-screen, local competitive platformer
 
 Written with [Phaser](http://github.com/photonstorm/phaser), with [Subpoly](http://github.com/okaybenji/subpoly) for real-time SFX
 
