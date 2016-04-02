@@ -173,6 +173,10 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         return;
       }
 
+      setTimeout(function() {
+        actions.applyInvulnerability();
+      }, 100); // delay invuln so players don't spawn behind one another
+
       if (player.hp > 0) {
         sfx.die();
         actions.endAttack();
@@ -190,7 +194,28 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.isPermadead = true;
         onDeath(); // TODO: this could probably be better architected
       }
-    }
+    },
+
+    applyInvulnerability: function() {
+      player.isCollidable = false;
+      var makeWhite = function() {
+        player.loadTexture('white');
+      };
+      var makeColor = function() {
+        player.loadTexture(settings.color);
+      };
+      var colorInterval = setInterval(makeColor, 150);
+      var whiteInterval;
+      setTimeout(function() {
+        whiteInterval = setInterval(makeWhite, 150);
+      }, 75);
+      makeColor();
+      setTimeout(function() {
+        clearInterval(whiteInterval);
+        clearInterval(colorInterval);
+        player.isCollidable = true;
+      }, 1500);
+    },
   };
 
   var player = game.add.sprite(0, 0, settings.color);
@@ -214,8 +239,6 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.isPermadead = false;
   player.lastAttacked = 0;
   player.isCollidable = true;
-
-
 
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {

@@ -86,7 +86,6 @@ var sfx = (function sfx() {
       dieTimeouts.push(setTimeout(voice.stop, duration * pitches.length));
     },
     permadie: function() {
-      console.log('permadying');
       while (dieTimeouts.length) {
         clearTimeout(dieTimeouts.pop());
       }
