@@ -4,7 +4,6 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
-* come up with better way to show health. height thing is ok, but your character can't foll on its side when dead. :'( also, can't see partial damage. maybe have colored bars representing each player's health at top of screen?
 * show who wins without text/font (create 'wins' graphic)
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
