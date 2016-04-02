@@ -1,4 +1,4 @@
-# MICROGAME
+# BITBOUT
 ### A single-screen, local competitive platformer
 
 Written with [Phaser](http://github.com/photonstorm/phaser), with [Subpoly](http://github.com/okaybenji/subpoly) for real-time SFX
