@@ -173,11 +173,11 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         return;
       }
 
-      setTimeout(function() {
-        actions.applyInvulnerability();
-      }, 100); // delay invuln so players don't spawn behind one another
-
       if (player.hp > 0) {
+        setTimeout(function() {
+          actions.applyInvulnerability();
+        }, 100); // delay invuln so players don't spawn behind one another
+
         sfx.die();
         actions.endAttack();
         player.lastAttacked = 0;
