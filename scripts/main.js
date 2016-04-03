@@ -1,5 +1,5 @@
 var resize = function resize() {
-  document.body.style.zoom = window.innerWidth / game.width;
+  document.body.style.zoom = window.innerHeight / game.height;
 };
 
 var main = {
