@@ -1,7 +1,7 @@
 # BITBOUT
 ### A single-screen, local competitive platformer
 
-2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last man standing wins!
+2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last man or woman standing wins!
 
 Written with [Phaser](http://github.com/photonstorm/phaser), with [Subpoly](http://github.com/okaybenji/subpoly) for real-time SFX
 
