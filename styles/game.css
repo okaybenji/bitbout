@@ -1,12 +1,14 @@
 
 * {
+  background: black;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   image-rendering: pixelated;
-  font-smooth: never; /* TODO: disabling font smoothing doesn't seem to be working */
   -webkit-font-smoothing : none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
