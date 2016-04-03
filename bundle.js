@@ -357,7 +357,7 @@ module.exports = stages;
 
 },{}],6:[function(require,module,exports){
 var resize = function resize() {
-  document.body.style.zoom = window.innerWidth / game.width;
+  document.body.style.zoom = window.innerHeight / game.height;
 };
 
 var main = {
