@@ -9,6 +9,7 @@
 * reach out to chasm pixel artist about doing sprites and animations
 
 ### music / sfx
+* fix SFX bug: jump sound rings out indefinitely
 * implement MIDI and use a synth to generate music in real-time
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 

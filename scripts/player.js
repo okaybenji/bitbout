@@ -33,7 +33,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var actions = {
     attack: function attack() {
       var duration = 200;
-      var interval = 400;
+      var interval = 600;
       var velocity = 100;
 
       var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isPermadead;
