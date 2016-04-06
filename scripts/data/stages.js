@@ -14,7 +14,7 @@ var stages = [{
       [10, 62],
       [45, 62]
     ],
-    "color": "green"
+    "color": "yellow"
   },
   "backgrounds": [],
   "foreground": "clear",
@@ -42,7 +42,7 @@ var stages = [{
       [50, 44],
       [27, 60]
     ],
-    "color": "blue"
+    "color": "gray"
   },
   "backgrounds": [],
   "foreground": "clear",
@@ -54,7 +54,7 @@ var stages = [{
   ],
   "uiColor": "#28D6F1"
 },{
-  "name": "C",
+  "name": "Hangar",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -67,7 +67,9 @@ var stages = [{
     ],
     "color": "gray"
   },
-  "backgrounds": [],
+  "backgrounds": [{
+    image: 'hangar'
+  }],
   "foreground": "clear",
   "spawnPoints": [
     { "x": 10, "y": 27 },
@@ -77,7 +79,7 @@ var stages = [{
   ],
   "uiColor": "#8D8D8D"
 },{
-  "name": "D",
+  "name": "Waterfall",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -89,7 +91,9 @@ var stages = [{
     ],
     "color": "brown"
   },
-  "backgrounds": [],
+  "backgrounds": [{
+    image: 'waterfall'
+  }],
   "foreground": "clear",
   "spawnPoints": [
     { "x": 14, "y": 6 },
