@@ -195,20 +195,20 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 },{"submono":1}],3:[function(require,module,exports){
 var Players = function(game) {
     var players = [{
-      name: 'Orange',
-      color: 'orange',
+      name: 'Blue',
+      color: 'blue',
       gamepad: game.input.gamepad.pad1,
       keys: {
         up: 'W', down: 'S', left: 'A', right: 'D', attack: 'Q'
       },
     }, {
-      name: 'Yellow',
-      color: 'yellow',
+      name: 'Pink',
+      color: 'pink',
       gamepad: game.input.gamepad.pad2,
       orientation: 'left',
     }, {
-      name: 'Pink',
-      color: 'pink',
+      name: 'Green',
+      color: 'green',
       gamepad: game.input.gamepad.pad3,
       keys: {
         up: 'I', down: 'K', left: 'J', right: 'L', attack: 'U'
@@ -267,7 +267,7 @@ var stages = [{
       [10, 62],
       [45, 62]
     ],
-    "color": "green"
+    "color": "yellow"
   },
   "backgrounds": [],
   "foreground": "clear",
@@ -295,7 +295,7 @@ var stages = [{
       [50, 44],
       [27, 60]
     ],
-    "color": "blue"
+    "color": "gray"
   },
   "backgrounds": [],
   "foreground": "clear",
@@ -307,7 +307,7 @@ var stages = [{
   ],
   "uiColor": "#28D6F1"
 },{
-  "name": "C",
+  "name": "Hangar",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -320,7 +320,9 @@ var stages = [{
     ],
     "color": "gray"
   },
-  "backgrounds": [],
+  "backgrounds": [{
+    image: 'hangar'
+  }],
   "foreground": "clear",
   "spawnPoints": [
     { "x": 10, "y": 27 },
@@ -330,7 +332,7 @@ var stages = [{
   ],
   "uiColor": "#8D8D8D"
 },{
-  "name": "D",
+  "name": "Waterfall",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -342,7 +344,9 @@ var stages = [{
     ],
     "color": "brown"
   },
-  "backgrounds": [],
+  "backgrounds": [{
+    image: 'waterfall'
+  }],
   "foreground": "clear",
   "spawnPoints": [
     { "x": 14, "y": 6 },
@@ -589,6 +593,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
       if (!player.isDucking && player.hp > 2) {
         player.scale.setTo(settings.scale.x, settings.scale.y / 2);
+        actions.applyOrientation();
         player.y += settings.scale.y;
       }
       player.isDucking = true;
@@ -630,9 +635,14 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     applyHealthEffects: function() {
       var newPlayerHeight = Math.max(Math.round(player.hp / 2), 1);
       player.scale.setTo(settings.scale.x, newPlayerHeight);
+      actions.applyOrientation();
 
       var newPlayerAlpha = player.hp % 2 === 0 ? 1 : 0.75;
       player.alpha = newPlayerAlpha;
+    },
+
+    applyOrientation: function() {
+      player.scale.setTo(player.orientation === 'left' ? settings.scale.x : -settings.scale.x, player.scale.y);
     },
 
     die: function() {
@@ -688,6 +698,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var player = game.add.sprite(0, 0, settings.color);
   player.name = settings.name;
   player.orientation = settings.orientation;
+  player.anchor.setTo(.5,.5); // anchor to center to allow flipping
 
   // track health
   player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
@@ -742,8 +753,10 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
     if (input.left) {
       actions.run('left');
+      player.actions.applyOrientation();
     } else if (input.right) {
       actions.run('right');
+      player.actions.applyOrientation();
     } else if (player.body.touching.down && !player.isRolling) {
       // apply friction
       if (Math.abs(player.body.velocity.x) < 2) {
@@ -1203,6 +1216,8 @@ var Splash = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
+      game.load.image('waterfall', 'images/waterfall.gif');
+      game.load.image('hangar', 'images/hangar.gif');
       game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
     },
 
