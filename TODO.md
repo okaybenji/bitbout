@@ -4,7 +4,7 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
-* physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid.
+* physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
 * look into creating native OS X / Windows / Linux app versions of bitbout
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
