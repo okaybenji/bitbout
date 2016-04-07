@@ -1,7 +1,7 @@
 {
-  "name": "game",
+  "name": "bitbout",
   "version": "0.1.0",
-  "description": "a game.",
+  "description": "A single-screen, local competitive platformer.",
   "main": "bundle.js",
   "scripts": {
     "build": "browserify scripts/main.js -o bundle.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/okaybenji/game.git"
+    "url": "https://github.com/okaybenji/bitbout.git"
   },
   "author": "Benji Kay <okaybenji@gmail.com> (http://benjikay.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/okaybenji/game/issues"
+    "url": "https://github.com/okaybenji/bitbout/issues"
   },
-  "homepage": "https://github.com/okaybenji/game",
+  "homepage": "https://github.com/okaybenji/bitbout",
   "devDependencies": {
     "browserify": "^12.0.1",
     "watchify": "^3.6.1"
