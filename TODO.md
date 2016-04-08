@@ -5,7 +5,7 @@
 
 ### misc
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid.
-* look into creating native OS X / Windows / Linux app versions of bitbout
+* create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module)
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
 
