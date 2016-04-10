@@ -8,6 +8,7 @@ var Splash = function(game) {
 
     preload: function() {
       // images
+      game.load.image('title', 'images/title.gif');
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
@@ -23,21 +24,22 @@ var Splash = function(game) {
     },
 
     create: function() {
+      game.bgm.play('title.xm');
+      game.add.sprite(0, 0, 'hangar');
+      game.add.sprite(0, 0, 'title');
+
       var startGame = function startGame() {
-        clearTimeout(timeout);
         if (game.state.current === 'splash') {
+          game.bgm.play('None');
           game.state.start('play');
         }
       };
       
-      // start game after a delay...
-      var timeout = setTimeout(startGame, 0); // TODO: increase delay...
-
-      // ...or when start/enter is pressed
-      /*game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
+      // start game when start/enter is pressed
+      game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
       if (game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
         game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
-      }*/
+      }
     }
   };
   

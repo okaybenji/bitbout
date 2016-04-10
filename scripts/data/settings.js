@@ -13,7 +13,7 @@ var settings = {
     options: stages.map(function(stage) {
       return stage.name;
     }),
-    selected: 'A',
+    selected: 'Hangar',
   }
 };
 
