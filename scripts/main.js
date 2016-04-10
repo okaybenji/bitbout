@@ -15,17 +15,13 @@ var main = {
     // prevent game pausing when it loses focus
     game.stage.disableVisibilityChange = true;
     
-    // assets used in splash screen intro animation
-    game.load.image('purple', 'images/purple.png');
+    // assets used in loading screen
+    game.load.image('loading', 'images/loading.gif');
   },
 
   create: function create() {
-    game.input.gamepad.start();
-
-    game.state.add('splash', require('./states/splash.js')(game));
-    game.state.add('play', require('./states/play.js')(game));
-
-    game.state.start('splash');
+    game.state.add('loading', require('./states/loading.js')(game));
+    game.state.start('loading');
   }
 };
 
