@@ -479,7 +479,7 @@ var bgm = function() {
       if (fileName === 'None') {
         player.stop.call(player);
       } else {
-        player.load('../music/' + fileName, function(buffer) {
+        player.load('./music/' + fileName, function(buffer) {
           player.play(buffer);
         });
       }
