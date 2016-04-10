@@ -6,14 +6,14 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['A', 'None'],
-    selected: 'None',
+    options: ['test.xm', 'title.xm', 'None'],
+    selected: 'test.xm',
   },
   stage: {
     options: stages.map(function(stage) {
       return stage.name;
     }),
-    selected: 'A',
+    selected: 'Hangar',
   }
 };
 

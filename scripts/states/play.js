@@ -3,7 +3,6 @@ var Play = function(game) {
     create: function create() {
       var self = this;
 
-      self.sfx = require('../sfx.js');
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message, e.g. PINK WINS
@@ -20,14 +19,8 @@ var Play = function(game) {
     },
 
     resetMusic: function(settings) {
-      // play music
-      if (this.music) {
-        this.music.stop();
-      }
-      if (settings.bgm.selected !== 'None') {
-        this.music = game.add.audio(settings.bgm.selected);
-        this.music.loopFull();
-      }
+      var self = this;
+      game.bgm.play(settings.bgm.selected);
     },
 
     restart: function restart() {
@@ -37,6 +30,8 @@ var Play = function(game) {
       var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
       var stage = utils.getStage();
+
+      self.resetMusic(settings);
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
@@ -126,7 +121,7 @@ var Play = function(game) {
         }
 
         function bounce() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var bounceVelocity = 50;
           var velocityA, velocityB;
@@ -143,7 +138,7 @@ var Play = function(game) {
         }
 
         function fling() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var playerToFling;
           var playerToLeave;
@@ -164,7 +159,7 @@ var Play = function(game) {
         }
 
         function pop() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var playerToPop;
           if (playerA.isRolling) {
