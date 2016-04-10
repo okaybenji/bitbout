@@ -2,6 +2,7 @@ var Loading = function(game) {
   var loading = {
     init: function() {
       game.add.sprite(0, 0, 'loading');
+      document.getElementById('loading').style.display = 'none';
     },
 
     preload: function() {
