@@ -14,3 +14,7 @@ body {
   display: flex;
   justify-content: center;
 }
+
+#loading {
+  height: 100%;
+}
