@@ -1006,6 +1006,7 @@ var Loading = function(game) {
       game.load.image('pink', 'images/pink.png');
       game.load.image('yellow', 'images/yellow.png');
       game.load.image('blue', 'images/blue.png');
+      game.load.image('purple', 'images/purple.png');
       game.load.image('orange', 'images/orange.png');
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
