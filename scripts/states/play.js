@@ -3,9 +3,6 @@ var Play = function(game) {
     create: function create() {
       var self = this;
 
-      self.sfx = require('../sfx.js');
-      self.bgm = require('../music')();
-
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message, e.g. PINK WINS
@@ -23,7 +20,7 @@ var Play = function(game) {
 
     resetMusic: function(settings) {
       var self = this;
-      self.bgm.play(settings.bgm.selected);
+      game.bgm.play(settings.bgm.selected);
     },
 
     restart: function restart() {
@@ -124,7 +121,7 @@ var Play = function(game) {
         }
 
         function bounce() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var bounceVelocity = 50;
           var velocityA, velocityB;
@@ -141,7 +138,7 @@ var Play = function(game) {
         }
 
         function fling() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var playerToFling;
           var playerToLeave;
@@ -162,7 +159,7 @@ var Play = function(game) {
         }
 
         function pop() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var playerToPop;
           if (playerA.isRolling) {

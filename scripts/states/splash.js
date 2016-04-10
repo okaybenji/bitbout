@@ -2,6 +2,8 @@ var Splash = function(game) {
   var splash = {
     init: function() {
       // TODO: intro animation
+      game.sfx = require('../sfx.js');
+      game.bgm = require('../music')();
     },
 
     preload: function() {

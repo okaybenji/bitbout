@@ -6,7 +6,7 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['test.xm', 'None'],
+    options: ['test.xm', 'title.xm', 'None'],
     selected: 'test.xm',
   },
   stage: {
