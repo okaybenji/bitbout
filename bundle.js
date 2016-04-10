@@ -237,14 +237,14 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['test.xm', 'None'],
+    options: ['test.xm', 'title.xm', 'None'],
     selected: 'test.xm',
   },
   stage: {
     options: stages.map(function(stage) {
       return stage.name;
     }),
-    selected: 'A',
+    selected: 'Hangar',
   }
 };
 
@@ -525,7 +525,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var actions = {
     attack: function attack() {
       var duration = 200;
-      var interval = 400;
+      var interval = 600;
       var velocity = 100;
 
       var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isPermadead;
@@ -1000,9 +1000,6 @@ var Play = function(game) {
     create: function create() {
       var self = this;
 
-      self.sfx = require('../sfx.js');
-      self.bgm = require('../music')();
-
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message, e.g. PINK WINS
@@ -1020,7 +1017,7 @@ var Play = function(game) {
 
     resetMusic: function(settings) {
       var self = this;
-      self.bgm.play(settings.bgm.selected);
+      game.bgm.play(settings.bgm.selected);
     },
 
     restart: function restart() {
@@ -1121,7 +1118,7 @@ var Play = function(game) {
         }
 
         function bounce() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var bounceVelocity = 50;
           var velocityA, velocityB;
@@ -1138,7 +1135,7 @@ var Play = function(game) {
         }
 
         function fling() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var playerToFling;
           var playerToLeave;
@@ -1159,7 +1156,7 @@ var Play = function(game) {
         }
 
         function pop() {
-          self.sfx.bounce();
+          game.sfx.bounce();
 
           var playerToPop;
           if (playerA.isRolling) {
@@ -1217,15 +1214,18 @@ var Play = function(game) {
 
 module.exports = Play;
 
-},{"../data/players.js":3,"../data/settings":4,"../menu.js":7,"../music":8,"../player.js":9,"../sfx.js":10,"../stageBuilder.js":11,"../utils.js":14}],13:[function(require,module,exports){
+},{"../data/players.js":3,"../data/settings":4,"../menu.js":7,"../player.js":9,"../stageBuilder.js":11,"../utils.js":14}],13:[function(require,module,exports){
 var Splash = function(game) {
   var splash = {
     init: function() {
       // TODO: intro animation
+      game.sfx = require('../sfx.js');
+      game.bgm = require('../music')();
     },
 
     preload: function() {
       // images
+      game.load.image('title', 'images/title.gif');
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
@@ -1241,21 +1241,22 @@ var Splash = function(game) {
     },
 
     create: function() {
+      game.bgm.play('title.xm');
+      game.add.sprite(0, 0, 'hangar');
+      game.add.sprite(0, 0, 'title');
+
       var startGame = function startGame() {
-        clearTimeout(timeout);
         if (game.state.current === 'splash') {
+          game.bgm.play('None');
           game.state.start('play');
         }
       };
       
-      // start game after a delay...
-      var timeout = setTimeout(startGame, 0); // TODO: increase delay...
-
-      // ...or when start/enter is pressed
-      /*game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
+      // start game when start/enter is pressed
+      game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
       if (game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
         game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
-      }*/
+      }
     }
   };
   
@@ -1264,7 +1265,7 @@ var Splash = function(game) {
 
 module.exports = Splash;
 
-},{}],14:[function(require,module,exports){
+},{"../music":8,"../sfx.js":10}],14:[function(require,module,exports){
 var utils = {
   // from underscore
   debounce: function debounce(func, wait, immediate) {
