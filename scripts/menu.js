@@ -18,14 +18,14 @@ var buildMenu = function buildMenu(game, state) {
       state.restart();
     },
     selected: true
-  }, /*{
+  }, {
     name: 'BGM',
     setting: settings.bgm,
     action: function() {
       cycleSetting.call(this);
       state.resetMusic(settings);
     },
-  },*/ {
+  }, {
     name: 'Stage',
     setting: settings.stage,
     action: function() {
@@ -40,11 +40,13 @@ var buildMenu = function buildMenu(game, state) {
   }];
 
   var changePlayerCount = menu[0].action.bind(menu[0]);
-  var changeStage = menu[1].action.bind(menu[1]);
-  var restart = menu[2].action.bind(menu[2]);
+  var changeBgm = menu[1].action.bind(menu[1]);
+  var changeStage = menu[2].action.bind(menu[2]);
+  var restart = menu[3].action.bind(menu[3]);
 
   game.input.keyboard.addKey(Phaser.Keyboard.P).onDown.add(changePlayerCount);
   game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(changeStage);
+  game.input.keyboard.addKey(Phaser.Keyboard.B).onDown.add(changeBgm);
   game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(restart);
   if (game.input.gamepad.supported && game.input.gamepad.active) {
     if (game.input.gamepad.pad1.connected) {
