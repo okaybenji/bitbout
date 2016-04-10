@@ -122,6 +122,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
       if (!player.isDucking && player.hp > 2) {
         player.scale.setTo(settings.scale.x, settings.scale.y / 2);
+        actions.applyOrientation();
         player.y += settings.scale.y;
       }
       player.isDucking = true;
@@ -163,9 +164,14 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     applyHealthEffects: function() {
       var newPlayerHeight = Math.max(Math.round(player.hp / 2), 1);
       player.scale.setTo(settings.scale.x, newPlayerHeight);
+      actions.applyOrientation();
 
       var newPlayerAlpha = player.hp % 2 === 0 ? 1 : 0.75;
       player.alpha = newPlayerAlpha;
+    },
+
+    applyOrientation: function() {
+      player.scale.setTo(player.orientation === 'left' ? settings.scale.x : -settings.scale.x, player.scale.y);
     },
 
     die: function() {
@@ -221,6 +227,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var player = game.add.sprite(0, 0, settings.color);
   player.name = settings.name;
   player.orientation = settings.orientation;
+  player.anchor.setTo(.5,.5); // anchor to center to allow flipping
 
   // track health
   player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
@@ -275,8 +282,10 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
     if (input.left) {
       actions.run('left');
+      player.actions.applyOrientation();
     } else if (input.right) {
       actions.run('right');
+      player.actions.applyOrientation();
     } else if (player.body.touching.down && !player.isRolling) {
       // apply friction
       if (Math.abs(player.body.velocity.x) < 2) {

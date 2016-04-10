@@ -15,6 +15,8 @@ var Splash = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
+      game.load.image('waterfall', 'images/waterfall.gif');
+      game.load.image('hangar', 'images/hangar.gif');
       game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
     },
 

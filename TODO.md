@@ -4,12 +4,20 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
+* physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
+* create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module)
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
-* reach out to chasm pixel artist about doing sprites and animations
+
+### art
+* title screen / logo
+* walljump / dash FX
+* levels A & B bg art
+* animate bg art
+* add scarves
 
 ### music / sfx
-* fix SFX bug: jump sound rings out indefinitely
+* fix SFX bug: jump sound sometimes rings out indefinitely
 * implement MIDI and use a synth to generate music in real-time
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
