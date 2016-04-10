@@ -17,7 +17,7 @@
 * add scarves
 
 ### music / sfx
-* fix sfx bug where jump sfx may ring out indefinitely
+* fix SFX bug: jump sound sometimes rings out indefinitely
 * implement MIDI and use a synth to generate music in real-time
 * update submono/subpoly to allow using custom waveforms and add noise with Math.random
 
