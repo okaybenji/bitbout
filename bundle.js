@@ -237,8 +237,8 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['A', 'None'],
-    selected: 'None',
+    options: ['test.xm', 'None'],
+    selected: 'test.xm',
   },
   stage: {
     options: stages.map(function(stage) {
@@ -399,7 +399,7 @@ var game = new Phaser.Game(64, 64, Phaser.AUTO, 'game', {
 game.state.add('main', main);
 game.state.start('main');
 
-},{"./states/play.js":11,"./states/splash.js":12,"./utils.js":13}],7:[function(require,module,exports){
+},{"./states/play.js":12,"./states/splash.js":13,"./utils.js":14}],7:[function(require,module,exports){
 var buildMenu = function buildMenu(game, state) {
   var settings = require('./data/settings.js');
 
@@ -420,14 +420,14 @@ var buildMenu = function buildMenu(game, state) {
       state.restart();
     },
     selected: true
-  }, /*{
+  }, {
     name: 'BGM',
     setting: settings.bgm,
     action: function() {
       cycleSetting.call(this);
       state.resetMusic(settings);
     },
-  },*/ {
+  }, {
     name: 'Stage',
     setting: settings.stage,
     action: function() {
@@ -442,11 +442,13 @@ var buildMenu = function buildMenu(game, state) {
   }];
 
   var changePlayerCount = menu[0].action.bind(menu[0]);
-  var changeStage = menu[1].action.bind(menu[1]);
-  var restart = menu[2].action.bind(menu[2]);
+  var changeBgm = menu[1].action.bind(menu[1]);
+  var changeStage = menu[2].action.bind(menu[2]);
+  var restart = menu[3].action.bind(menu[3]);
 
   game.input.keyboard.addKey(Phaser.Keyboard.P).onDown.add(changePlayerCount);
   game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(changeStage);
+  game.input.keyboard.addKey(Phaser.Keyboard.B).onDown.add(changeBgm);
   game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(restart);
   if (game.input.gamepad.supported && game.input.gamepad.active) {
     if (game.input.gamepad.pad1.connected) {
@@ -469,6 +471,25 @@ var buildMenu = function buildMenu(game, state) {
 module.exports = buildMenu;
 
 },{"./data/settings.js":4}],8:[function(require,module,exports){
+var bgm = function() {
+  var player = new ChiptuneJsPlayer(new ChiptuneJsConfig(-1));
+
+  return {
+    play: function(fileName) {
+      if (fileName === 'None') {
+        player.stop.call(player);
+      } else {
+        player.load('../music/' + fileName, function(buffer) {
+          player.play(buffer);
+        });
+      }
+    }
+  };
+};
+
+module.exports = bgm;
+
+},{}],9:[function(require,module,exports){
 var createPlayer = function createPlayer(game, options, onDeath) {
   var defaults = {
     orientation: 'right',
@@ -792,7 +813,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
 module.exports = createPlayer;
 
-},{"./sfx.js":9,"./utils":13}],9:[function(require,module,exports){
+},{"./sfx.js":10,"./utils":14}],10:[function(require,module,exports){
 var sfx = (function sfx() {
   Polysynth = require('subpoly');
 
@@ -906,7 +927,7 @@ var sfx = (function sfx() {
 
 module.exports = sfx;
 
-},{"subpoly":2}],10:[function(require,module,exports){
+},{"subpoly":2}],11:[function(require,module,exports){
 var stageBuilder = function stageBuilder(game) {
   var settings = require('./data/settings.js');
   var utils = require('./utils.js');
@@ -973,13 +994,15 @@ var stageBuilder = function stageBuilder(game) {
 
 module.exports = stageBuilder;
 
-},{"./data/settings.js":4,"./utils.js":13}],11:[function(require,module,exports){
+},{"./data/settings.js":4,"./utils.js":14}],12:[function(require,module,exports){
 var Play = function(game) {
   var play = {
     create: function create() {
       var self = this;
 
       self.sfx = require('../sfx.js');
+      self.bgm = require('../music')();
+
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message, e.g. PINK WINS
@@ -996,14 +1019,8 @@ var Play = function(game) {
     },
 
     resetMusic: function(settings) {
-      // play music
-      if (this.music) {
-        this.music.stop();
-      }
-      if (settings.bgm.selected !== 'None') {
-        this.music = game.add.audio(settings.bgm.selected);
-        this.music.loopFull();
-      }
+      var self = this;
+      self.bgm.play(settings.bgm.selected);
     },
 
     restart: function restart() {
@@ -1013,6 +1030,8 @@ var Play = function(game) {
       var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
       var stage = utils.getStage();
+
+      self.resetMusic(settings);
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
@@ -1198,7 +1217,7 @@ var Play = function(game) {
 
 module.exports = Play;
 
-},{"../data/players.js":3,"../data/settings":4,"../menu.js":7,"../player.js":8,"../sfx.js":9,"../stageBuilder.js":10,"../utils.js":13}],12:[function(require,module,exports){
+},{"../data/players.js":3,"../data/settings":4,"../menu.js":7,"../music":8,"../player.js":9,"../sfx.js":10,"../stageBuilder.js":11,"../utils.js":14}],13:[function(require,module,exports){
 var Splash = function(game) {
   var splash = {
     init: function() {
@@ -1245,7 +1264,7 @@ var Splash = function(game) {
 
 module.exports = Splash;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var utils = {
   // from underscore
   debounce: function debounce(func, wait, immediate) {
