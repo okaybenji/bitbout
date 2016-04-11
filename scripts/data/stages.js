@@ -55,6 +55,7 @@ var stages = [{
   "uiColor": "#28D6F1"
 },{
   "name": "Hangar",
+  "theme": "hangar.xm",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [

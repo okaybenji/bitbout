@@ -19,7 +19,6 @@ var Play = function(game) {
     },
 
     resetMusic: function(settings) {
-      var self = this;
       game.bgm.play(settings.bgm.selected);
     },
 
@@ -31,6 +30,10 @@ var Play = function(game) {
       var stageBuilder = require('../stageBuilder.js')(game);
       var stage = utils.getStage();
 
+      // if stage has a default bgm, load it
+      if (stage.theme) {
+        settings.bgm.selected = stage.theme;
+      }
       self.resetMusic(settings);
 
       // destroy and rebuild stage and players

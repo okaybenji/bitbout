@@ -6,8 +6,8 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['test.xm', 'title.xm', 'None'],
-    selected: 'test.xm',
+    options: ['hangar.xm', 'title.xm', 'None'],
+    selected: 'None',
   },
   stage: {
     options: stages.map(function(stage) {
