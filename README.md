@@ -15,9 +15,9 @@ Written with [Phaser](http://github.com/photonstorm/phaser), with [Subpoly](http
 
 Supports **PS4** DualShock 4 and **Xbox One** controllers!
 
-**Orange**: Gamepad 1, or move with `W S A D` and attack with `Q`<br>
-**Yellow**: Gamepad 2, or move with `UP DOWN LEFT RIGHT` and attack with `SHIFT`<br>
-**Pink**: Gamepad 3, or move with `I K J L` and attack with `U`<br>
+**Blue**: Gamepad 1, or move with `W S A D` and attack with `Q`<br>
+**Pink**: Gamepad 2, or move with `UP DOWN LEFT RIGHT` and attack with `SHIFT`<br>
+**Green**: Gamepad 3, or move with `I K J L` and attack with `U`<br>
 **Purple**: Gamepad 4, or move with `T G F H` and attack with `R`<br>
 
 Change the **map** with `M`<br>
