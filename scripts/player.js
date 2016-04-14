@@ -166,7 +166,9 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.scale.setTo(settings.scale.x, newPlayerHeight);
       actions.applyOrientation();
 
-      if (player.hp % 2 === 1) {
+      if (player.hp === 0) {
+        return; // bit's becoming a ghost; leaves its scarf (or lack thereof) alone
+      } else if (player.hp % 2 === 1) {
         player.scarf.visible = false;
       } else {
         player.scarf.visible = true;
