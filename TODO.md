@@ -5,7 +5,6 @@
 
 ### misc
 * add animation for player losing scarf
-* fix position and orientation of scarves
 * create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module)
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
@@ -19,9 +18,9 @@
 * add scarves
 
 ### music / sfx
-* fix SFX bug: jump sound sometimes rings out indefinitely
-* implement MIDI and use a synth to generate music in real-time
-* update submono/subpoly to allow using custom waveforms and add noise with Math.random
+* prevent music from restarting when a new match starts
+* fix SFX bug: jump sound sometimes rings out indefinitely... maybe just use tracker files for SFX?
+* add SFX for round start and game over/victory msg
 
 ### phaser
 * there appears to be a bug in phaser's physics.arcade.collide's processCallback; it should pass colliding objects as args 1 and 2 in the same order as collideCallback. logging the objects' positions shows two different (correct) positions in collideCallback, but shows the same positions in processCallback.
