@@ -236,7 +236,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
   player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
   player.scarf.animations.add('scarf');
-  player.scarf.animations.play('scarf', 32/3, true);
+  player.scarf.animation = player.scarf.animations.play('scarf', 32/3, true);
   player.scarf.setScaleMinMax(-1, 1, 1, 1);
   player.addChild(player.scarf);
 
@@ -264,6 +264,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     if (player.position.y > 64 && player.hp !== 0) { // TODO: how to access native height from game.js?
       actions.takeDamage(2);
     }
+
+    player.scarf.animation.speed = Math.abs(player.body.velocity.x) * .75 + 32/3;
 
     var input = {
       left:   (keys.left.isDown && !keys.right.isDown) ||
