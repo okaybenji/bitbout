@@ -665,8 +665,13 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.scale.setTo(settings.scale.x, newPlayerHeight);
       actions.applyOrientation();
 
-      var newPlayerAlpha = player.hp % 2 === 0 ? 1 : 0.75;
-      player.alpha = newPlayerAlpha;
+      if (player.hp === 0) {
+        return; // bit's becoming a ghost; leaves its scarf (or lack thereof) alone
+      } else if (player.hp % 2 === 1) {
+        player.scarf.visible = false;
+      } else {
+        player.scarf.visible = true;
+      }
     },
 
     applyOrientation: function() {
@@ -695,7 +700,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.y = 0;
       } else {
         sfx.permadie();
-        player.loadTexture('white');
+        player.alpha = 0.5;
         player.isPermadead = true;
         onDeath(); // TODO: this could probably be better architected
       }
@@ -727,6 +732,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.name = settings.name;
   player.orientation = settings.orientation;
   player.anchor.setTo(.5,.5); // anchor to center to allow flipping
+
+  player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
+  player.scarf.animations.add('scarf');
+  player.scarf.animations.play('scarf', 32/3, true);
+  player.scarf.setScaleMinMax(-1, 1, 1, 1);
+  player.addChild(player.scarf);
 
   // track health
   player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
@@ -1011,7 +1022,14 @@ var Loading = function(game) {
 
     preload: function() {
       // images
-      game.load.image('title', 'images/title.gif');
+      game.load.spritesheet('title', 'images/spritesheet-title.gif', 64, 64);
+      game.load.spritesheet('victoryMsg', 'images/spritesheet-winner.gif', 52, 22);
+      game.load.spritesheet('blueScarf', 'images/spritesheet-scarf-bluebit.gif', 5, 2);
+      game.load.spritesheet('pinkScarf', 'images/spritesheet-scarf-pinkbit.gif', 5, 2);
+      game.load.spritesheet('greenScarf', 'images/spritesheet-scarf-greenbit.gif', 5, 2);
+      game.load.spritesheet('purpleScarf', 'images/spritesheet-scarf-purplebit.gif', 5, 2);
+      game.load.spritesheet('jump', 'images/spritesheet-jump.gif', 5, 2);
+      game.load.spritesheet('land', 'images/spritesheet-land.gif', 5, 2);
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
@@ -1022,9 +1040,8 @@ var Loading = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
-      game.load.image('waterfall', 'images/waterfall.gif');
-      game.load.image('hangar', 'images/hangar-wip.gif');
-      game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
+      game.load.image('waterfall', 'images/level-waterfall-wip.gif');
+      game.load.image('hangar', 'images/level-hangar-wip.gif');
 
       // sound
       game.sfx = require('../sfx.js');
@@ -1053,9 +1070,13 @@ var Play = function(game) {
 
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
-      // game over victory message, e.g. PINK WINS
-      self.victoryMsg = game.add.sprite(9, 24, 'victoryMsg');
+      // game over victory message declaring the winner
+      self.victoryMsg = game.add.sprite(6, 21, 'victoryMsg');
       self.victoryMsg.visible = false;
+      self.victoryMsg.animations.add('Blue', [0, 4, 8, 12], 32/3, true);
+      self.victoryMsg.animations.add('Pink', [1, 5, 9, 13], 32/3, true);
+      self.victoryMsg.animations.add('Green', [2, 6, 10, 14], 32/3, true);
+      self.victoryMsg.animations.add('Purple', [3, 7, 11, 15], 32/3, true);
 
       // menu
       var buildMenu = require('../menu.js');
@@ -1126,8 +1147,7 @@ var Play = function(game) {
             }
           });
           if (alivePlayers.length === 1) {
-            var playerIndex = players.map(function(player) { return player.name }).indexOf(alivePlayers[0]);
-            self.victoryMsg.frame = playerIndex;
+            self.victoryMsg.play(alivePlayers[0]);
             self.victoryMsg.visible = true;
             setTimeout(function() {
               self.victoryMsg.visible = false;
@@ -1274,7 +1294,9 @@ var Splash = function(game) {
     create: function() {
       game.bgm.play('title.xm');
       game.add.sprite(0, 0, 'hangar');
-      game.add.sprite(0, 0, 'title');
+      var title = game.add.sprite(0, 0, 'title');
+      title.animations.add('title');
+      title.animations.play('title', 32/3, true);
 
       var startGame = function startGame() {
         if (game.state.current === 'splash') {

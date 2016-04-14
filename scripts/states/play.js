@@ -5,9 +5,13 @@ var Play = function(game) {
 
       self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
-      // game over victory message, e.g. PINK WINS
-      self.victoryMsg = game.add.sprite(9, 24, 'victoryMsg');
+      // game over victory message declaring the winner
+      self.victoryMsg = game.add.sprite(6, 21, 'victoryMsg');
       self.victoryMsg.visible = false;
+      self.victoryMsg.animations.add('Blue', [0, 4, 8, 12], 32/3, true);
+      self.victoryMsg.animations.add('Pink', [1, 5, 9, 13], 32/3, true);
+      self.victoryMsg.animations.add('Green', [2, 6, 10, 14], 32/3, true);
+      self.victoryMsg.animations.add('Purple', [3, 7, 11, 15], 32/3, true);
 
       // menu
       var buildMenu = require('../menu.js');
@@ -78,8 +82,7 @@ var Play = function(game) {
             }
           });
           if (alivePlayers.length === 1) {
-            var playerIndex = players.map(function(player) { return player.name }).indexOf(alivePlayers[0]);
-            self.victoryMsg.frame = playerIndex;
+            self.victoryMsg.play(alivePlayers[0]);
             self.victoryMsg.visible = true;
             setTimeout(function() {
               self.victoryMsg.visible = false;

@@ -166,8 +166,13 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.scale.setTo(settings.scale.x, newPlayerHeight);
       actions.applyOrientation();
 
-      var newPlayerAlpha = player.hp % 2 === 0 ? 1 : 0.75;
-      player.alpha = newPlayerAlpha;
+      if (player.hp === 0) {
+        return; // bit's becoming a ghost; leaves its scarf (or lack thereof) alone
+      } else if (player.hp % 2 === 1) {
+        player.scarf.visible = false;
+      } else {
+        player.scarf.visible = true;
+      }
     },
 
     applyOrientation: function() {
@@ -196,7 +201,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.y = 0;
       } else {
         sfx.permadie();
-        player.loadTexture('white');
+        player.alpha = 0.5;
         player.isPermadead = true;
         onDeath(); // TODO: this could probably be better architected
       }
@@ -228,6 +233,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.name = settings.name;
   player.orientation = settings.orientation;
   player.anchor.setTo(.5,.5); // anchor to center to allow flipping
+
+  player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
+  player.scarf.animations.add('scarf');
+  player.scarf.animations.play('scarf', 32/3, true);
+  player.scarf.setScaleMinMax(-1, 1, 1, 1);
+  player.addChild(player.scarf);
 
   // track health
   player.hp = player.maxHp = 6; // TODO: allow setting custom hp amount for each player
