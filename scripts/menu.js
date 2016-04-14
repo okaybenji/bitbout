@@ -30,6 +30,14 @@ var buildMenu = function buildMenu(game, state) {
     setting: settings.stage,
     action: function() {
       cycleSetting.call(this);
+
+      // if stage has a default bgm, load it
+      var stages = require('./data/stages.js');
+      var selectedStage = stages[settings.stage.options.indexOf(settings.stage.selected)];
+      if (selectedStage.theme) {
+        settings.bgm.selected = selectedStage.theme;
+      }
+
       state.restart();
     },
   }, {

@@ -19,4 +19,5 @@ Supports **PS4** DualShock 4 and **Xbox One** controllers!
 
 Change the **map** with `M`<br>
 Change the number of **players** with `P`<br>
+Change the **BGM** (music) with `B`<br>
 **Restart** the game with `ENTER`

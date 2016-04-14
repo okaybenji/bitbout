@@ -3,7 +3,9 @@ var Splash = function(game) {
     create: function() {
       game.bgm.play('title.xm');
       game.add.sprite(0, 0, 'hangar');
-      game.add.sprite(0, 0, 'title');
+      var title = game.add.sprite(0, 0, 'title');
+      title.animations.add('title');
+      title.animations.play('title', 32/3, true);
 
       var startGame = function startGame() {
         if (game.state.current === 'splash') {
