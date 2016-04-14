@@ -4,9 +4,10 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
+* gzip/zopfli libopenmpt
 * add animation for player losing scarf
 * cancel player invulnerability timeouts when starting new round (to prevent caching errors)
-* create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module)
+* create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module, and be sure to include phaser so client doesn't need internet access to play!)
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
