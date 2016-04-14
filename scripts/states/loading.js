@@ -7,7 +7,8 @@ var Loading = function(game) {
 
     preload: function() {
       // images
-      game.load.image('title', 'images/title.gif');
+      game.load.spritesheet('title', 'images/spritesheet-title.gif', 64, 64);
+      game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
@@ -18,9 +19,8 @@ var Loading = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
-      game.load.image('waterfall', 'images/waterfall.gif');
-      game.load.image('hangar', 'images/hangar-wip.gif');
-      game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
+      game.load.image('waterfall', 'images/level-waterfall-wip.gif');
+      game.load.image('hangar', 'images/level-hangar-wip.gif');
 
       // sound
       game.sfx = require('../sfx.js');
