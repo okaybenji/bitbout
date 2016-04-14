@@ -8,7 +8,7 @@ var Loading = function(game) {
     preload: function() {
       // images
       game.load.spritesheet('title', 'images/spritesheet-title.gif', 64, 64);
-      game.load.spritesheet('victoryMsg', 'images/victoryMsg.png', 47, 6);
+      game.load.spritesheet('victoryMsg', 'images/spritesheet-winner.gif', 52, 22);
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
