@@ -9,6 +9,12 @@ var Loading = function(game) {
       // images
       game.load.spritesheet('title', 'images/spritesheet-title.gif', 64, 64);
       game.load.spritesheet('victoryMsg', 'images/spritesheet-winner.gif', 52, 22);
+      game.load.spritesheet('blueScarf', 'images/spritesheet-scarf-bluebit.gif', 5, 2);
+      game.load.spritesheet('pinkScarf', 'images/spritesheet-scarf-pinkbit.gif', 5, 2);
+      game.load.spritesheet('greenScarf', 'images/spritesheet-scarf-greenbit.gif', 5, 2);
+      game.load.spritesheet('purpleScarf', 'images/spritesheet-scarf-purplebit.gif', 5, 2);
+      game.load.spritesheet('jump', 'images/spritesheet-jump.gif', 5, 2);
+      game.load.spritesheet('land', 'images/spritesheet-land.gif', 5, 2);
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
