@@ -235,7 +235,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.scarf = game.add.sprite(-4, -1, settings.color + 'Scarf');
   player.scarf.animations.add('scarf');
   player.scarf.animations.play('scarf', 32/3, true);
-  player.scarf.setScaleMinMax(1, 1, 1, 1);
+  player.scarf.setScaleMinMax(-1, 1, 1, 1);
   player.addChild(player.scarf);
 
   // track health
