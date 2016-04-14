@@ -12,11 +12,10 @@
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
 
 ### art
-* title screen / logo
-* walljump / dash FX
+* title screen BG?
+* jump/land FX
 * levels A & B bg art
 * animate bg art
-* add scarves
 
 ### music / sfx
 * prevent music from restarting when a new match starts
