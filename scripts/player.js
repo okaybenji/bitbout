@@ -95,16 +95,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         return;
       }
 
-      var dust = game.add.sprite(0, 0, 'jump');
-      var anim = dust.animations.add('dust');
-      dust.animations.play('dust', 32/3);
-      anim.onComplete.add(function() {
-        dust.kill();
-      }, this);
+      var dust;
 
       if (player.body.touching.down) {
         player.body.velocity.y = -100;
         sfx.jump();
+        dust = game.add.sprite(0, 0, 'jump');
         dust.position.x = player.body.position.x - 4;
         dust.position.y = player.body.position.y + player.body.height - 2;
       // wall jumps
@@ -112,6 +108,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.y = -120;
         player.body.velocity.x = 45;
         sfx.jump();
+        dust = game.add.sprite(0, 0, 'land');
         dust.position.x = player.body.position.x + 2;
         dust.position.y = player.body.position.y - player.body.height;
         dust.angle = 90;
@@ -119,10 +116,17 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.y = -120;
         player.body.velocity.x = -45;
         sfx.jump();
+        dust = game.add.sprite(0, 0, 'land');
         dust.position.x = player.body.position.x;
         dust.position.y = player.body.position.y + player.body.height;
         dust.angle = -90;
       }
+
+      var anim = dust.animations.add('dust');
+      dust.animations.play('dust', 32/3);
+      anim.onComplete.add(function() {
+        dust.kill();
+      }, this);
     },
 
     dampenJump: function dampenJump() {
