@@ -91,18 +91,37 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     jump: function jump() {
+      if (!player.body.touching.down && !player.body.touching.left && !player.body.touching.right) {
+        return;
+      }
+
+      var dust = game.add.sprite(0, 0, 'jump');
+      var anim = dust.animations.add('dust');
+      dust.animations.play('dust', 32/3);
+      anim.onComplete.add(function() {
+        dust.kill();
+      }, this);
+
       if (player.body.touching.down) {
         player.body.velocity.y = -100;
         sfx.jump();
+        dust.position.x = player.body.position.x - 4;
+        dust.position.y = player.body.position.y + player.body.height - 2;
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -120;
         player.body.velocity.x = 45;
         sfx.jump();
+        dust.position.x = player.body.position.x + 2;
+        dust.position.y = player.body.position.y;
+        dust.angle = 90;
       } else if (player.body.touching.right) {
         player.body.velocity.y = -120;
         player.body.velocity.x = -45;
         sfx.jump();
+        dust.position.x = player.body.position.x;
+        dust.position.y = player.body.position.y;
+        dust.angle = -90;
       }
     },
 
