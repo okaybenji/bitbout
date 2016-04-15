@@ -58,7 +58,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     endAttack: function endAttack() {
-      if (player.isAttacking) {
+      if (player.alive && player.isAttacking) {
         player.loadTexture(settings.color);
         player.isAttacking = false;
       }
