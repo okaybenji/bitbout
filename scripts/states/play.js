@@ -133,7 +133,7 @@ var Play = function(game) {
         }
 
         function bounce() {
-          game.sfx.bounce();
+          game.sfx.play('bounce');;
 
           var bounceVelocity = 50;
           var velocityA, velocityB;
@@ -150,7 +150,7 @@ var Play = function(game) {
         }
 
         function fling() {
-          game.sfx.bounce();
+          game.sfx.play('bounce');
 
           var playerToFling;
           var playerToLeave;
@@ -171,7 +171,7 @@ var Play = function(game) {
         }
 
         function pop() {
-          game.sfx.bounce();
+          game.sfx.play('bounce');
 
           var playerToPop;
           if (playerA.isRolling) {

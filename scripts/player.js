@@ -28,8 +28,6 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
   var gamepad = settings.gamepad;
 
-  var sfx = require('./sfx.js');
-
   var actions = {
     attack: function attack() {
       var duration = 200;
@@ -44,7 +42,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.isAttacking = true;
       player.lastAttacked = Date.now();
 
-      sfx.attack();
+      game.sfx.play('attack');
 
       switch(player.orientation) {
         case 'left':
@@ -99,7 +97,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
       if (player.body.touching.down) {
         player.body.velocity.y = -100;
-        sfx.jump();
+        game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'jump');
         dust.position.x = player.body.position.x - 4;
         dust.position.y = player.body.position.y + player.body.height - 2;
@@ -107,7 +105,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       } else if (player.body.touching.left) {
         player.body.velocity.y = -120;
         player.body.velocity.x = 45;
-        sfx.jump();
+        game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'land');
         dust.position.x = player.body.position.x + 2;
         dust.position.y = player.body.position.y - player.body.height;
@@ -115,7 +113,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       } else if (player.body.touching.right) {
         player.body.velocity.y = -120;
         player.body.velocity.x = -45;
-        sfx.jump();
+        game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'land');
         dust.position.x = player.body.position.x;
         dust.position.y = player.body.position.y + player.body.height;
@@ -213,7 +211,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
           actions.applyInvulnerability();
         }, 100); // delay invuln so players don't spawn behind one another
 
-        sfx.die();
+        game.sfx.play('die');
         actions.endAttack();
         player.lastAttacked = 0;
 
@@ -224,7 +222,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
       } else {
-        sfx.permadie();
+        game.sfx.play('permadie');
         player.alpha = 0.5;
         player.isPermadead = true;
         onDeath(); // TODO: this could probably be better architected
@@ -268,7 +266,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var player = game.add.sprite(0, 0, settings.color);
   player.name = settings.name;
   player.orientation = settings.orientation;
-  player.anchor.setTo(.5,.5); // anchor to center to allow flipping
+  player.anchor.setTo(0.5, 0.5); // anchor to center to allow flipping
 
   player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
   player.scarf.animations.add('scarf');
@@ -306,7 +304,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.isFalling = true;
     }
 
-    player.scarf.animation.speed = Math.abs(player.body.velocity.x) * .75 + 32/3;
+    player.scarf.animation.speed = Math.abs(player.body.velocity.x) * 0.75 + 32/3;
 
     var input = {
       left:   (keys.left.isDown && !keys.right.isDown) ||
