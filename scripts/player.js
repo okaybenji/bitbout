@@ -122,6 +122,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         dust.angle = -90;
       }
 
+      game.subUi.add(dust); // mount below ui elements (winner message)
       var anim = dust.animations.add('dust');
       dust.animations.play('dust', 32/3);
       anim.onComplete.add(function() {

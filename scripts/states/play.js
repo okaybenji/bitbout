@@ -3,7 +3,7 @@ var Play = function(game) {
     create: function create() {
       var self = this;
 
-      self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
+      game.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message declaring the winner
       self.victoryMsg = game.add.sprite(6, 21, 'victoryMsg');
@@ -67,11 +67,11 @@ var Play = function(game) {
 
       self.platforms = stageBuilder.buildPlatforms();
       self.backgrounds = stageBuilder.buildBackgrounds();
-      self.subUi.add(self.platforms);
-      self.subUi.add(self.backgrounds);
+      game.subUi.add(self.platforms);
+      game.subUi.add(self.backgrounds);
 
       self.players = game.add.group();
-      self.subUi.add(self.players);
+      game.subUi.add(self.players);
 
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
@@ -103,7 +103,7 @@ var Play = function(game) {
       }
 
       self.foreground = stageBuilder.buildForeground();
-      self.subUi.add(self.foreground);
+      game.subUi.add(self.foreground);
     },
 
     update: function update() {
@@ -114,6 +114,7 @@ var Play = function(game) {
           player.isFalling = false;
           // kick up dust
           var dust = game.add.sprite(0, 0, 'land');
+          game.subUi.add(dust);
           dust.position.x = player.body.position.x - 4;
           dust.position.y = player.body.position.y + player.body.height - 2;
 
