@@ -22,10 +22,6 @@ var Play = function(game) {
       game.input.gamepad.start();
     },
 
-    resetMusic: function(settings) {
-      game.bgm.play(settings.bgm.selected);
-    },
-
     restart: function restart() {
       var self = this;
       var players = require('../data/players.js')(game);
@@ -33,12 +29,6 @@ var Play = function(game) {
       var utils = require('../utils.js');
       var stageBuilder = require('../stageBuilder.js')(game);
       var stage = utils.getStage();
-
-      // if stage has a default bgm, load it
-      if (stage.theme) {
-        settings.bgm.selected = stage.theme;
-      }
-      self.resetMusic(settings);
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {

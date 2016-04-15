@@ -18,7 +18,6 @@
 * animate bg art
 
 ### music / sfx
-* prevent music from restarting when a new match starts
 * fix SFX bug: jump sound sometimes rings out indefinitely... maybe just use tracker files for SFX?
 * add SFX for round start and game over/victory msg
 

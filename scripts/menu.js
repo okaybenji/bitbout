@@ -23,7 +23,7 @@ var buildMenu = function buildMenu(game, state) {
     setting: settings.bgm,
     action: function() {
       cycleSetting.call(this);
-      state.resetMusic(settings);
+      game.bgm.play(settings.bgm.selected);
     },
   }, {
     name: 'Stage',
@@ -37,6 +37,7 @@ var buildMenu = function buildMenu(game, state) {
       if (selectedStage.theme) {
         settings.bgm.selected = selectedStage.theme;
       }
+      game.bgm.play(settings.bgm.selected);;
 
       state.restart();
     },
