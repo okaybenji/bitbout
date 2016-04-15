@@ -3,7 +3,7 @@ var Play = function(game) {
     create: function create() {
       var self = this;
 
-      self.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
+      game.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message declaring the winner
       self.victoryMsg = game.add.sprite(6, 21, 'victoryMsg');
@@ -14,31 +14,24 @@ var Play = function(game) {
       self.victoryMsg.animations.add('Purple', [3, 7, 11, 15], 32/3, true);
 
       // menu
-      var buildMenu = require('../menu.js');
+      var buildMenu = require('../menu');
       buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
 
       self.restart();
       game.physics.startSystem(Phaser.Physics.ARCADE);
       game.input.gamepad.start();
-    },
 
-    resetMusic: function(settings) {
+      var settings = require('../data/settings')
       game.bgm.play(settings.bgm.selected);
     },
 
     restart: function restart() {
       var self = this;
-      var players = require('../data/players.js')(game);
+      var players = require('../data/players')(game);
       var settings = require('../data/settings');
-      var utils = require('../utils.js');
-      var stageBuilder = require('../stageBuilder.js')(game);
+      var utils = require('../utils');
+      var stageBuilder = require('../stageBuilder')(game);
       var stage = utils.getStage();
-
-      // if stage has a default bgm, load it
-      if (stage.theme) {
-        settings.bgm.selected = stage.theme;
-      }
-      self.resetMusic(settings);
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
@@ -67,11 +60,11 @@ var Play = function(game) {
 
       self.platforms = stageBuilder.buildPlatforms();
       self.backgrounds = stageBuilder.buildBackgrounds();
-      self.subUi.add(self.platforms);
-      self.subUi.add(self.backgrounds);
+      game.subUi.add(self.platforms);
+      game.subUi.add(self.backgrounds);
 
       self.players = game.add.group();
-      self.subUi.add(self.players);
+      game.subUi.add(self.players);
 
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
@@ -84,13 +77,14 @@ var Play = function(game) {
           if (alivePlayers.length === 1) {
             self.victoryMsg.play(alivePlayers[0]);
             self.victoryMsg.visible = true;
+            game.sfx.play('victory');
             setTimeout(function() {
               self.victoryMsg.visible = false;
               self.restart();
             }, 3000);
           }
         };
-        var createPlayer = require('../player.js');
+        var createPlayer = require('../player');
         var newPlayer = self.players.add(createPlayer(game, player, checkForGameOver));
         var pos = stage.spawnPoints[i];
         newPlayer.position.x = pos.x;
@@ -103,13 +97,31 @@ var Play = function(game) {
       }
 
       self.foreground = stageBuilder.buildForeground();
-      self.subUi.add(self.foreground);
+      game.subUi.add(self.foreground);
+
+      game.sfx.play('roundStart');
     },
 
     update: function update() {
       var self = this;
       
-      game.physics.arcade.collide(this.players, this.platforms);
+      game.physics.arcade.collide(this.players, this.platforms, function handlePlatformCollision(player, platform) {
+        if (player.body.touching.down && player.isFalling) {
+          player.isFalling = false;
+          // kick up dust
+          var dust = game.add.sprite(0, 0, 'land');
+          game.subUi.add(dust);
+          dust.position.x = player.body.position.x - 4;
+          dust.position.y = player.body.position.y + player.body.height - 2;
+
+          var anim = dust.animations.add('dust');
+          dust.animations.play('dust', 32/3);
+          anim.onComplete.add(function() {
+            dust.kill();
+          }, this);
+        }
+      });
+
       // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
       game.physics.arcade.collide(this.players, this.players, function handlePlayerCollision(playerA, playerB) {
          /* let's not knock anybody around if something's on one of these dudes'/dudettes' heads.
@@ -127,7 +139,7 @@ var Play = function(game) {
         }
 
         function bounce() {
-          game.sfx.bounce();
+          game.sfx.play('bounce');;
 
           var bounceVelocity = 50;
           var velocityA, velocityB;
@@ -144,7 +156,7 @@ var Play = function(game) {
         }
 
         function fling() {
-          game.sfx.bounce();
+          game.sfx.play('bounce');
 
           var playerToFling;
           var playerToLeave;
@@ -165,7 +177,7 @@ var Play = function(game) {
         }
 
         function pop() {
-          game.sfx.bounce();
+          game.sfx.play('bounce');
 
           var playerToPop;
           if (playerA.isRolling) {

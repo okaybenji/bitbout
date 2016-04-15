@@ -28,8 +28,6 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
   var gamepad = settings.gamepad;
 
-  var sfx = require('./sfx.js');
-
   var actions = {
     attack: function attack() {
       var duration = 200;
@@ -44,7 +42,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.isAttacking = true;
       player.lastAttacked = Date.now();
 
-      sfx.attack();
+      game.sfx.play('attack');
 
       switch(player.orientation) {
         case 'left':
@@ -60,7 +58,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     endAttack: function endAttack() {
-      if (player.isAttacking) {
+      if (player.alive && player.isAttacking) {
         player.loadTexture(settings.color);
         player.isAttacking = false;
       }
@@ -91,19 +89,43 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     jump: function jump() {
+      if (!player.body.touching.down && !player.body.touching.left && !player.body.touching.right) {
+        return;
+      }
+
+      var dust;
+
       if (player.body.touching.down) {
         player.body.velocity.y = -100;
-        sfx.jump();
+        game.sfx.play('jump');
+        dust = game.add.sprite(0, 0, 'jump');
+        dust.position.x = player.body.position.x - 4;
+        dust.position.y = player.body.position.y + player.body.height - 2;
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -120;
         player.body.velocity.x = 45;
-        sfx.jump();
+        game.sfx.play('jump');
+        dust = game.add.sprite(0, 0, 'land');
+        dust.position.x = player.body.position.x + 2;
+        dust.position.y = player.body.position.y - player.body.height;
+        dust.angle = 90;
       } else if (player.body.touching.right) {
         player.body.velocity.y = -120;
         player.body.velocity.x = -45;
-        sfx.jump();
+        game.sfx.play('jump');
+        dust = game.add.sprite(0, 0, 'land');
+        dust.position.x = player.body.position.x;
+        dust.position.y = player.body.position.y + player.body.height;
+        dust.angle = -90;
       }
+
+      game.subUi.add(dust); // mount below ui elements (winner message)
+      var anim = dust.animations.add('dust');
+      dust.animations.play('dust', 32/3);
+      anim.onComplete.add(function() {
+        dust.kill();
+      }, this);
     },
 
     dampenJump: function dampenJump() {
@@ -185,11 +207,9 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       }
 
       if (player.hp > 0) {
-        setTimeout(function() {
-          actions.applyInvulnerability();
-        }, 100); // delay invuln so players don't spawn behind one another
+        actions.applyInvulnerability();
 
-        sfx.die();
+        game.sfx.play('die');
         actions.endAttack();
         player.lastAttacked = 0;
 
@@ -200,7 +220,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
       } else {
-        sfx.permadie();
+        game.sfx.play('permadie');
         player.alpha = 0.5;
         player.isPermadead = true;
         onDeath(); // TODO: this could probably be better architected
@@ -209,21 +229,34 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
     applyInvulnerability: function() {
       player.isCollidable = false;
-      var makeWhite = function() {
-        player.loadTexture('white');
+
+      var setColor = function(color) {
+        // in case game restarts and player no longer exists...
+        if (!player.alive) {
+          clearInterval(colorInterval);
+          clearInterval(whiteInterval);
+          return;
+        }
+        player.loadTexture(color);
       };
-      var makeColor = function() {
-        player.loadTexture(settings.color);
-      };
-      var colorInterval = setInterval(makeColor, 150);
+
+      var colorInterval = setInterval(function() {
+        setColor(settings.color);
+      }, 150);
       var whiteInterval;
       setTimeout(function() {
-        whiteInterval = setInterval(makeWhite, 150);
+        whiteInterval = setInterval(function() {
+          setColor('white');
+        }, 150);
       }, 75);
-      makeColor();
+
       setTimeout(function() {
+        if (!player.alive) {
+          return;
+        }
         clearInterval(whiteInterval);
         clearInterval(colorInterval);
+        setColor(settings.color); // ensure player color returns to normal
         player.isCollidable = true;
       }, 1500);
     },
@@ -232,11 +265,11 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   var player = game.add.sprite(0, 0, settings.color);
   player.name = settings.name;
   player.orientation = settings.orientation;
-  player.anchor.setTo(.5,.5); // anchor to center to allow flipping
+  player.anchor.setTo(0.5, 0.5); // anchor to center to allow flipping
 
   player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
   player.scarf.animations.add('scarf');
-  player.scarf.animations.play('scarf', 32/3, true);
+  player.scarf.animation = player.scarf.animations.play('scarf', 32/3, true);
   player.scarf.setScaleMinMax(-1, 1, 1, 1);
   player.addChild(player.scarf);
 
@@ -251,6 +284,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.body.gravity.y = 380; // TODO: allow gravity configuration
 
   player.upWasDown = false; // track input change for variable jump height
+  player.isFalling = false;
   player.isRolling = false;
   player.isDucking = false;
   player.isAttacking = false;
@@ -264,6 +298,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     if (player.position.y > 64 && player.hp !== 0) { // TODO: how to access native height from game.js?
       actions.takeDamage(2);
     }
+
+    if (player.body.velocity.y > 85) {
+      player.isFalling = true;
+    }
+
+    player.scarf.animation.speed = Math.abs(player.body.velocity.x) * 0.75 + 32/3;
 
     var input = {
       left:   (keys.left.isDown && !keys.right.isDown) ||

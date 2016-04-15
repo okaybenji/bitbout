@@ -8,9 +8,16 @@
       <img id="loading" src="./images/loading.gif">
     </div>
   </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.4/phaser.js"></script>
+  <script>
+    // hack to allow multiple chiptune2.js instances with a single audio context
+    var AudioCtx = AudioContext || webkitAudioContext;
+    var audioCtx = new AudioCtx();
+    AudioContext = webkitAudioContext = function() {
+      return audioCtx;
+    };
+  </script>
+  <script src="./scripts/vendor/phaser.min.js"></script>
   <script src="./scripts/vendor/libopenmpt.js"></script>
   <script src="./scripts/vendor/chiptune2.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.4/phaser.js"></script>
   <script src="bundle.js"></script>
 </html>

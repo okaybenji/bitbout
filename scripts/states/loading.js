@@ -13,8 +13,8 @@ var Loading = function(game) {
       game.load.spritesheet('pinkScarf', 'images/spritesheet-scarf-pinkbit.gif', 5, 2);
       game.load.spritesheet('greenScarf', 'images/spritesheet-scarf-greenbit.gif', 5, 2);
       game.load.spritesheet('purpleScarf', 'images/spritesheet-scarf-purplebit.gif', 5, 2);
-      game.load.spritesheet('jump', 'images/spritesheet-jump.gif', 5, 2);
-      game.load.spritesheet('land', 'images/spritesheet-land.gif', 5, 2);
+      game.load.spritesheet('jump', 'images/spritesheet-jump.gif', 10, 2);
+      game.load.spritesheet('land', 'images/spritesheet-land.gif', 10, 2);
       game.load.image('clear', 'images/clear.png');
       game.load.image('white', 'images/white.png');
       game.load.image('pink', 'images/pink.png');
@@ -25,19 +25,19 @@ var Loading = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
-      game.load.image('waterfall', 'images/level-waterfall-wip.gif');
+      game.load.image('waterfall', 'images/waterfall.gif');
       game.load.image('hangar', 'images/level-hangar-wip.gif');
 
       // sound
-      game.sfx = require('../sfx.js');
       game.bgm = require('../music')();
+      game.sfx = require('../sfx')();
     },
 
     create: function() {
       game.input.gamepad.start();
 
-      game.state.add('splash', require('./splash.js')(game));
-      game.state.add('play', require('./play.js')(game));
+      game.state.add('splash', require('./splash')(game));
+      game.state.add('play', require('./play')(game));
       game.state.start('splash');
     }
   };

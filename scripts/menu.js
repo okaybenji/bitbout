@@ -1,5 +1,5 @@
 var buildMenu = function buildMenu(game, state) {
-  var settings = require('./data/settings.js');
+  var settings = require('./data/settings');
 
   var cycleSetting = function cycleSetting() {
     var optionIndex = this.setting.options.indexOf(this.setting.selected);
@@ -23,7 +23,7 @@ var buildMenu = function buildMenu(game, state) {
     setting: settings.bgm,
     action: function() {
       cycleSetting.call(this);
-      state.resetMusic(settings);
+      game.bgm.play(settings.bgm.selected);
     },
   }, {
     name: 'Stage',
@@ -32,11 +32,12 @@ var buildMenu = function buildMenu(game, state) {
       cycleSetting.call(this);
 
       // if stage has a default bgm, load it
-      var stages = require('./data/stages.js');
+      var stages = require('./data/stages');
       var selectedStage = stages[settings.stage.options.indexOf(settings.stage.selected)];
       if (selectedStage.theme) {
         settings.bgm.selected = selectedStage.theme;
       }
+      game.bgm.play(settings.bgm.selected);
 
       state.restart();
     },
