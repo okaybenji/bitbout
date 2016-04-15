@@ -233,19 +233,31 @@ var createPlayer = function createPlayer(game, options, onDeath) {
 
     applyInvulnerability: function() {
       player.isCollidable = false;
-      var makeWhite = function() {
-        player.loadTexture('white');
+
+      var setColor = function(color) {
+        // in case game restarts and player no longer exists...
+        if (!player.alive) {
+          clearInterval(colorInterval);
+          clearInterval(whiteInterval);
+          return;
+        }
+        player.loadTexture(color);
       };
-      var makeColor = function() {
-        player.loadTexture(settings.color);
-      };
-      var colorInterval = setInterval(makeColor, 150);
+
+      var colorInterval = setInterval(function() {
+        setColor(settings.color);
+      }, 150);
       var whiteInterval;
       setTimeout(function() {
-        whiteInterval = setInterval(makeWhite, 150);
+        whiteInterval = setInterval(function() {
+          setColor('white');
+        }, 150);
       }, 75);
-      makeColor();
+
       setTimeout(function() {
+        if (!player.alive) {
+          return;
+        }
         clearInterval(whiteInterval);
         clearInterval(colorInterval);
         player.isCollidable = true;
