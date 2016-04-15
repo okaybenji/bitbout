@@ -36,8 +36,8 @@ var Loading = function(game) {
     create: function() {
       game.input.gamepad.start();
 
-      game.state.add('splash', require('./splash.js')(game));
-      game.state.add('play', require('./play.js')(game));
+      game.state.add('splash', require('./splash')(game));
+      game.state.add('play', require('./play')(game));
       game.state.start('splash');
     }
   };

@@ -1,6 +1,6 @@
 var stageBuilder = function stageBuilder(game) {
-  var settings = require('./data/settings.js');
-  var utils = require('./utils.js');
+  var settings = require('./data/settings');
+  var utils = require('./utils');
   var stage = utils.getStage();
 
   game.stage.backgroundColor = stage.backgroundColor;

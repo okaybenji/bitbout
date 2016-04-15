@@ -14,7 +14,7 @@ var Play = function(game) {
       self.victoryMsg.animations.add('Purple', [3, 7, 11, 15], 32/3, true);
 
       // menu
-      var buildMenu = require('../menu.js');
+      var buildMenu = require('../menu');
       buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
 
       self.restart();
@@ -27,10 +27,10 @@ var Play = function(game) {
 
     restart: function restart() {
       var self = this;
-      var players = require('../data/players.js')(game);
+      var players = require('../data/players')(game);
       var settings = require('../data/settings');
-      var utils = require('../utils.js');
-      var stageBuilder = require('../stageBuilder.js')(game);
+      var utils = require('../utils');
+      var stageBuilder = require('../stageBuilder')(game);
       var stage = utils.getStage();
 
       // destroy and rebuild stage and players
@@ -83,7 +83,7 @@ var Play = function(game) {
             }, 3000);
           }
         };
-        var createPlayer = require('../player.js');
+        var createPlayer = require('../player');
         var newPlayer = self.players.add(createPlayer(game, player, checkForGameOver));
         var pos = stage.spawnPoints[i];
         newPlayer.position.x = pos.x;
