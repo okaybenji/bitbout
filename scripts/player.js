@@ -256,6 +256,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         }
         clearInterval(whiteInterval);
         clearInterval(colorInterval);
+        setColor(settings.color); // ensure player color returns to normal
         player.isCollidable = true;
       }, 1500);
     },
