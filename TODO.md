@@ -7,9 +7,11 @@
 * gzip/zopfli libopenmpt
 * add animation for player losing scarf
 * create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module, and be sure to include phaser so client doesn't need internet access to play!)
+* write task to build itch.io and native app releases for you!
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
+* standardize require statements (remove all '.js')
 
 ### art
 * title screen BG?
@@ -18,7 +20,8 @@
 * animate bg art
 
 ### music / sfx
-* fix SFX bug: jump sound sometimes rings out indefinitely... maybe just use tracker files for SFX?
+* have toggle music on/off separate from changing music tracks (so changing/restarting level doesn't turn off music back on)
+* instead of creating a new chiptune.js every time a sound plays, just have one per sound file (so the same sound will interrupt itself)
 * add SFX for round start and game over/victory msg
 
 ### phaser
