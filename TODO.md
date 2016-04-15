@@ -11,7 +11,6 @@
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
-* standardize require statements (remove all '.js')
 
 ### art
 * title screen BG?
@@ -20,7 +19,7 @@
 * animate bg art
 
 ### music / sfx
-* have toggle music on/off separate from changing music tracks (so changing/restarting level doesn't turn off music back on)
+* have toggle music on/off separate from changing music tracks (so changing level doesn't turn off music back on)
 * add SFX for round start and game over/victory msg
 
 ### phaser

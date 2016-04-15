@@ -77,6 +77,7 @@ var Play = function(game) {
           if (alivePlayers.length === 1) {
             self.victoryMsg.play(alivePlayers[0]);
             self.victoryMsg.visible = true;
+            game.sfx.play('victory');
             setTimeout(function() {
               self.victoryMsg.visible = false;
               self.restart();
@@ -97,6 +98,8 @@ var Play = function(game) {
 
       self.foreground = stageBuilder.buildForeground();
       game.subUi.add(self.foreground);
+
+      game.sfx.play('roundStart');
     },
 
     update: function update() {
