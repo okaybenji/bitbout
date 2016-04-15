@@ -207,9 +207,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       }
 
       if (player.hp > 0) {
-        setTimeout(function() {
-          actions.applyInvulnerability();
-        }, 100); // delay invuln so players don't spawn behind one another
+        actions.applyInvulnerability();
 
         game.sfx.play('die');
         actions.endAttack();
