@@ -21,7 +21,6 @@
 
 ### music / sfx
 * have toggle music on/off separate from changing music tracks (so changing/restarting level doesn't turn off music back on)
-* instead of creating a new chiptune.js every time a sound plays, just have one per sound file (so the same sound will interrupt itself)
 * add SFX for round start and game over/victory msg
 
 ### phaser
