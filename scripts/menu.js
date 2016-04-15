@@ -37,7 +37,7 @@ var buildMenu = function buildMenu(game, state) {
       if (selectedStage.theme) {
         settings.bgm.selected = selectedStage.theme;
       }
-      game.bgm.play(settings.bgm.selected);;
+      game.bgm.play(settings.bgm.selected);
 
       state.restart();
     },

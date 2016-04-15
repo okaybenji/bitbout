@@ -20,6 +20,9 @@ var Play = function(game) {
       self.restart();
       game.physics.startSystem(Phaser.Physics.ARCADE);
       game.input.gamepad.start();
+
+      var settings = require('../data/settings')
+      game.bgm.play(settings.bgm.selected);
     },
 
     restart: function restart() {
