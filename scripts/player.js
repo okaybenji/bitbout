@@ -285,7 +285,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       actions.takeDamage(2);
     }
 
-    if (player.body.velocity.y > 75) {
+    if (player.body.velocity.y > 85) {
       player.isFalling = true;
     }
 
