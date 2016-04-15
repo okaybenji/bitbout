@@ -109,7 +109,22 @@ var Play = function(game) {
     update: function update() {
       var self = this;
       
-      game.physics.arcade.collide(this.players, this.platforms);
+      game.physics.arcade.collide(this.players, this.platforms, function handlePlatformCollision(player, platform) {
+        if (player.body.touching.down && player.isFalling) {
+          player.isFalling = false;
+          // kick up dust
+          var dust = game.add.sprite(0, 0, 'land');
+          dust.position.x = player.body.position.x - 4;
+          dust.position.y = player.body.position.y + player.body.height - 2;
+
+          var anim = dust.animations.add('dust');
+          dust.animations.play('dust', 32/3);
+          anim.onComplete.add(function() {
+            dust.kill();
+          }, this);
+        }
+      });
+
       // TODO: how do i do this on the player itself without access to players? or should i add a ftn to player and set that as the cb?
       game.physics.arcade.collide(this.players, this.players, function handlePlayerCollision(playerA, playerB) {
          /* let's not knock anybody around if something's on one of these dudes'/dudettes' heads.
