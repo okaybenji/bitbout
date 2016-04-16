@@ -49,13 +49,14 @@ var Play = function(game) {
       destroyGroup(self.players);
       destroyGroup(self.platforms);
       destroyGroup(self.backgrounds);
+      destroyGroup(self.foregrounds);
 
       // TODO: ugh, clean this up!
       if (self.backgrounds && self.backgrounds.loop) {
         game.time.events.remove(self.backgrounds.loop);
       }
-      if (self.foreground) {
-        self.foreground.destroy();
+      if (self.foregrounds && self.foregrounds.loop) {
+        game.time.events.remove(self.foregrounds.loop);
       }
 
       self.platforms = stageBuilder.buildPlatforms();
@@ -96,8 +97,8 @@ var Play = function(game) {
         addPlayer(players[i], i);
       }
 
-      self.foreground = stageBuilder.buildForeground();
-      game.subUi.add(self.foreground);
+      self.foregrounds = stageBuilder.buildForegrounds();
+      game.subUi.add(self.foregrounds);
 
       game.sfx.play('roundStart');
     },

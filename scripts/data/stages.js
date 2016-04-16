@@ -1,6 +1,6 @@
 var stages = [{
-  "name": "A",
-  "theme": "None",
+  "name": "Waterfall0",
+  "theme": "waterfall",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -17,8 +17,13 @@ var stages = [{
     ],
     "color": "yellow"
   },
-  "backgrounds": [],
-  "foreground": "clear",
+  "backgrounds": [{
+    "image": "waterfall0",
+  }],
+  "foregrounds": [{
+    "image": "clouds",
+    "scrolling": true,
+  }],
   "spawnPoints": [
     { "x": 14, "y": 0 },
     { "x": 48, "y": 0 },
@@ -46,7 +51,9 @@ var stages = [{
     "color": "gray"
   },
   "backgrounds": [],
-  "foreground": "clear",
+  "foregrounds": [{
+    "image": "clear"
+  }],
   "spawnPoints": [
     { "x": 14, "y": 6 },
     { "x": 48, "y": 6 },
@@ -70,9 +77,11 @@ var stages = [{
     "color": "gray"
   },
   "backgrounds": [{
-    image: 'hangar'
+    image: "hangar"
   }],
-  "foreground": "clear",
+  "foregrounds": [{
+    "image": "clear",
+  }],
   "spawnPoints": [
     { "x": 10, "y": 27 },
     { "x": 19, "y": 27 },
@@ -97,7 +106,9 @@ var stages = [{
   "backgrounds": [{
     image: 'waterfall'
   }],
-  "foreground": "clear",
+  "foregrounds": [{
+    "image": "clear"
+  }],
   "spawnPoints": [
     { "x": 14, "y": 6 },
     { "x": 48, "y": 6 },

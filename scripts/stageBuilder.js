@@ -31,34 +31,31 @@ var stageBuilder = function stageBuilder(game) {
     return platforms;
   };
 
-  var buildBackgrounds = function buildBackgrounds() {
-    var backgrounds = game.add.group();
+  var buildLayer = function buildLayer(sublayers) {
+    return function() {
+      var layer = game.add.group();
 
-    stage.backgrounds.forEach(function(layer) {
-      var bg;
-      if (layer.scrolling) {
-        bg = game.add.tileSprite(0, 0, game.width, game.height, layer.image);
-        backgrounds.loop = game.time.events.loop(Phaser.Timer.QUARTER, function() {
-          bg.tilePosition.x -=1;
-        }, this);
-      } else {
-        bg = game.add.sprite(0, 0, layer.image);
-      }
-      backgrounds.add(bg);
-    });
-    
-    return backgrounds;
-  };
+      sublayers.forEach(function(sublayer) {
+        var bg;
+        if (sublayer.scrolling) {
+          bg = game.add.tileSprite(0, 0, game.width, game.height, sublayer.image);
+          layer.loop = game.time.events.loop(Phaser.Timer.QUARTER, function() {
+            bg.tilePosition.x -=1;
+          }, this);
+        } else {
+          bg = game.add.sprite(0, 0, sublayer.image);
+        }
+        layer.add(bg);
+      });
 
-  var buildForeground = function() {
-    var foreground = game.add.sprite(0, 0, stage.foreground);
-    return foreground;
+    return layer;
+    };
   };
   
   return {
     buildPlatforms: buildPlatforms,
-    buildForeground: buildForeground,
-    buildBackgrounds: buildBackgrounds
+    buildForegrounds: buildLayer(stage.foregrounds),
+    buildBackgrounds: buildLayer(stage.backgrounds),
   };
 };
 
