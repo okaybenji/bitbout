@@ -56,13 +56,14 @@ var Play = function(game) {
       destroyGroup(self.players);
       destroyGroup(self.platforms);
       destroyGroup(self.backgrounds);
+      destroyGroup(self.foregrounds);
 
       // TODO: ugh, clean this up!
       if (self.backgrounds && self.backgrounds.loop) {
         game.time.events.remove(self.backgrounds.loop);
       }
-      if (self.foreground) {
-        self.foreground.destroy();
+      if (self.foregrounds && self.foregrounds.loop) {
+        game.time.events.remove(self.foregrounds.loop);
       }
 
       self.platforms = stageBuilder.buildPlatforms();
@@ -72,6 +73,9 @@ var Play = function(game) {
 
       self.players = game.add.group();
       game.subUi.add(self.players);
+
+      game.subUi.fx = game.add.group();
+      game.subUi.add(game.subUi.fx);
 
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
@@ -105,8 +109,8 @@ var Play = function(game) {
         addPlayer(players[i], i);
       }
 
-      self.foreground = stageBuilder.buildForeground();
-      game.subUi.add(self.foreground);
+      self.foregrounds = stageBuilder.buildForegrounds();
+      game.subUi.add(self.foregrounds);
 
       game.sfx.play('roundStart');
     },
@@ -119,7 +123,7 @@ var Play = function(game) {
           player.isFalling = false;
           // kick up dust
           var dust = game.add.sprite(0, 0, 'land');
-          game.subUi.add(dust);
+          game.subUi.fx.add(dust);
           dust.position.x = player.body.position.x - 4;
           dust.position.y = player.body.position.y + player.body.height - 2;
 

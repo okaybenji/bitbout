@@ -25,6 +25,8 @@ var Loading = function(game) {
       game.load.image('green', 'images/green.png');
       game.load.image('gray', 'images/gray.png');
       game.load.image('brown', 'images/brown.png');
+      game.load.image('clouds', 'images/clouds.png');
+      game.load.image('waterfall0', 'images/waterfall0.gif');
       game.load.image('waterfall', 'images/waterfall.gif');
       game.load.image('hangar', 'images/level-hangar-wip.gif');
 

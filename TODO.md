@@ -6,7 +6,6 @@
 ### misc
 * remove reference to webkitAudioContext in index.html
 * gzip/zopfli libopenmpt
-* add animation for player losing scarf
 * create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module, and be sure to include phaser so client doesn't need internet access to play!)
 * write task to build itch.io and native app releases for you!
 * consider requiring everything in one place and using dependency injection everywhere else
@@ -14,6 +13,7 @@
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
 
 ### art
+* add animation for player losing scarf
 * title screen BG?
 * jump/land FX
 * levels A & B bg art
