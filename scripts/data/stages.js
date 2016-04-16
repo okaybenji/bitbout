@@ -1,5 +1,5 @@
 var stages = [{
-  "name": "Waterfall0",
+  "name": "Waterfall",
   "theme": "waterfall",
   "backgroundColor": "#000",
   "platforms": {
@@ -15,10 +15,10 @@ var stages = [{
       [10, 62],
       [45, 62]
     ],
-    "color": "yellow"
+    "color": "white"
   },
   "backgrounds": [{
-    "image": "waterfall0",
+    "image": "waterfall",
   }],
   "foregrounds": [{
     "image": "clouds",
@@ -32,28 +32,28 @@ var stages = [{
   ],
   "uiColor": "#28F129"
 },{
-  "name": "B",
+  "name": "Forest",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
       [27, 6],
       [10, 13],
-      [45, 13],
-      [4, 22],
-      [50, 22],
+      [44, 13],
+      [5, 22],
+      [49, 22],
       [18, 31],
       [27, 31],
-      [37, 31],
-      [4, 44],
-      [50, 44],
+      [36, 31],
+      [5, 44],
+      [49, 44],
       [27, 60]
     ],
-    "color": "gray"
+    "color": "white"
   },
-  "backgrounds": [],
-  "foregrounds": [{
-    "image": "clear"
+  "backgrounds": [{
+    "image": "forest"
   }],
+  "foregrounds": [],
   "spawnPoints": [
     { "x": 14, "y": 6 },
     { "x": 48, "y": 6 },
@@ -74,7 +74,7 @@ var stages = [{
       [41, 34],
       [46, 34],
     ],
-    "color": "gray"
+    "color": "white"
   },
   "backgrounds": [{
     image: "hangar"
@@ -90,21 +90,21 @@ var stages = [{
   ],
   "uiColor": "#8D8D8D"
 },{
-  "name": "Waterfall",
+  "name": "Tomb",
   "theme": "waterfall",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
       [10, 13],
-      [45, 13],
+      [44, 13],
       [27, 21],
       [10, 31],
-      [45, 31]
+      [44, 31]
     ],
-    "color": "brown"
+    "color": "white"
   },
   "backgrounds": [{
-    image: 'waterfall'
+    image: 'tomb'
   }],
   "foregrounds": [{
     "image": "clear"

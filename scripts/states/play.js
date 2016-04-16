@@ -13,6 +13,8 @@ var Play = function(game) {
       self.victoryMsg.animations.add('Green', [2, 6, 10, 14], 32/3, true);
       self.victoryMsg.animations.add('Purple', [3, 7, 11, 15], 32/3, true);
 
+      self.timeouts = []; // store game timeouts to cancel if game restarts
+
       // menu
       var buildMenu = require('../menu');
       buildMenu(game, self); // TODO: is there a better approach than injecting the whole state into the menu to let it access functions for resetting stage, players, music?
@@ -32,6 +34,11 @@ var Play = function(game) {
       var utils = require('../utils');
       var stageBuilder = require('../stageBuilder')(game);
       var stage = utils.getStage();
+
+      // cancel any timeouts from the last game
+      self.timeouts.forEach(function(timeout) {
+        clearTimeout(timeout);
+      });
 
       // destroy and rebuild stage and players
       var destroyGroup = function destroyGroup(group) {
@@ -84,8 +91,10 @@ var Play = function(game) {
             game.sfx.play('victory');
             setTimeout(function() {
               self.victoryMsg.visible = false;
-              self.restart();
             }, 3000);
+            self.timeouts.push(setTimeout(function() {
+              self.restart();
+            }, 3000));
           }
         };
         var createPlayer = require('../player');
@@ -137,9 +146,9 @@ var Play = function(game) {
 
         function temporarilyDisableCollision(player) {
           player.isCollidable = false;
-          setTimeout(function() {
+          self.timeouts.push(setTimeout(function() {
             player.isCollidable = true;
-          }, 100);
+          }, 100));
         }
 
         function bounce() {

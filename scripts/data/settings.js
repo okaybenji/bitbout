@@ -7,13 +7,13 @@ var settings = {
   },
   bgm: {
     options: ['hangar', 'waterfall', 'title', 'None'],
-    selected: 'hangar',
+    selected: 'waterfall',
   },
   stage: {
     options: stages.map(function(stage) {
       return stage.name;
     }),
-    selected: 'Hangar',
+    selected: 'Forest',
   }
 };
 
