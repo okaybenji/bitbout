@@ -4,7 +4,7 @@ var resize = function resize() {
 
 var main = {
   preload: function preload() {
-    var utils = require('./utils.js');
+    var utils = require('./utils');
 
     resize();
     window.onresize = utils.debounce(resize, 100);
@@ -20,7 +20,7 @@ var main = {
   },
 
   create: function create() {
-    game.state.add('loading', require('./states/loading.js')(game));
+    game.state.add('loading', require('./states/loading')(game));
     game.state.start('loading');
   }
 };

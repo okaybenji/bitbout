@@ -1,7 +1,7 @@
 var Splash = function(game) {
   var splash = {
     create: function() {
-      game.bgm.play('title.xm');
+      game.bgm.play('title');
       game.add.sprite(0, 0, 'hangar');
       var title = game.add.sprite(0, 0, 'title');
       title.animations.add('title');
