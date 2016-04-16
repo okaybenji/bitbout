@@ -13,7 +13,6 @@
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
 
 ### art
-* put player FX on layer below foreground
 * add animation for player losing scarf
 * title screen BG?
 * jump/land FX

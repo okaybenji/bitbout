@@ -67,6 +67,9 @@ var Play = function(game) {
       self.players = game.add.group();
       game.subUi.add(self.players);
 
+      game.subUi.fx = game.add.group();
+      game.subUi.add(game.subUi.fx);
+
       var addPlayer = function addPlayer(player) {
         var checkForGameOver = function checkForGameOver() {
           var alivePlayers = [];
@@ -111,7 +114,7 @@ var Play = function(game) {
           player.isFalling = false;
           // kick up dust
           var dust = game.add.sprite(0, 0, 'land');
-          game.subUi.add(dust);
+          game.subUi.fx.add(dust);
           dust.position.x = player.body.position.x - 4;
           dust.position.y = player.body.position.y + player.body.height - 2;
 
