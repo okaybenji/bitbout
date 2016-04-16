@@ -29,8 +29,9 @@ var Loading = function(game) {
       game.load.image('hangar', 'images/level-hangar-wip.gif');
 
       // sound
-      game.bgm = require('../music')();
-      game.sfx = require('../sfx')();
+      var audioCtx = new AudioContext();
+      game.bgm = require('../music')(audioCtx);
+      game.sfx = require('../sfx')(audioCtx);
     },
 
     create: function() {
