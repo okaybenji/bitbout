@@ -82,7 +82,7 @@ var stages = [{
   "uiColor": "#8D8D8D"
 },{
   "name": "Waterfall",
-  "theme": "title",
+  "theme": "waterfall",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
