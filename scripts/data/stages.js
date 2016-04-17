@@ -1,6 +1,6 @@
 var stages = [{
   "name": "Waterfall",
-  "theme": "forest",
+  "theme": "waterfall",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
