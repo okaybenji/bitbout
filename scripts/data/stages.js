@@ -94,7 +94,10 @@ var stages = [{
     "color": "white"
   },
   "backgrounds": [{
-    image: 'tomb'
+    "image": "tomb"
+  },{
+    "image": "tombBg",
+    "animated": true
   }],
   "foregrounds": [{
     "image": "clear"

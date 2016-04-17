@@ -26,11 +26,12 @@ var Loading = function(game) {
       game.load.image('green', 'images/colors/green.gif');
       game.load.image('purple', 'images/colors/purple.gif');
       // forest
-      game.load.image('forest', 'images/arenas/forest-summer.gif');
+      game.load.image('forest', 'images/arenas/forest.gif');
       game.load.image('forestBg1', 'images/arenas/forest-bg1.gif');
       game.load.image('forestBg2', 'images/arenas/forest-bg2.gif');
       // tomb
-      game.load.image('tomb', 'images/arenas/tomb-warm.gif');
+      game.load.image('tomb', 'images/arenas/tomb.gif');
+      game.load.spritesheet('tombBg', 'images/arenas/tomb-bg.gif', 64, 64);
       // waterfall
       game.load.image('waterfall', 'images/arenas/waterfall.gif');
       game.load.spritesheet('waterfallAnim', 'images/arenas/waterfall-anim.gif', 64, 64);
