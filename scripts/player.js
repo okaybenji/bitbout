@@ -191,9 +191,9 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       if (player.hp === 0) {
         return; // bit's becoming a ghost; leaves its scarf (or lack thereof) alone
       } else if (player.hp % 2 === 1) {
-        player.scarf.visible = false;
+        player.scarf.animation = player.scarf.animations.play('disintegrate', 32/3, false);
       } else {
-        player.scarf.visible = true;
+        player.scarf.animation = player.scarf.animations.play('flap', 32/3, true);
       }
     },
 
@@ -268,8 +268,9 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.anchor.setTo(0.5, 0.5); // anchor to center to allow flipping
 
   player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
-  player.scarf.animations.add('scarf');
-  player.scarf.animation = player.scarf.animations.play('scarf', 32/3, true);
+  player.scarf.animations.add('flap', [0, 1, 2, 3, 4, 5]);
+  player.scarf.animations.add('disintegrate', [7, 8, 9, 10, 11, 6]);
+  player.scarf.animation = player.scarf.animations.play('flap', 32/3, true);
   player.scarf.setScaleMinMax(-1, 1, 1, 1);
   player.addChild(player.scarf);
 

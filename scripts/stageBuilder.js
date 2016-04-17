@@ -37,6 +37,7 @@ var stageBuilder = function stageBuilder(game) {
 
       sublayers.forEach(function(sublayer) {
         var bg;
+
         if (sublayer.scrolling) {
           bg = game.add.tileSprite(0, 0, game.width, game.height, sublayer.image);
           layer.loop = game.time.events.loop(Phaser.Timer.QUARTER, function() {
@@ -45,10 +46,16 @@ var stageBuilder = function stageBuilder(game) {
         } else {
           bg = game.add.sprite(0, 0, sublayer.image);
         }
+
+        if (sublayer.animated) {
+          bg.animations.add('bg');
+          bg.animations.play('bg', 32/3, true);
+        }
+
         layer.add(bg);
       });
 
-    return layer;
+      return layer;
     };
   };
   

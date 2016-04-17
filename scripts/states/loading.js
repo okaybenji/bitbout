@@ -7,29 +7,28 @@ var Loading = function(game) {
 
     preload: function() {
       // images
-      game.load.spritesheet('title', 'images/spritesheet-title.gif', 64, 64);
-      game.load.spritesheet('victoryMsg', 'images/spritesheet-winner.gif', 52, 22);
-      game.load.spritesheet('blueScarf', 'images/spritesheet-scarf-bluebit.gif', 5, 2);
-      game.load.spritesheet('pinkScarf', 'images/spritesheet-scarf-pinkbit.gif', 5, 2);
-      game.load.spritesheet('greenScarf', 'images/spritesheet-scarf-greenbit.gif', 5, 2);
-      game.load.spritesheet('purpleScarf', 'images/spritesheet-scarf-purplebit.gif', 5, 2);
-      game.load.spritesheet('jump', 'images/spritesheet-jump.gif', 10, 2);
-      game.load.spritesheet('land', 'images/spritesheet-land.gif', 10, 2);
-      game.load.image('clear', 'images/clear.png');
-      game.load.image('white', 'images/white.png');
-      game.load.image('pink', 'images/pink.png');
-      game.load.image('yellow', 'images/yellow.png');
-      game.load.image('blue', 'images/blue.png');
-      game.load.image('purple', 'images/purple.png');
-      game.load.image('orange', 'images/orange.png');
-      game.load.image('green', 'images/green.png');
-      game.load.image('gray', 'images/gray.png');
-      game.load.image('brown', 'images/brown.png');
-      game.load.image('clouds', 'images/clouds.png');
-      game.load.image('forest', 'images/forest-summer.gif');
-      game.load.image('tomb', 'images/tomb-warm.gif');
-      game.load.image('waterfall', 'images/waterfall0.gif');
-      game.load.image('hangar', 'images/level-hangar-wip.gif');
+      game.load.spritesheet('title', 'images/sprites/ui-title.gif', 64, 64);
+      game.load.spritesheet('victoryMsg', 'images/sprites/ui-winner.gif', 52, 22);
+      game.load.spritesheet('blueScarf', 'images/sprites/bit-scarf-blue.gif', 5, 2);
+      game.load.spritesheet('pinkScarf', 'images/sprites/bit-scarf-pink.gif', 5, 2);
+      game.load.spritesheet('greenScarf', 'images/sprites/bit-scarf-green.gif', 5, 2);
+      game.load.spritesheet('purpleScarf', 'images/sprites/bit-scarf-purple.gif', 5, 2);
+      game.load.spritesheet('jump', 'images/sprites/bit-jump.gif', 10, 2);
+      game.load.spritesheet('land', 'images/sprites/bit-land.gif', 10, 2);
+      // colors
+      game.load.image('clear', 'images/colors/clear.gif');
+      game.load.image('white', 'images/colors/white.gif');
+      game.load.image('blue', 'images/colors/blue.gif');
+      game.load.image('pink', 'images/colors/pink.gif');
+      game.load.image('green', 'images/colors/green.gif');
+      game.load.image('purple', 'images/colors/purple.gif');
+      // arenas
+      game.load.image('forest', 'images/arenas/forest-summer.gif');
+      game.load.image('tomb', 'images/arenas/tomb-warm.gif');
+      game.load.image('waterfall', 'images/arenas/waterfall.gif');
+      game.load.spritesheet('waterfallAnim', 'images/arenas/waterfall-anim.gif', 64, 64);
+      game.load.spritesheet('waterfallFg', 'images/arenas/waterfall-fg.png', 64, 64);
+      game.load.image('hangar', 'images/arenas/level-hangar-wip.gif');
 
       // sound
       game.bgm = require('../music')();

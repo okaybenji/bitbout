@@ -19,11 +19,15 @@ var stages = [{
   },
   "backgrounds": [{
     "image": "waterfall",
+  },
+  {
+    "image": "waterfallAnim",
+    "animated": true,
   }],
-  "foregrounds": [{
-    "image": "clouds",
+  "foregrounds": [/*{
+    "image": "waterfallFg",
     "scrolling": true,
-  }],
+  }*/],
   "spawnPoints": [
     { "x": 14, "y": 0 },
     { "x": 48, "y": 0 },
