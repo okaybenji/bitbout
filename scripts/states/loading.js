@@ -1,7 +1,10 @@
 var Loading = function(game) {
   var loading = {
     init: function() {
-      game.add.sprite(0, 0, 'loading');
+      var loading = game.add.sprite(26, 29, 'loading');
+      loading.animations.add('loading');
+      loading.animations.play('loading');
+
       document.getElementById('loading').style.display = 'none';
     },
 

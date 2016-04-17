@@ -16,7 +16,7 @@ var main = {
     game.stage.disableVisibilityChange = true;
     
     // assets used in loading screen
-    game.load.image('loading', 'images/loading.gif');
+    game.load.spritesheet('loading', 'images/sprites/ui-loading.gif', 11, 6);
   },
 
   create: function create() {
