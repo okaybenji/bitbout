@@ -95,7 +95,12 @@ var stages = [{
     "color": "white"
   },
   "backgrounds": [{
-    image: "hangar"
+    "image": "hangar"
+  }, {
+    "image": "hangarBg",
+    "animated": true,
+    "frames": [0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 1],
+    "animSpeed": 10,
   }],
   "foregrounds": [{
     "image": "clear",

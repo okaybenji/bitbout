@@ -48,7 +48,11 @@ var stageBuilder = function stageBuilder(game) {
         }
 
         if (sublayer.animated) {
-          bg.animations.add('bg');
+          if (sublayer.frames) {
+            bg.animations.add('bg', sublayer.frames);
+          } else {
+            bg.animations.add('bg');
+          }
           bg.animations.play('bg', sublayer.animSpeed || 32/3, true);
         }
 
