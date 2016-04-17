@@ -1,6 +1,6 @@
 var stages = [{
   "name": "Waterfall",
-  "theme": "waterfall",
+  "theme": "forest",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -41,6 +41,7 @@ var stages = [{
   "uiColor": "#28F129"
 },{
   "name": "Forest",
+  "theme": "forest",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
@@ -108,7 +109,7 @@ var stages = [{
   "uiColor": "#8D8D8D"
 },{
   "name": "Tomb",
-  "theme": "waterfall",
+  "theme": "tomb",
   "backgroundColor": "#000",
   "platforms": {
     "positions": [
