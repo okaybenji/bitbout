@@ -6,8 +6,8 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['hangar', 'waterfall', 'title', 'None'],
-    selected: 'waterfall',
+    options: ['forest', 'hangar', 'tomb', 'None'],
+    selected: 'forest',
   },
   stage: {
     options: stages.map(function(stage) {
