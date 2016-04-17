@@ -1,6 +1,6 @@
 {
   "name": "bitbout",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A single-screen, local competitive platformer.",
   "main": "bundle.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "url": "https://github.com/okaybenji/bitbout.git"
   },
   "author": "Benji Kay <okaybenji@gmail.com> (http://benjikay.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/okaybenji/bitbout/issues"
   },
