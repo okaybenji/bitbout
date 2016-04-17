@@ -13,15 +13,11 @@
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
 
 ### art
-* add animation for player losing scarf
 * title screen BG?
-* jump/land FX
-* levels A & B bg art
-* animate bg art
 
 ### music / sfx
+* add themes for remaining levels
 * have toggle music on/off separate from changing music tracks (so changing level doesn't turn off music back on)
-* add SFX for round start and game over/victory msg
 
 ### phaser
 * there appears to be a bug in phaser's physics.arcade.collide's processCallback; it should pass colliding objects as args 1 and 2 in the same order as collideCallback. logging the objects' positions shows two different (correct) positions in collideCallback, but shows the same positions in processCallback.
