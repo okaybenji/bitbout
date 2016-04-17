@@ -132,6 +132,7 @@ var stages = [{
   }, {
     "image": "hangarBg2",
     "animated": true,
+    "animSpeed": 96/3,
   }],
   "foregrounds": [{
     "image": "clear",
