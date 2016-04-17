@@ -36,8 +36,9 @@ var Loading = function(game) {
       game.load.spritesheet('waterfallAnim', 'images/arenas/waterfall-anim.gif', 64, 64);
       game.load.spritesheet('waterfallFg', 'images/arenas/waterfall-fg-anim.gif', 64, 64);
       // hangar
-      game.load.image('hangar', 'images/arenas/hangar.gif');
-      game.load.spritesheet('hangarBg', 'images/arenas/hangar-bg.gif', 64, 64);
+      game.load.image('hangar', 'images/arenas/shaft.gif');
+      game.load.spritesheet('hangarBg1', 'images/arenas/shaft-bg1.gif', 64, 64);
+      game.load.spritesheet('hangarBg2', 'images/arenas/shaft-bg2.gif', 64, 64);
 
       // sound
       game.bgm = require('../music')();

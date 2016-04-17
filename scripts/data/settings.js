@@ -6,7 +6,7 @@ var settings = {
     selected: 4,
   },
   bgm: {
-    options: ['forest', 'hangar', 'tomb', 'waterfall', 'None'],
+    options: ['forest', 'waterfall', 'tomb', 'hangar', 'None'],
     selected: 'forest',
   },
   stage: {

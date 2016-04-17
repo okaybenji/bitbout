@@ -16,7 +16,6 @@
 * title screen BG?
 
 ### music / sfx
-* add themes for remaining levels
 * have toggle music on/off separate from changing music tracks (so changing level doesn't turn off music back on)
 
 ### phaser
