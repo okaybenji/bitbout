@@ -29,7 +29,8 @@ var stages = [{
     "animated": true,
     "animSpeed": 32/16,
     "scrolling": true,
-    "alpha": 0.97,
+    "pulse": true,
+    "minAlpha": 0.95
   }],
   "spawnPoints": [
     { "x": 14, "y": 0 },
@@ -62,12 +63,12 @@ var stages = [{
   }, {
     "image": "forestBg1",
     "pulse": true,
-    "pulseDuration": 8000,
+    "pulseDuration": 4000,
   }, {
     "image": "forestBg2",
     "pulse": true,
-    "pulseDelay": 6000,
-    "pulseDuration": 10000,
+    "pulseDelay": 3000,
+    "pulseDuration": 5000,
   }],
   "foregrounds": [],
   "spawnPoints": [
