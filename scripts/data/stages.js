@@ -83,6 +83,7 @@ var stages = [{
   "name": "Hangar",
   "theme": "hangar",
   "backgroundColor": "#000",
+  "gravity": 150,
   "platforms": {
     "positions": [
       [8, 34],

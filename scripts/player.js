@@ -282,7 +282,16 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   game.physics.arcade.enable(player);
   player.body.collideWorldBounds = true;
   player.body.bounce.y = 0.2; // TODO: allow bounce configuration
-  player.body.gravity.y = 380; // TODO: allow gravity configuration
+
+  // if stage has a gravity setting, use that
+  var gameSettings = require('./data/settings');
+  var stages = require('./data/stages');
+  var selectedStage = stages[gameSettings.stage.options.indexOf(gameSettings.stage.selected)];
+  if (selectedStage.gravity) {
+    player.body.gravity.y = selectedStage.gravity;
+  } else {
+    player.body.gravity.y = 380;
+  }
 
   player.upWasDown = false; // track input change for variable jump height
   player.isFalling = false;
