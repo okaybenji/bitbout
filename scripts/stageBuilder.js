@@ -53,13 +53,13 @@ var stageBuilder = function stageBuilder(game) {
         }
 
         if (sublayer.pulse) {
-          bg.alpha = 1;
           var repeat = -1;
           var autostart = true;
           var yoyo = true;
           var duration = sublayer.pulseDuration || 2000;
           var delay = sublayer.pulseDelay || 0;
-          game.add.tween(bg).to({ alpha: 0 }, duration, Phaser.Easing.Linear.None, autostart, delay, repeat, yoyo);
+          var minAlpha = sublayer.minAlpha || 0;
+          game.add.tween(bg).to({ alpha: minAlpha }, duration, Phaser.Easing.Linear.None, autostart, delay, repeat, yoyo);
         }
 
         bg.alpha = sublayer.alpha || 1;
