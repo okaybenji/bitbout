@@ -49,8 +49,20 @@ var stageBuilder = function stageBuilder(game) {
 
         if (sublayer.animated) {
           bg.animations.add('bg');
-          bg.animations.play('bg', 32/3, true);
+          bg.animations.play('bg', sublayer.animSpeed || 32/3, true);
         }
+
+        if (sublayer.pulse) {
+          bg.alpha = 1;
+          var repeat = -1;
+          var autostart = true;
+          var yoyo = true;
+          var duration = sublayer.pulseDuration || 2000;
+          var delay = sublayer.pulseDelay || 0;
+          game.add.tween(bg).to({ alpha: 0 }, duration, Phaser.Easing.Linear.None, autostart, delay, repeat, yoyo);
+        }
+
+        bg.alpha = sublayer.alpha || 1;
 
         layer.add(bg);
       });

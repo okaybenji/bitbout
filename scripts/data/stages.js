@@ -24,10 +24,13 @@ var stages = [{
     "image": "waterfallAnim",
     "animated": true,
   }],
-  "foregrounds": [/*{
+  "foregrounds": [{
     "image": "waterfallFg",
+    "animated": true,
+    "animSpeed": 32/16,
     "scrolling": true,
-  }*/],
+    "alpha": 0.97,
+  }],
   "spawnPoints": [
     { "x": 14, "y": 0 },
     { "x": 48, "y": 0 },
@@ -56,6 +59,15 @@ var stages = [{
   },
   "backgrounds": [{
     "image": "forest"
+  }, {
+    "image": "forestBg1",
+    "pulse": true,
+    "pulseDuration": 8000,
+  }, {
+    "image": "forestBg2",
+    "pulse": true,
+    "pulseDelay": 6000,
+    "pulseDuration": 10000,
   }],
   "foregrounds": [],
   "spawnPoints": [
