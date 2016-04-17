@@ -2,7 +2,11 @@ var Splash = function(game) {
   var splash = {
     create: function() {
       game.bgm.play('title');
-      game.add.sprite(0, 0, 'hangar');
+
+      // add forest as title bg
+      var stageBuilder = require('../stageBuilder')(game);
+      stageBuilder.buildBackgrounds();
+
       var title = game.add.sprite(0, 0, 'title');
       title.animations.add('title');
       title.animations.play('title', 32/3, true);
