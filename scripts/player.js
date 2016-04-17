@@ -191,7 +191,9 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       if (player.hp === 0) {
         return; // bit's becoming a ghost; leaves its scarf (or lack thereof) alone
       } else if (player.hp % 2 === 1) {
-        player.scarf.animation = player.scarf.animations.play('disintegrate', 32/3, false);
+        if (player.scarf.animation.name !== 'disintegrate') { // only disintegrate it hasn't already
+          player.scarf.animation = player.scarf.animations.play('disintegrate', 32/3, false);
+        }
       } else {
         player.scarf.animation = player.scarf.animations.play('flap', 32/3, true);
       }
