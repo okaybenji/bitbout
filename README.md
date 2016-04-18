@@ -1,9 +1,9 @@
 # BITBOUT
 ### A single-screen, local competitive platformer
 
-2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last man or woman standing wins!
+2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last bit standing wins!
 
-Code, design and music by Benji Kay. [@okaybenji](http://twitter.com/okaybenji)
+Code, design and sound by Benji Kay. [@okaybenji](http://twitter.com/okaybenji)
 
 Art and animation by Adam Bing. [@Exciteless](http://twitter.com/Exciteless)
 
