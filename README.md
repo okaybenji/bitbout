@@ -1,4 +1,4 @@
-# BITBOUT
+![bitbout](http://okaybenji.github.io/bitbout/bitbout-icon-512.png)
 ### A single-screen, local competitive platformer
 
 2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last man or woman standing wins!
