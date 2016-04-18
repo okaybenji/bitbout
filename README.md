@@ -1,9 +1,9 @@
-# BITBOUT
+![bitbout](http://okaybenji.github.io/bitbout/bitbout-icon-512.png)
 ### A single-screen, local competitive platformer
 
-2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last bit standing wins!
+2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last man or woman standing wins!
 
-Code, design and sound by Benji Kay. [@okaybenji](http://twitter.com/okaybenji)
+Code, design and music by Benji Kay. [@okaybenji](http://twitter.com/okaybenji)
 
 Art and animation by Adam Bing. [@Exciteless](http://twitter.com/Exciteless)
 
@@ -25,6 +25,3 @@ Change the **map** with `M`<br>
 Change the number of **players** with `P`<br>
 Change the **BGM** (music) with `B`<br>
 **Restart** the game with `ENTER`
-
-# Thanks
-Special thanks to [Goldfire Studios](http://github.com/goldfire/) for giving its employees time to work on their own projects!
