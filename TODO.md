@@ -4,6 +4,7 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
+* allow pressing start/option button on controllers to start game
 * remove reference to webkitAudioContext in index.html
 * gzip/zopfli libopenmpt
 * create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module, and be sure to include phaser so client doesn't need internet access to play!)
