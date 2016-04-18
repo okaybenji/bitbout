@@ -61,13 +61,14 @@ var stages = [{
     "image": "waterfall",
   },
   {
-    "image": "waterfallAnim",
+    "image": "waterfallBg",
     "animated": true,
   }],
   "foregrounds": [{
     "image": "waterfallFg",
     "animated": true,
     "animSpeed": 32/16,
+    "frames": [0, 0, 0, 1, 2, 2, 2, 1],
     "scrolling": true,
     "pulse": true,
     "minAlpha": 0.95

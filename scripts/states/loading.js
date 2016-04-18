@@ -34,8 +34,8 @@ var Loading = function(game) {
       game.load.spritesheet('tombBg', 'images/arenas/tomb-bg.gif', 64, 64);
       // waterfall
       game.load.image('waterfall', 'images/arenas/waterfall.gif');
-      game.load.spritesheet('waterfallAnim', 'images/arenas/waterfall-anim.gif', 64, 64);
-      game.load.spritesheet('waterfallFg', 'images/arenas/waterfall-fg-anim.gif', 64, 64);
+      game.load.spritesheet('waterfallBg', 'images/arenas/waterfall-bg.gif', 64, 64);
+      game.load.spritesheet('waterfallFg', 'images/arenas/waterfall-fg.gif', 64, 64);
       // hangar
       game.load.image('hangar', 'images/arenas/shaft.gif');
       game.load.spritesheet('hangarBg1', 'images/arenas/shaft-bg1.gif', 64, 64);
