@@ -25,3 +25,6 @@ Change the **map** with `M`<br>
 Change the number of **players** with `P`<br>
 Change the **BGM** (music) with `B`<br>
 **Restart** the game with `ENTER`
+
+# Thanks
+Special thanks to [Goldfire Studios](http://github.com/goldfire/) for giving its employees time to work on their own projects!
