@@ -6,7 +6,6 @@
 ### misc
 * allow pressing start/option button on controllers to start game
 * get game working in firefox & safari. for firefox, see: http://www.photonstorm.com/phaser/pixel-perfect-scaling-a-phaser-game
-* remove reference to webkitAudioContext in index.html (use updated chiptune2.js)
 * gzip/zopfli libopenmpt
 * write task to build itch.io and native app releases for you!
 * consider requiring everything in one place and using dependency injection everywhere else
