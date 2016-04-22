@@ -53,7 +53,9 @@ var Loading = function(game) {
       game.state.add('splash', require('./splash')(game));
       game.state.add('play', require('./play')(game));
       game.state.start('splash');
-    }
+    },
+
+    render: require('../renderer')(game)
   };
   
   return loading;

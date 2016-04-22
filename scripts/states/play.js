@@ -240,7 +240,9 @@ var Play = function(game) {
         }
         return true;
       });
-    }
+    },
+
+    render: require('../renderer')(game)
   };
   
   return play;

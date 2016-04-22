@@ -1,5 +1,8 @@
 var Splash = function(game) {
   var splash = {
+    init: function() {
+      game.canvas.style.display = 'none';
+    },
     create: function() {
       game.bgm.play('title');
 
@@ -51,7 +54,9 @@ var Splash = function(game) {
         game.input.gamepad.onConnectCallback = assignStartButtons;
         game.input.gamepad.onDisconnectCallback = assignStartButtons;
       }
-    }
+    },
+
+    render: require('../renderer')(game)
   };
   
   return splash;
