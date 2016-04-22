@@ -12,7 +12,6 @@
 * allow jump through platforms from below
 
 ### misc
-* allow connecting gamepad w/o restarting
 * get game working in firefox & safari. for firefox, see: http://www.photonstorm.com/phaser/pixel-perfect-scaling-a-phaser-game
 * update itch.io releases to bitbout v1.0.1
 * gzip/zopfli libopenmpt
