@@ -1,5 +1,5 @@
-var bgm = function() {
-  var player = new ChiptuneJsPlayer(new ChiptuneJsConfig(-1));
+var bgm = function(audioCtx) {
+  var player = new ChiptuneJsPlayer(new ChiptuneJsConfig(-1, audioCtx));
 
   return {
     play: function(fileName) {
