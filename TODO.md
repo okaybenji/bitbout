@@ -3,12 +3,16 @@
 ### bugfix
 * players must reconnect their gamepads when toggling fullscreen in native app
 * investigate intermittent issue in which jump button doesn't work on one of four ps4 gamepads
+* investigate and fix error: 'openmpt: openmpt_module_read_float_stereo: ERROR: module * not valid'
 
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
+### movement
+* allow jump through platforms from below
+
 ### misc
-* allow pressing start/option button on controllers to start game and change map
+* allow connecting gamepad w/o restarting
 * get game working in firefox & safari. for firefox, see: http://www.photonstorm.com/phaser/pixel-perfect-scaling-a-phaser-game
 * update itch.io releases to bitbout v1.0.1
 * gzip/zopfli libopenmpt
