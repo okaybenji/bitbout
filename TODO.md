@@ -4,7 +4,7 @@
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
 ### misc
-* allow pressing start/option button on controllers to start game
+* allow pressing start/option button on controllers to start game and change map
 * get game working in firefox & safari. for firefox, see: http://www.photonstorm.com/phaser/pixel-perfect-scaling-a-phaser-game
 * update itch.io releases to bitbout v1.0.1
 * gzip/zopfli libopenmpt
