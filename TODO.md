@@ -1,5 +1,9 @@
 #To do
 
+### bugfix
+* players must reconnect their gamepads when toggling fullscreen in native app
+* investigate intermittent issue in which jump button doesn't work on one of four ps4 gamepads
+
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
