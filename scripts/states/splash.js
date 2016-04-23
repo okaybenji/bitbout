@@ -11,17 +11,45 @@ var Splash = function(game) {
       title.animations.add('title');
       title.animations.play('title', 32/3, true);
 
+      var padNames = ['pad1', 'pad2', 'pad3', 'pad4'];
+
+      var unassignStartButtons = function() {
+        padNames.forEach(function(padName) {
+          var startButton = game.input.gamepad[padName].getButton(Phaser.Gamepad.XBOX360_START);
+            if (startButton) {
+              startButton.onDown.forget();
+            }
+        });
+      };
+
       var startGame = function startGame() {
+        unassignStartButtons();
+
         if (game.state.current === 'splash') {
           game.bgm.play('None');
           game.state.start('play');
         }
       };
-      
+
       // start game when start/enter is pressed
+      var assignStartButtons = function() {
+        unassignStartButtons();
+
+        padNames.forEach(function(padName) {
+          var startButton = game.input.gamepad[padName].getButton(Phaser.Gamepad.XBOX360_START);
+          if (startButton) {
+            startButton.onDown.addOnce(startGame);
+          }
+        });
+      };
+
       game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.addOnce(startGame);
-      if (game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
-        game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.addOnce(startGame);
+      if (game.input.gamepad.supported) {
+        if (game.input.gamepad.active) {
+          assignStartButtons();
+        }
+        game.input.gamepad.onConnectCallback = assignStartButtons;
+        game.input.gamepad.onDisconnectCallback = assignStartButtons;
       }
     }
   };

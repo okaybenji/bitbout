@@ -42,8 +42,9 @@ var Loading = function(game) {
       game.load.spritesheet('hangarBg2', 'images/arenas/shaft-bg2.gif', 64, 64);
 
       // sound
-      game.bgm = require('../music')();
-      game.sfx = require('../sfx')();
+      var audioCtx = new AudioContext();
+      game.bgm = require('../music')(audioCtx);
+      game.sfx = require('../sfx')(audioCtx);
     },
 
     create: function() {

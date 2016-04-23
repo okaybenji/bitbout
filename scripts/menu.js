@@ -57,19 +57,36 @@ var buildMenu = function buildMenu(game, state) {
   game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(changeStage);
   game.input.keyboard.addKey(Phaser.Keyboard.B).onDown.add(changeBgm);
   game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(restart);
-  if (game.input.gamepad.supported && game.input.gamepad.active) {
-    if (game.input.gamepad.pad1.connected) {
-      game.input.gamepad.pad1.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
+
+  // allow changing map with start button on gamepad
+  var padNames = ['pad1', 'pad2', 'pad3', 'pad4'];
+
+  var unassignStartButtons = function() {
+    padNames.forEach(function(padName) {
+      var startButton = game.input.gamepad[padName].getButton(Phaser.Gamepad.XBOX360_START);
+        if (startButton) {
+          startButton.onDown.forget();
+        }
+    });
+  };
+
+  var assignStartButtons = function() {
+    unassignStartButtons();
+
+    padNames.forEach(function(padName) {
+      var startButton = game.input.gamepad[padName].getButton(Phaser.Gamepad.XBOX360_START);
+      if (startButton) {
+        startButton.onDown.add(changeStage);
+      }
+    });
+  };
+
+  if (game.input.gamepad.supported) {
+    if (game.input.gamepad.active) {
+      assignStartButtons();
     }
-    if (game.input.gamepad.pad2.connected) {
-      game.input.gamepad.pad2.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
-    }
-    if (game.input.gamepad.pad3.connected) {
-      game.input.gamepad.pad3.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
-    }
-    if (game.input.gamepad.pad4.connected) {
-      game.input.gamepad.pad4.getButton(Phaser.Gamepad.XBOX360_START).onDown.add(restart);
-    }
+    game.input.gamepad.onConnectCallback = assignStartButtons;
+    game.input.gamepad.onDisconnectCallback = assignStartButtons;
   }
 
   return menu;

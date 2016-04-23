@@ -1,16 +1,26 @@
 #To do
 
+### bugfix
+* players must reconnect their gamepads when toggling fullscreen in native app
+* investigate intermittent issue in which jump button doesn't work on one of four ps4 gamepads
+* investigate and fix error: 'openmpt: openmpt_module_read_float_stereo: ERROR: module * not valid'
+
 ### attack
 * player attacked from behind receives 2 damage, whether he is attacking or not
 
+### movement
+* allow jump through platforms from below
+
 ### misc
-* remove reference to webkitAudioContext in index.html
+* update README in binaries with correct Github source link
+* update itch.io releases to bitbout v1.0.2
 * gzip/zopfli libopenmpt
-* create native OS X / Windows / Linux app versions with Electron (require bitbout as npm module, and be sure to include phaser so client doesn't need internet access to play!)
 * write task to build itch.io and native app releases for you!
 * consider requiring everything in one place and using dependency injection everywhere else
 * add power-ups? like maybe one that does 2x damage (and can knock a player down 2 hearts).
 * physics got weird after scaling down. try scaling up resolution but sticking to 64x64 grid. EDIT: can't do this until after game jam because movement will no longer stick to the grid.
+* add a button for atari mode!
+* get game working in firefox & safari. may not be worth doing, since gamepad support is terrible in both and safari doesn't support AudioContext for chiptune2.js. see branch pixel-perfect-scaling.
 
 ### art
 * title screen BG?

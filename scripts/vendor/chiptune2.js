@@ -2,14 +2,15 @@
 ChiptuneAudioContext = AudioContext || webkitAudioContext;
 
 // config
-function ChiptuneJsConfig(repeatCount) {
+function ChiptuneJsConfig(repeatCount, context) {
   this.repeatCount = repeatCount;
+  this.context = context;
 }
 
 // player
 function ChiptuneJsPlayer(config) {
-  this.context = new ChiptuneAudioContext;
   this.config = config;
+  this.context = config.context || new ChiptuneAudioContext;
   this.currentPlayingNode = null;
   this.handlers = [];
 }
@@ -207,4 +208,3 @@ ChiptuneJsPlayer.prototype.createLibopenmptNode = function(buffer, config) {
   }
   return processNode;
 }
-

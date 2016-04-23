@@ -4,7 +4,7 @@
  * This ensures the file system is only hit once per sound, as needed.
  * It will also prevent sounds from 'stacking' -- the same sound played repeatedly will interrupt itself each time.
  */
-var sfx = function() {
+var sfx = function(audioCtx) {
   var soundbank = {};
 
   return {
@@ -12,7 +12,7 @@ var sfx = function() {
       if (soundbank[fileName]) {
         soundbank[fileName].play(soundbank[fileName].buffer);
       } else {
-        soundbank[fileName] = new ChiptuneJsPlayer(new ChiptuneJsConfig(0));
+        soundbank[fileName] = new ChiptuneJsPlayer(new ChiptuneJsConfig(0, audioCtx));
         soundbank[fileName].load('./sfx/' + fileName + '.xm', function(buffer) {
           soundbank[fileName].buffer = buffer;
           soundbank[fileName].play(buffer);
