@@ -3,6 +3,8 @@
 
 2-4 players duke it out while trying not to fall to their doom. Each player has 3 lives and limited HP. Last bit standing wins!
 
+###[Play it!](http://okaybenji.itch.io/bitbout)
+
 Code, design and sound by Benji Kay. [@okaybenji](http://twitter.com/okaybenji)
 
 Art and animation by Adam Bing. [@Exciteless](http://twitter.com/Exciteless)
