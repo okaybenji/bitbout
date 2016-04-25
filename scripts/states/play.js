@@ -6,7 +6,7 @@ var Play = function(game) {
       game.subUi = game.add.group(); // place to keep anything on-screen that's not UI to depth sort below UI
 
       // game over victory message declaring the winner
-      self.victoryMsg = game.add.sprite(6, 21, 'victoryMsg');
+      self.victoryMsg = game.add.sprite(48, 168, 'victoryMsg');
       self.victoryMsg.visible = false;
       self.victoryMsg.animations.add('Blue', [0, 4, 8, 12], 32/3, true);
       self.victoryMsg.animations.add('Pink', [1, 5, 9, 13], 32/3, true);
@@ -124,8 +124,9 @@ var Play = function(game) {
           // kick up dust
           var dust = game.add.sprite(0, 0, 'land');
           game.subUi.fx.add(dust);
-          dust.position.x = player.body.position.x - 4;
-          dust.position.y = player.body.position.y + player.body.height - 2;
+          dust.position.x = player.body.position.x - 32;
+          dust.position.y = player.body.position.y + player.body.height - 16;
+          dust.scale.setTo(8, 8);
 
           var anim = dust.animations.add('dust');
           dust.animations.play('dust', 32/3);

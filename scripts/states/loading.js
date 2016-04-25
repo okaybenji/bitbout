@@ -1,7 +1,8 @@
 var Loading = function(game) {
   var loading = {
     init: function() {
-      var loading = game.add.sprite(26, 29, 'loading');
+      var loading = game.add.sprite(208, 232, 'loading');
+      loading.scale.setTo(8, 8);
       loading.animations.add('loading');
       loading.animations.play('loading');
 

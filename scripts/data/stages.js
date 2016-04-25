@@ -150,4 +150,56 @@ var stages = [{
   "uiColor": "#8D8D8D"
 }];
 
+/**
+ * Creates a deep copy of an array (for non-destructive manipulation).
+ */
+var copyArray = function(array) {
+  if (!Array.isArray(array)) {
+    return array;
+  }
+
+  var copy = array.slice(0);
+  for (var i=0, ii=copy.length; i<ii; i++) {
+    copy[i] = copyArray(copy[i]);
+  }
+
+  return copy;
+};
+
+/**
+ * Applies passed function to passed number or all numbers in passed array or object's properties.
+ * Non-destructive. Returns new value.
+ * @param {Mixed} x object, array, or number e.g. allPays
+ * @param {Function} ftn
+ * @return {Mixed} processed object, array, or number
+ */
+var applyMath = function(x, ftn) {
+  var a; // this will hold copy of x prevent side effects
+
+  if (typeof x === 'number') {
+    a = x;
+    a = ftn(a);
+  } else if (Array.isArray(x)) { // since arrays are objects, too
+    a = copyArray(x);
+    a = a.map(function(y) {
+      return applyMath(y, ftn);
+    });
+  } else if (typeof x === 'object') {
+    a = Object.assign({}, x);
+    for (var key in a) {
+      if (a.hasOwnProperty(key)) {
+        a[key] = applyMath(a[key], ftn);
+      }
+    }
+  } else {
+    return x;
+  }
+
+  return a;
+};
+
+stages = applyMath(stages, function(x) {
+  return x *= 8;
+});
+
 module.exports = stages;

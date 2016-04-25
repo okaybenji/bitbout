@@ -12,20 +12,20 @@ var stageBuilder = function stageBuilder(game) {
     var platformPositions = stage.platforms.positions;
     platformPositions.forEach(function(position) {
       var platform = platforms.create(position[0], position[1], stage.platforms.color);
-      platform.scale.setTo(5, 1);
+      platform.scale.setTo(40, 8);
       platform.body.immovable = true;
     });
 
     var walls = [];
-    walls.push(platforms.create(-3, -12, stage.platforms.color));
-    walls.push(platforms.create(61, -12, stage.platforms.color));
+    walls.push(platforms.create(-24, -96, stage.platforms.color));
+    walls.push(platforms.create(488, -96, stage.platforms.color));
     walls.forEach(function(wall) {
-      wall.scale.setTo(3, 38);
+      wall.scale.setTo(24, 304);
       wall.body.immovable = true;
     });
 
-    var ceiling = platforms.create(0, -12, stage.platforms.color);
-    ceiling.scale.setTo(32, 3);
+    var ceiling = platforms.create(0, -96, stage.platforms.color);
+    ceiling.scale.setTo(256, 24);
     ceiling.body.immovable = true;
     
     return platforms;
@@ -67,6 +67,7 @@ var stageBuilder = function stageBuilder(game) {
         }
 
         bg.alpha = sublayer.alpha || 1;
+        bg.scale.setTo(8, 8);
 
         layer.add(bg);
       });

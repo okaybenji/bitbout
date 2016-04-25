@@ -9,8 +9,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       attack: 'SHIFT'
     },
     scale: {
-      x: 1,
-      y: 2
+      x: 8,
+      y: 16
     },
     color: 'pink',
     gamepad: game.input.gamepad.pad1,
@@ -99,15 +99,15 @@ var createPlayer = function createPlayer(game, options, onDeath) {
         player.body.velocity.y = -100;
         game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'jump');
-        dust.position.x = player.body.position.x - 4;
-        dust.position.y = player.body.position.y + player.body.height - 2;
+        dust.position.x = player.body.position.x - 32;
+        dust.position.y = player.body.position.y + player.body.height - 16;
       // wall jumps
       } else if (player.body.touching.left) {
         player.body.velocity.y = -120;
         player.body.velocity.x = 45;
         game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'land');
-        dust.position.x = player.body.position.x + 2;
+        dust.position.x = player.body.position.x + 16;
         dust.position.y = player.body.position.y - player.body.height;
         dust.angle = 90;
       } else if (player.body.touching.right) {
@@ -121,6 +121,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       }
 
       game.subUi.fx.add(dust); // mount below foreground & ui
+      dust.scale.setTo(8, 8);
+
       var anim = dust.animations.add('dust');
       dust.animations.play('dust', 32/3);
       anim.onComplete.add(function() {
@@ -184,7 +186,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     applyHealthEffects: function() {
-      var newPlayerHeight = Math.max(Math.round(player.hp / 2), 1);
+      var newPlayerHeight = Math.max(Math.round(player.hp / 2), 1/2) * settings.scale.x;
       player.scale.setTo(settings.scale.x, newPlayerHeight);
       actions.applyOrientation();
 
@@ -270,10 +272,11 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   player.anchor.setTo(0.5, 0.5); // anchor to center to allow flipping
 
   player.scarf = game.add.sprite(-1, -1, settings.color + 'Scarf');
+  player.scarf.scale.setTo(8, 8);
   player.scarf.animations.add('flap', [0, 1, 2, 3, 4, 5]);
   player.scarf.animations.add('disintegrate', [7, 8, 9, 10, 11, 6]);
   player.scarf.animation = player.scarf.animations.play('flap', 32/3, true);
-  player.scarf.setScaleMinMax(-1, 1, 1, 1);
+  player.scarf.setScaleMinMax(-8, 8, 8, 8);
   player.addChild(player.scarf);
 
   // track health
@@ -307,7 +310,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   // phaser apparently automatically calls any function named update attached to a sprite!
   player.update = function() {
     // kill player if he falls off the screen
-    if (player.position.y > 64 && player.hp !== 0) { // TODO: how to access native height from game.js?
+    if (player.position.y > 512 && player.hp !== 0) { // TODO: how to access native height from game.js?
       actions.takeDamage(2);
     }
 

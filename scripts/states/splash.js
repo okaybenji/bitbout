@@ -8,6 +8,7 @@ var Splash = function(game) {
       stageBuilder.buildBackgrounds();
 
       var title = game.add.sprite(0, 0, 'title');
+      title.scale.setTo(8, 8);
       title.animations.add('title');
       title.animations.play('title', 32/3, true);
 
