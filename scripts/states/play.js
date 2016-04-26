@@ -7,6 +7,7 @@ var Play = function(game) {
 
       // game over victory message declaring the winner
       self.victoryMsg = game.add.sprite(48, 168, 'victoryMsg');
+      self.victoryMsg.scale.setTo(8, 8);
       self.victoryMsg.visible = false;
       self.victoryMsg.animations.add('Blue', [0, 4, 8, 12], 32/3, true);
       self.victoryMsg.animations.add('Pink', [1, 5, 9, 13], 32/3, true);
