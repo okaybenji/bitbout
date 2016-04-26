@@ -32,7 +32,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     attack: function attack() {
       var duration = 200;
       var interval = 600;
-      var velocity = 100;
+      var velocity = 800;
 
       var canAttack = (Date.now() > player.lastAttacked + interval) && !player.isDucking && !player.isPermadead;
       if (!canAttack) {
@@ -65,8 +65,8 @@ var createPlayer = function createPlayer(game, options, onDeath) {
     },
 
     run: function run(direction) {
-      var maxSpeed = 32;
-      var acceleration = player.body.touching.down ? 8 : 3; // players have less control in the air
+      var maxSpeed = 256;
+      var acceleration = player.body.touching.down ? 64 : 24; // players have less control in the air
       player.orientation = direction;
 
       switch (direction) {
@@ -96,23 +96,23 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       var dust;
 
       if (player.body.touching.down) {
-        player.body.velocity.y = -100;
+        player.body.velocity.y = -805;
         game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'jump');
         dust.position.x = player.body.position.x - 32;
         dust.position.y = player.body.position.y + player.body.height - 16;
       // wall jumps
       } else if (player.body.touching.left) {
-        player.body.velocity.y = -120;
-        player.body.velocity.x = 45;
+        player.body.velocity.y = -960;
+        player.body.velocity.x = 360;
         game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'land');
         dust.position.x = player.body.position.x + 16;
         dust.position.y = player.body.position.y - player.body.height;
         dust.angle = 90;
       } else if (player.body.touching.right) {
-        player.body.velocity.y = -120;
-        player.body.velocity.x = -45;
+        player.body.velocity.y = -960;
+        player.body.velocity.x = -360;
         game.sfx.play('jump');
         dust = game.add.sprite(0, 0, 'land');
         dust.position.x = player.body.position.x;
@@ -152,7 +152,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.isDucking = true;
 
       (function roll() {
-        var canRoll = Math.abs(player.body.velocity.x) > 25 && player.body.touching.down;
+        var canRoll = Math.abs(player.body.velocity.x) > 200 && player.body.touching.down;
         if (canRoll) {
           player.isRolling = true;
         }
@@ -295,7 +295,7 @@ var createPlayer = function createPlayer(game, options, onDeath) {
   if (selectedStage.gravity) {
     player.body.gravity.y = selectedStage.gravity;
   } else {
-    player.body.gravity.y = 380;
+    player.body.gravity.y = 3000;
   }
 
   player.upWasDown = false; // track input change for variable jump height
@@ -314,11 +314,11 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       actions.takeDamage(2);
     }
 
-    if (player.body.velocity.y > 85) {
+    if (player.body.velocity.y > 680) {
       player.isFalling = true;
     }
 
-    player.scarf.animation.speed = Math.abs(player.body.velocity.x) * 0.75 + 32/3;
+    player.scarf.animation.speed = Math.abs(player.body.velocity.x) * 0.1 + 32/3;
 
     var input = {
       left:   (keys.left.isDown && !keys.right.isDown) ||
@@ -354,12 +354,12 @@ var createPlayer = function createPlayer(game, options, onDeath) {
       player.actions.applyOrientation();
     } else if (player.body.touching.down && !player.isRolling) {
       // apply friction
-      if (Math.abs(player.body.velocity.x) < 2) {
+      if (Math.abs(player.body.velocity.x) < 16) {
         player.body.velocity.x *= 0.5; // quickly bring slow-moving players to a stop
       } else if (player.body.velocity.x > 0) {
-        player.body.velocity.x -= 2;
+        player.body.velocity.x -= 16;
       } else if (player.body.velocity.x < 0) {
-        player.body.velocity.x += 2;
+        player.body.velocity.x += 16;
       }
     }
 

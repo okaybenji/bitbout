@@ -155,7 +155,7 @@ var Play = function(game) {
         function bounce() {
           game.sfx.play('bounce');;
 
-          var bounceVelocity = 50;
+          var bounceVelocity = 400;
           var velocityA, velocityB;
           velocityA = velocityB = bounceVelocity;
           if (playerA.position.x > playerB.position.x) {
@@ -182,12 +182,12 @@ var Play = function(game) {
             playerToLeave = playerB;
           }
           temporarilyDisableCollision(playerToFling);
-          var flingXVelocity = 75;
+          var flingXVelocity = 600;
           if (playerToFling.position.x > playerToLeave.position.x) {
             flingXVelocity *= -1;
           }
           playerToFling.body.velocity.x = flingXVelocity;
-          playerToFling.body.velocity.y = -75;
+          playerToFling.body.velocity.y = -600;
         }
 
         function pop() {
@@ -200,14 +200,14 @@ var Play = function(game) {
             playerToPop = playerA;
           }
           temporarilyDisableCollision(playerToPop);
-          playerToPop.body.velocity.y = -75;
+          playerToPop.body.velocity.y = -600;
         }
 
         var bothRolling = playerA.isRolling && playerB.isRolling;
         var bothStanding = !playerA.isDucking && !playerB.isDucking;
         var neitherRolling = !playerA.isRolling && !playerB.isRolling;
         var eitherDucking = playerA.isDucking || playerB.isDucking;
-        var eitherRunning = Math.abs(playerA.body.velocity.x) > 28 || Math.abs(playerB.body.velocity.x) >= 28;
+        var eitherRunning = Math.abs(playerA.body.velocity.x) > 224 || Math.abs(playerB.body.velocity.x) >= 224;
         var eitherRolling = playerA.isRolling || playerB.isRolling;
         var eitherStanding = !playerA.isDucking || !playerB.isDucking;
 
