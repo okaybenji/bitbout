@@ -27,3 +27,5 @@ Change the **map** with `M`<br>
 Change the number of **players** with `P`<br>
 Change the **BGM** (music) with `B`<br>
 **Restart** the game with `ENTER`
+
+Made for [#LOWREZJAM 2016](https://itch.io/jam/lowrezjam2016).
