@@ -45,6 +45,11 @@ var Loading = function(game) {
       var audioCtx = new AudioContext();
       game.bgm = require('../music')(audioCtx);
       game.sfx = require('../sfx')(audioCtx);
+
+      // Click anywhere in the page to enable sound.
+      document.onclick = function() {
+        audioCtx.resume();
+      };
     },
 
     create: function() {
@@ -55,7 +60,7 @@ var Loading = function(game) {
       game.state.start('splash');
     }
   };
-  
+
   return loading;
 };
 
